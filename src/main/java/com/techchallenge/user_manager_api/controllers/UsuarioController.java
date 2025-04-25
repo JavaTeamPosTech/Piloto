@@ -4,10 +4,7 @@ import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -23,6 +20,12 @@ public class UsuarioController {
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
         usuarioService.cadastrarUsuario(usuario);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removerUsuario(@PathVariable Long id) {
+        usuarioService.removerUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
