@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.services.impl;
 
+import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
@@ -27,6 +28,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void removerUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
         usuarioRepository.deleteById(usuario.getId());
+    }
+
+    @Override
+    public void alterarUsuario(AtualizarUsuarioRequestDTO dto, Long id) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        usuario.alterarInformacoes(dto);
+        usuarioRepository.save(usuario);
     }
 
 

@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.controllers;
 
+import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -28,4 +29,9 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterarUsuario(@RequestBody @Valid AtualizarUsuarioRequestDTO usuario, @PathVariable Long id) {
+        usuarioService.alterarUsuario(usuario, id);
+        return ResponseEntity.noContent().build();
+    }
 }
