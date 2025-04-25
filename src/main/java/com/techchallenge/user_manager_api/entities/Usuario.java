@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.entities;
 
+import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,4 +37,9 @@ public class Usuario {
         this.endereco = dto.endereco();
     }
 
+    public void alterarInformacoes(AtualizarUsuarioRequestDTO dto) {
+            this.nome = dto.nome();
+            this.email = dto.email();
+            this.endereco = dto.endereco();
+    }
 }
