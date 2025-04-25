@@ -2,12 +2,15 @@ package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
+@Tag(name = "Usuario", description = "teste")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -17,6 +20,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @Operation(summary = "Busca todos os alugueis paginados")
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
         usuarioService.cadastrarUsuario(usuario);
         return ResponseEntity.ok().build();
