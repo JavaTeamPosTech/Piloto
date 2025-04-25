@@ -2,7 +2,9 @@ package com.techchallenge.user_manager_api.entities;
 
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Entity(name = "Usuario")
 @Table(name = "usuarios")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
