@@ -2,6 +2,7 @@ package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
+import com.techchallenge.user_manager_api.dto.UsuarioLoginDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,4 +41,11 @@ public class UsuarioController {
         usuarioService.alterarUsuario(usuario, id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> logar(@RequestBody @Valid UsuarioLoginDTO usuario){
+        Boolean validacao = usuarioService.logar(usuario);
+        return ResponseEntity.ok(validacao);
+    }
+
 }

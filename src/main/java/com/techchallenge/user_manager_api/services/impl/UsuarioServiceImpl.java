@@ -2,12 +2,16 @@ package com.techchallenge.user_manager_api.services.impl;
 
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
+import com.techchallenge.user_manager_api.dto.UsuarioLoginDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
+import com.techchallenge.user_manager_api.exceptions.AuthenticationException;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -36,6 +40,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
         usuario.alterarInformacoes(dto);
         usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public Boolean logar(UsuarioLoginDTO dto) {
+        if(usuarioRepository.existsByEmailAndSenha(dto.email(), dto.senha())){
+            return true;
+        }else{
+            throw new AuthenticationException("Cliente não encontrado, verifique a senha e o email!");
+        }
     }
 
 

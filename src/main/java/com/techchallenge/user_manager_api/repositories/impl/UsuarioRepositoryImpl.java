@@ -1,5 +1,7 @@
 package com.techchallenge.user_manager_api.repositories.impl;
 
+import com.techchallenge.user_manager_api.dto.UsuarioLoginDTO;
+import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import org.springframework.stereotype.Repository;
 

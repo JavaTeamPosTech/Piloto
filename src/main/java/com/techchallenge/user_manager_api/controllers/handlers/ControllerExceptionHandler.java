@@ -1,6 +1,7 @@
 package com.techchallenge.user_manager_api.controllers.handlers;
 
 import com.techchallenge.user_manager_api.dto.ExcecaoDTO;
+import com.techchallenge.user_manager_api.exceptions.AuthenticationException;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,4 +17,9 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status.value()).body(new ExcecaoDTO(e.getMessage(), status.value()));
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ExcecaoDTO> handlerAuthenticationException(AuthenticationException e){
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status.value()).body(new ExcecaoDTO(e.getMessage(), status.value()));
+    }
 }
