@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
-@Tag(name = "Usuario", description = "teste")
+@Tag(name = "Usuario", description = "Controller do Usuario")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -21,19 +21,21 @@ public class UsuarioController {
     }
 
     @PostMapping
-    @Operation(summary = "Busca todos os alugueis paginados")
+    @Operation(summary = "Cadastrar usuario")
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
         usuarioService.cadastrarUsuario(usuario);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Remover usuario")
     public ResponseEntity<Void> removerUsuario(@PathVariable Long id) {
         usuarioService.removerUsuario(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Alterar dados cadastrais do usuario, exceto login e senha")
     public ResponseEntity<Void> alterarUsuario(@RequestBody @Valid AtualizarUsuarioRequestDTO usuario, @PathVariable Long id) {
         usuarioService.alterarUsuario(usuario, id);
         return ResponseEntity.noContent().build();

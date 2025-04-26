@@ -3,6 +3,7 @@ package com.techchallenge.user_manager_api.services.impl;
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.UsuarioDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
+import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void alterarUsuario(AtualizarUsuarioRequestDTO dto, Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
         usuario.alterarInformacoes(dto);
         usuarioRepository.save(usuario);
     }
