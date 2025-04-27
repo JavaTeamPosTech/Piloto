@@ -1,13 +1,9 @@
 package com.techchallenge.user_manager_api.entities;
 
-import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.dto.UsuarioRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,19 +31,15 @@ public abstract class Usuario {
     private List<Endereco> enderecos = new ArrayList<>();
 
 
-//    public Usuario(UsuarioRequestDTO dto) {
-//        this.nome = dto.nome();
-//        this.email = dto.email();
-//        this.login = dto.login();
-//        this.senha = dto.senha();
-//        this.ultimaAlteracao = LocalDate.now();
-//
-//        for (EnderecoRequestDTO endereco : dto.enderecos()) {
-//            this.enderecos.add(new Endereco(endereco, this));
-//        }
-//
-//    }
-//
+    public Usuario(String nome, String email, String login, String senha, List<Endereco> enderecos) {
+        this.nome = nome;
+        this.email = email;
+        this.login = login;
+        this.senha = senha;
+        this.ultimaAlteracao = LocalDate.now();
+        this.enderecos = enderecos;
+    }
+
 //    public void alterarInformacoes(AtualizarUsuarioRequestDTO dto) {
 //            this.nome = dto.nome();
 //            this.email = dto.email();

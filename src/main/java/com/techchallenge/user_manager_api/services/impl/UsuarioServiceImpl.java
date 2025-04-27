@@ -21,8 +21,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void cadastrarUsuario(UsuarioRequestDTO dto) {
-        Usuario usuario = new Usuario(dto);
-        usuarioRepository.save(usuario);
+//        Usuario usuario = new Usuario(dto);
+//        usuarioRepository.save(usuario);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void alterarUsuario(AtualizarUsuarioRequestDTO dto, Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
-        usuario.alterarInformacoes(dto);
+        //usuario.alterarInformacoes(dto);
         usuarioRepository.save(usuario);
     }
 
