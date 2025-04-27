@@ -1,7 +1,6 @@
 package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,8 @@ public class ProprietarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> criarProprietario(@RequestBody ProprietarioRequestDTO proprietarioDTO) {
-        proprietarioService.criarProprietario(proprietarioDTO);
+    public ResponseEntity<Void> cadastrarProprietario(@RequestBody ProprietarioRequestDTO proprietarioDTO) {
+        proprietarioService.cadastrarProprietario(proprietarioDTO);
         return ResponseEntity.ok().build();
     }
 
