@@ -40,9 +40,4 @@ public abstract class Usuario {
         this.enderecos = enderecos;
     }
 
-//    public void alterarInformacoes(AtualizarUsuarioRequestDTO dto) {
-//            this.nome = dto.nome();
-//            this.email = dto.email();
-//            //this.endereco = dto.endereco();
-//    }
 }
