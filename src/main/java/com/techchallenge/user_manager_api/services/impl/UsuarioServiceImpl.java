@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.services.impl;
 
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.UsuarioDTO;
+import com.techchallenge.user_manager_api.dto.UsuarioRequestDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
@@ -20,7 +20,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public void cadastrarUsuario(UsuarioDTO dto) {
+    public void cadastrarUsuario(UsuarioRequestDTO dto) {
         Usuario usuario = new Usuario(dto);
         usuarioRepository.save(usuario);
     }

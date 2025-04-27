@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.UsuarioDTO;
+import com.techchallenge.user_manager_api.dto.UsuarioRequestDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping
     @Operation(summary = "Cadastrar usuario")
-    public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
+    public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuario) {
         usuarioService.cadastrarUsuario(usuario);
         return ResponseEntity.ok().build();
     }

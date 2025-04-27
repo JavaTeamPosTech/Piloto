@@ -1,10 +1,10 @@
 package com.techchallenge.user_manager_api.services;
 
 import com.techchallenge.user_manager_api.dto.AtualizarUsuarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.UsuarioDTO;
+import com.techchallenge.user_manager_api.dto.UsuarioRequestDTO;
 
 public interface UsuarioService {
-    void cadastrarUsuario(UsuarioDTO usuario);
+    void cadastrarUsuario(UsuarioRequestDTO usuario);
 
     void removerUsuario(Long id);
 
