@@ -2,6 +2,7 @@ package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +20,10 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarCliente(@RequestBody ClienteRequestDTO clienteDTO){
+    public ResponseEntity<Void> cadastrarCliente(@RequestBody @Valid ClienteRequestDTO clienteDTO){
         clienteService.cadastrarCliente(clienteDTO);
         return ResponseEntity.ok().build();
     }
+
 
 }

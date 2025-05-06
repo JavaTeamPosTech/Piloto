@@ -1,10 +1,15 @@
-CREATE TABLE usuarios
-(
-    id bigint auto_increment primary key,
-    nome             varchar(60) not null,
-    email            varchar(40) unique,
-    login            varchar(30),
-    senha            varchar(30),
-    ultima_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    endereco         varchar(60)
+CREATE TABLE IF NOT EXISTS usuarios (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    email VARCHAR(40) UNIQUE,
+    login VARCHAR(30),
+    senha VARCHAR(30),
+    ultima_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE IF NOT EXISTS clientes (
+  id BIGSERIAL PRIMARY KEY REFERENCES usuarios(id)
 );
+
+
+

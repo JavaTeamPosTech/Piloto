@@ -34,3 +34,8 @@ build/
 
 ### Logs files ###
 *.log
+
+#Dockerfile/Dockercompose
+.env
+*.class
+*.jar
