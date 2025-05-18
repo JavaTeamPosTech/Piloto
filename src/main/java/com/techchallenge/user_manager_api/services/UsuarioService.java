@@ -1,0 +1,12 @@
+package com.techchallenge.user_manager_api.services;
+
+import com.techchallenge.user_manager_api.dto.AtualizarSenhaRequestDTO;
+import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
+import jakarta.validation.Valid;
+
+public interface UsuarioService {
+    void atualizarSenha(Long id, @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO);
+
+    void fazerLogin(@Valid LoginRequestDTO loginRequestDTO);
+
+}
