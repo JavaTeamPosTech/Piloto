@@ -1,8 +1,6 @@
 package com.techchallenge.user_manager_api.mapper;
 
-import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
-import com.techchallenge.user_manager_api.dto.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.dto.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.dto.*;
 import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.entities.Endereco;
 import com.techchallenge.user_manager_api.entities.Proprietario;
@@ -51,5 +49,21 @@ public class UsuarioMapper {
                 .toList();
 
         usuario.getEnderecos().addAll(enderecos);
+    }
+
+    public static ClienteResponseDTO toClienteResponseDTO(Cliente cliente) {
+        return new ClienteResponseDTO(cliente.getId(), cliente.getNome(), cliente.getEmail(), cliente.getLogin(),
+                cliente.getUltimaAlteracao(), toEnderecoResponseDTO(cliente.getEnderecos()));
+    }
+
+    private static List<EnderecoResponseDTO> toEnderecoResponseDTO(List<Endereco> enderecos) {
+        List<EnderecoResponseDTO> enderecosDTO = new ArrayList<>();
+        for (Endereco endereco : enderecos) {
+            EnderecoResponseDTO enderecoResponseDTO = new EnderecoResponseDTO(
+                    endereco.getId(), endereco.getEstado(), endereco.getCidade(),
+                    endereco.getBairro(), endereco.getRua(), endereco.getNumero(), endereco.getComplemento(), endereco.getCep());
+            enderecosDTO.add(enderecoResponseDTO);
+        }
+        return enderecosDTO;
     }
 }

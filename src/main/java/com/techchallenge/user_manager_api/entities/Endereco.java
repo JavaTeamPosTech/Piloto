@@ -2,8 +2,10 @@ package com.techchallenge.user_manager_api.entities;
 
 import com.techchallenge.user_manager_api.dto.EnderecoRequestDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "enderecos")
