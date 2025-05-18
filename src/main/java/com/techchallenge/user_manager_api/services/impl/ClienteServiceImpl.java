@@ -2,6 +2,7 @@ package com.techchallenge.user_manager_api.services.impl;
 
 import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.ClienteResponseDTO;
+import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
@@ -29,5 +30,11 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteResponseDTO buscarCliente(Long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
         return UsuarioMapper.toClienteResponseDTO(cliente);
+    }
+
+    @Override
+    public void fazerLogin(LoginRequestDTO loginRequestDTO) {
+        clienteRepository.findByLoginAndSenha(loginRequestDTO.login(), loginRequestDTO.senha())
+                .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreto"));
     }
 }
