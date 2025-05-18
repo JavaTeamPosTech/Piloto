@@ -52,18 +52,27 @@ public class UsuarioMapper {
     }
 
     public static ClienteResponseDTO toClienteResponseDTO(Cliente cliente) {
-        return new ClienteResponseDTO(cliente.getId(), cliente.getNome(), cliente.getEmail(), cliente.getLogin(),
-                cliente.getUltimaAlteracao(), toEnderecoResponseDTO(cliente.getEnderecos()));
+
+        return new ClienteResponseDTO(
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getEmail(),
+                cliente.getLogin(),
+                cliente.getUltimaAlteracao(),
+                toEnderecoResponseDTO(cliente.getEnderecos()));
     }
 
     private static List<EnderecoResponseDTO> toEnderecoResponseDTO(List<Endereco> enderecos) {
-        List<EnderecoResponseDTO> enderecosDTO = new ArrayList<>();
-        for (Endereco endereco : enderecos) {
-            EnderecoResponseDTO enderecoResponseDTO = new EnderecoResponseDTO(
-                    endereco.getId(), endereco.getEstado(), endereco.getCidade(),
-                    endereco.getBairro(), endereco.getRua(), endereco.getNumero(), endereco.getComplemento(), endereco.getCep());
-            enderecosDTO.add(enderecoResponseDTO);
-        }
-        return enderecosDTO;
+
+        return enderecos.stream().map(e -> new EnderecoResponseDTO(
+                e.getId(),
+                e.getEstado(),
+                e.getCidade(),
+                e.getBairro(),
+                e.getRua(),
+                e.getNumero(),
+                e.getComplemento(),
+                e.getCep()
+        )).toList();
     }
 }
