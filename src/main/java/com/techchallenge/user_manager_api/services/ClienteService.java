@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.services;
 
+import com.techchallenge.user_manager_api.dto.AtualizarSenhaRequestDTO;
 import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
@@ -12,4 +13,6 @@ public interface ClienteService {
     ClienteResponseDTO buscarCliente(Long id);
 
     void fazerLogin(@Valid LoginRequestDTO loginRequestDTO);
+
+    void atualizarSenha(Long id, @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO);
 }

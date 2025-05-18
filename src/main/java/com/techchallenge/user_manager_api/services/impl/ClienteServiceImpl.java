@@ -1,10 +1,12 @@
 package com.techchallenge.user_manager_api.services.impl;
 
+import com.techchallenge.user_manager_api.dto.AtualizarSenhaRequestDTO;
 import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
+import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
 import com.techchallenge.user_manager_api.repositories.ClienteRepository;
 import com.techchallenge.user_manager_api.services.ClienteService;
@@ -36,5 +38,16 @@ public class ClienteServiceImpl implements ClienteService {
     public void fazerLogin(LoginRequestDTO loginRequestDTO) {
         clienteRepository.findByLoginAndSenha(loginRequestDTO.login(), loginRequestDTO.senha())
                 .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreto"));
+    }
+
+    @Override
+    public void atualizarSenha(Long id, AtualizarSenhaRequestDTO atualizarSenhaDTO) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        if (cliente.getSenha().equals(atualizarSenhaDTO.senhaAtual()) && cliente.getLogin().equals(atualizarSenhaDTO.login())) {
+            cliente.atualizarSenha(atualizarSenhaDTO.novaSenha());
+            clienteRepository.save(cliente);
+        } else {
+            throw new UnauthorizedException("Acesso negado. Login ou senha incorreta");
+        }
     }
 }

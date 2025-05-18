@@ -23,6 +23,7 @@ public abstract class Usuario {
     private String nome;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String login;
     private String senha;
     @Column(name = "ultima_alteracao")
@@ -39,6 +40,11 @@ public abstract class Usuario {
         this.senha = senha;
         this.ultimaAlteracao = LocalDate.now();
         this.enderecos = enderecos;
+    }
+
+    public void atualizarSenha(String senha) {
+        this.senha = senha;
+        this.ultimaAlteracao = LocalDate.now();
     }
 
 }
