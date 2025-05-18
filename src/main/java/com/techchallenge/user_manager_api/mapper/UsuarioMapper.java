@@ -75,4 +75,15 @@ public class UsuarioMapper {
                 e.getCep()
         )).toList();
     }
+
+    public static ProprietarioResponseDTO toProprietarioResponseDTO(Proprietario proprietario) {
+        return new ProprietarioResponseDTO(
+                proprietario.getId(),
+                proprietario.getNome(),
+                proprietario.getEmail(),
+                proprietario.getLogin(),
+                proprietario.getUltimaAlteracao(),
+                toEnderecoResponseDTO(proprietario.getEnderecos())
+        );
+    }
 }
