@@ -14,7 +14,11 @@ import java.util.List;
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_usuario_email", columnNames = "email"),
+                @UniqueConstraint(name = "uk_usuario_login", columnNames = "login")
+        })
 public abstract class Usuario {
 
     @Id

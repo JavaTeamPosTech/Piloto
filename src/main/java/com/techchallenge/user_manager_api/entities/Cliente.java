@@ -16,7 +16,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "clientes")
+@Table(name = "clientes",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")
+        })
 public class Cliente extends Usuario {
 
     private String cpf;
