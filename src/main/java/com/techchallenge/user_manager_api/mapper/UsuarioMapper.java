@@ -1,6 +1,11 @@
 package com.techchallenge.user_manager_api.mapper;
 
-import com.techchallenge.user_manager_api.dto.*;
+import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
+import com.techchallenge.user_manager_api.dto.response.EnderecoResponseDTO;
+import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.entities.Endereco;
 import com.techchallenge.user_manager_api.entities.Proprietario;
@@ -16,6 +21,15 @@ public class UsuarioMapper {
 
     public static Cliente toCliente(ClienteRequestDTO dto) {
         Cliente cliente = new Cliente(
+                dto.cpf(),
+                dto.dataNascimento(),
+                dto.genero(),
+                dto.telefone(),
+                dto.preferenciasAlimentares(),
+                dto.alergias(),
+                dto.metodoPagamentoPreferido(),
+                dto.clienteVip(),
+                dto.notificacoesAtivas(),
                 dto.nome(),
                 dto.email(),
                 dto.login(),

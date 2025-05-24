@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.ProprietarioResponseDTO;
+import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;

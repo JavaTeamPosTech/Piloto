@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.services;
 
-import com.techchallenge.user_manager_api.dto.ClienteRequestDTO;
-import com.techchallenge.user_manager_api.dto.ClienteResponseDTO;
+import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
+import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 
 
 public interface ClienteService {

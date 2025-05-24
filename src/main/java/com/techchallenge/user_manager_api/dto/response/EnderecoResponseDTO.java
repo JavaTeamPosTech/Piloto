@@ -1,4 +1,4 @@
-package com.techchallenge.user_manager_api.dto;
+package com.techchallenge.user_manager_api.dto.response;
 
 public record EnderecoResponseDTO(
         Long id,

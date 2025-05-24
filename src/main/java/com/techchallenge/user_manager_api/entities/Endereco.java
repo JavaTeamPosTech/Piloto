@@ -1,6 +1,6 @@
 package com.techchallenge.user_manager_api.entities;
 
-import com.techchallenge.user_manager_api.dto.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

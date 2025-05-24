@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.AtualizarSenhaRequestDTO;
-import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;

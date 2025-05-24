@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.techchallenge.user_manager_api.dto.AtualizarSenhaRequestDTO;
-import com.techchallenge.user_manager_api.dto.LoginRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.techchallenge.user_manager_api.dto.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.ProprietarioResponseDTO;
+import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

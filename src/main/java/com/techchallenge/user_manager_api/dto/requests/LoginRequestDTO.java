@@ -1,4 +1,4 @@
-package com.techchallenge.user_manager_api.dto;
+package com.techchallenge.user_manager_api.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
