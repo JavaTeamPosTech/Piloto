@@ -19,7 +19,7 @@ public class UsuarioMapper {
     private UsuarioMapper() {
     }
 
-    public static Cliente toCliente(ClienteRequestDTO dto) {
+    public static Cliente toCliente(ClienteRequestDTO dto, String senhaCriptografada) {
         Cliente cliente = new Cliente(
                 dto.cpf(),
                 dto.dataNascimento(),
@@ -33,7 +33,7 @@ public class UsuarioMapper {
                 dto.nome(),
                 dto.email(),
                 dto.login(),
-                dto.senha(),
+                senhaCriptografada,
                 new ArrayList<>()
         );
 
@@ -41,7 +41,7 @@ public class UsuarioMapper {
         return cliente;
     }
 
-    public static Proprietario toProprietario(ProprietarioRequestDTO dto) {
+    public static Proprietario toProprietario(ProprietarioRequestDTO dto, String senhaCriptografada) {
         Proprietario proprietario = new Proprietario(
                 dto.cnpj(),
                 dto.razaoSocial(),
@@ -53,7 +53,7 @@ public class UsuarioMapper {
                 dto.nome(),
                 dto.email(),
                 dto.login(),
-                dto.senha(),
+                senhaCriptografada,
                 new ArrayList<>()
         );
 

@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
 import com.techchallenge.user_manager_api.repositories.ProprietarioRepository;
+import com.techchallenge.user_manager_api.services.PasswordService;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +14,17 @@ import org.springframework.stereotype.Service;
 public class ProprietarioServiceImpl implements ProprietarioService {
 
     private final ProprietarioRepository proprietarioRepository;
+    private final PasswordService passwordService;
 
-    public ProprietarioServiceImpl(ProprietarioRepository proprietarioRepository) {
+    public ProprietarioServiceImpl(ProprietarioRepository proprietarioRepository, PasswordService passwordService) {
         this.proprietarioRepository = proprietarioRepository;
+        this.passwordService = passwordService;
     }
 
     @Override
     public void cadastrarProprietario(ProprietarioRequestDTO proprietarioDTO) {
-        Proprietario proprietario = UsuarioMapper.toProprietario(proprietarioDTO);
+        String senhaCriptografada = passwordService.encryptPassword(proprietarioDTO.senha());
+        Proprietario proprietario = UsuarioMapper.toProprietario(proprietarioDTO, senhaCriptografada);
         proprietarioRepository.save(proprietario);
     }
 
