@@ -26,7 +26,16 @@ public class Proprietario extends Usuario {
     @Column(name = "status_conta")
     private StatusContaEnum statusConta;
 
-    public Proprietario(String nome, String email, String login, String senha, List<Endereco> enderecos) {
+    public Proprietario(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
+                        String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,
+                        String email, String login, String senha, List<Endereco> enderecos) {
         super(nome, email, login, senha, enderecos);
+        this.cnpj = cnpj;
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.telefoneComercial = telefoneComercial;
+        this.whatsapp = whatsapp;
+        this.statusConta = statusConta;
     }
 }

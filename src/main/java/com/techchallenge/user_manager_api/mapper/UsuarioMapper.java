@@ -43,6 +43,13 @@ public class UsuarioMapper {
 
     public static Proprietario toProprietario(ProprietarioRequestDTO dto) {
         Proprietario proprietario = new Proprietario(
+                dto.cnpj(),
+                dto.razaoSocial(),
+                dto.nomeFantasia(),
+                dto.inscricaoEstadual(),
+                dto.telefoneComercial(),
+                dto.whatsapp(),
+                dto.statusConta(),
                 dto.nome(),
                 dto.email(),
                 dto.login(),
