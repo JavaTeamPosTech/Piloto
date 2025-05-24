@@ -99,6 +99,13 @@ public class UsuarioMapper {
 
     public static ProprietarioResponseDTO toProprietarioResponseDTO(Proprietario proprietario) {
         return new ProprietarioResponseDTO(
+                proprietario.getCnpj(),
+                proprietario.getRazaoSocial(),
+                proprietario.getNomeFantasia(),
+                proprietario.getInscricaoEstadual(),
+                proprietario.getTelefoneComercial(),
+                proprietario.getWhatsapp(),
+                proprietario.getStatusConta(),
                 proprietario.getId(),
                 proprietario.getNome(),
                 proprietario.getEmail(),

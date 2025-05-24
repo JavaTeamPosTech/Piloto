@@ -4,10 +4,12 @@ import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "proprietarios")
