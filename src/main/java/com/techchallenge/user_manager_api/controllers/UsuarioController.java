@@ -24,9 +24,9 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}/senha")
-    public ResponseEntity<Void> atualizarSenha(@PathVariable Long id, @RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO){
-        usuarioService.atualizarSenha(id, atualizarSenhaRequestDTO);
+    @PutMapping("/atualizarSenha")
+    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO){
+        usuarioService.atualizarSenha(atualizarSenhaRequestDTO);
         return ResponseEntity.noContent().build();
     }
 }

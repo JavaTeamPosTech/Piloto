@@ -38,7 +38,6 @@ public abstract class Usuario {
         this.email = email;
         this.login = login;
         this.senha = senha;
-        this.ultimaAlteracao = LocalDate.now();
         this.enderecos = enderecos;
     }
 

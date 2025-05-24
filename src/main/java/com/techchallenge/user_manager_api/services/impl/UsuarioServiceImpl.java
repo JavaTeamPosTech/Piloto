@@ -4,7 +4,6 @@ import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
-import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import org.springframework.stereotype.Service;
@@ -21,17 +20,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void fazerLogin(LoginRequestDTO loginRequestDTO) {
         usuarioRepository.findByLoginAndSenha(loginRequestDTO.login(), loginRequestDTO.senha())
-                .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreto"));
+                .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreta"));
     }
 
     @Override
-    public void atualizarSenha(Long id, AtualizarSenhaRequestDTO atualizarSenhaDTO) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-        if (usuario.getSenha().equals(atualizarSenhaDTO.senhaAtual()) && usuario.getLogin().equals(atualizarSenhaDTO.login())) {
-            usuario.atualizarSenha(atualizarSenhaDTO.novaSenha());
-            usuarioRepository.save(usuario);
-        } else {
-            throw new UnauthorizedException("Acesso negado. Login ou senha incorreta");
-        }
+    public void atualizarSenha(AtualizarSenhaRequestDTO atualizarSenhaDTO) {
+        Usuario usuario = usuarioRepository.findByLoginAndSenha(atualizarSenhaDTO.login(), atualizarSenhaDTO.senhaAtual())
+                .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreta"));
+
+        usuario.atualizarSenha(atualizarSenhaDTO.novaSenha());
+        usuarioRepository.save(usuario);
+
     }
 }

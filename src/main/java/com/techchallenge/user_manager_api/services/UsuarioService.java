@@ -5,7 +5,7 @@ import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import jakarta.validation.Valid;
 
 public interface UsuarioService {
-    void atualizarSenha(Long id, @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO);
+    void atualizarSenha(@Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO);
 
     void fazerLogin(@Valid LoginRequestDTO loginRequestDTO);
 
