@@ -24,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void fazerLogin(LoginRequestDTO loginRequestDTO) {
-        Usuario usuario = usuarioRepository.findByLogin(loginRequestDTO.login())
+        Usuario usuario = usuarioRepository.findByLoginAndSenha(loginRequestDTO.login(), null)
                 .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreta"));
 
         boolean isLoginValid = passwordService.matches(loginRequestDTO.senha(), usuario.getSenha());
@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void atualizarSenha(AtualizarSenhaRequestDTO atualizarSenhaDTO) {
-        Usuario usuario = usuarioRepository.findByLogin(atualizarSenhaDTO.login())
+        Usuario usuario = usuarioRepository.findByLoginAndSenha(atualizarSenhaDTO.login(), null)
                 .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreta"));
 
         boolean isLoginValid = passwordService.matches(atualizarSenhaDTO.senhaAtual(), usuario.getSenha());

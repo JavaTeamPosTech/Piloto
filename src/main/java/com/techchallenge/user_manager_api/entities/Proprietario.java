@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.entities;
 
+import com.techchallenge.user_manager_api.entities.enums.RolesEnum;
 import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +32,7 @@ public class Proprietario extends Usuario {
     public Proprietario(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
                         String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,
                         String email, String login, String senha, List<Endereco> enderecos) {
-        super(nome, email, login, senha, enderecos);
+        super(nome, email, login, senha, enderecos, RolesEnum.PROPRIETARIO);
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;

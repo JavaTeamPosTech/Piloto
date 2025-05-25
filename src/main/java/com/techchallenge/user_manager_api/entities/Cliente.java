@@ -1,9 +1,6 @@
 package com.techchallenge.user_manager_api.entities;
 
-import com.techchallenge.user_manager_api.entities.enums.AlergiaAlimentarEnum;
-import com.techchallenge.user_manager_api.entities.enums.GeneroEnum;
-import com.techchallenge.user_manager_api.entities.enums.MetodoPagamentoEnum;
-import com.techchallenge.user_manager_api.entities.enums.TiposComidaEnum;
+import com.techchallenge.user_manager_api.entities.enums.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -57,7 +54,7 @@ public class Cliente extends Usuario {
                    Boolean notificacoesAtivas, String nome, String email, String login, String senha,
                    List<Endereco> enderecos) {
 
-        super(nome, email, login, senha, enderecos);
+        super(nome, email, login, senha, enderecos, RolesEnum.CLIENTE);
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
