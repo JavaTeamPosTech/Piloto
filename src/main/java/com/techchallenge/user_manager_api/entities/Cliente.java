@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.entities.enums.MetodoPagamentoEnum;
 import com.techchallenge.user_manager_api.entities.enums.TiposComidaEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
 @Table(name = "clientes",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")

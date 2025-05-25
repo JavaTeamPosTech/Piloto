@@ -21,7 +21,6 @@ public class ClienteServiceImpl implements ClienteService {
         this.passwordService = passwordService;
     }
 
-
     @Override
     public void cadastrarCliente(ClienteRequestDTO clienteDTO) {
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());

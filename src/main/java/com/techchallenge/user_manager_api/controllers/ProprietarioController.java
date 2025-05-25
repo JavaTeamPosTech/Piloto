@@ -3,6 +3,7 @@ package com.techchallenge.user_manager_api.controllers;
 import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class ProprietarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarProprietario(@RequestBody ProprietarioRequestDTO proprietarioDTO) {
+    public ResponseEntity<Void> cadastrarProprietario(@RequestBody @Valid ProprietarioRequestDTO proprietarioDTO) {
         proprietarioService.cadastrarProprietario(proprietarioDTO);
         return ResponseEntity.ok().build();
     }
