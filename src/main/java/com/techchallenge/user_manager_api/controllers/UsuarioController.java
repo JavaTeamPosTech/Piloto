@@ -33,7 +33,7 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/atualizarSenha")
+    @PutMapping("/atualizar-senha")
     public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO) {
         usuarioService.atualizarSenha(atualizarSenhaRequestDTO);
         return ResponseEntity.noContent().build();
