@@ -39,6 +39,7 @@ public class Cliente extends Usuario {
     private MetodoPagamentoEnum metodoPagamentoPreferido;
     @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
+    @Column(name = "ultimo_pedido")
     private Date ultimoPedido;
     @Column(name = "saldo_pontos")
     private Integer saldoPontos;

@@ -2,9 +2,7 @@ package com.techchallenge.user_manager_api.entities;
 
 import com.techchallenge.user_manager_api.entities.enums.RolesEnum;
 import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +11,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "proprietarios")
+@Table(name = "proprietarios",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")
+        })
 public class Proprietario extends Usuario {
 
     private String cnpj;
@@ -26,6 +27,7 @@ public class Proprietario extends Usuario {
     @Column(name = "telefone_comercial")
     private String telefoneComercial;
     private String whatsapp;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_conta")
     private StatusContaEnum statusConta;
 

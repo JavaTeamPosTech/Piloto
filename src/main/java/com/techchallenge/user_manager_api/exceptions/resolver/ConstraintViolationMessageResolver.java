@@ -10,10 +10,11 @@ public class ConstraintViolationMessageResolver {
 
     private final Map<String, String> constraintMessages = Map.of(
             "uk_cliente_cpf", "Já existe um cadastro com este CPF.",
-            "telefone", "Já existe um cadastro com este telefone.",
-            "cnpj", "Já existe um cadastro com este CNPJ.",
-            "uk_usuario_email", "Já existe um cadastro com este e-mail.",
-            "usuarios_email_key", "Já existe um cadastro com este e-mail.",
+            "uk_cliente_telefone", "Já existe um cadastro com este telefone.",
+            "uk_proprietario_cnpj", "Já existe um cadastro com este CNPJ.",
+            "uk_proprietario_razao_social", "Já existe um cadastro com esta razao social.",
+            "uk_proprietario_inscricao_estadual", "Já existe um cadastro com esta inscricao estadual.",
+            "uk_usuario_email", "Já existe um cadastro com este email.",
             "uk_usuario_login", "Já existe um cadastro com este login."
     );
 

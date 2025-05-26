@@ -39,6 +39,7 @@ public class Usuario implements UserDetails {
     @Column(name = "ultima_alteracao")
     private LocalDate ultimaAlteracao;
     @Column(name = "role_descricao")
+    @Enumerated(EnumType.STRING)
     private RolesEnum role;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos = new ArrayList<>();

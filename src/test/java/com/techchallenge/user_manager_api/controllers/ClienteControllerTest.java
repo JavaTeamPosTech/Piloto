@@ -54,31 +54,48 @@ class ClienteControllerTest {
         // ARRANGE
         String json = """
                 {
-                  "cpf": "12345678900",
-                  "dataNascimento": "1990-05-24",
+                  "cpf": "319.456.789-00",
+                  "dataNascimento": "1990-05-20",
                   "genero": "MASCULINO",
                   "telefone": "(11) 91234-5678",
-                  "preferenciasAlimentares": ["CHURRASCO", "JAPONESA"],
-                  "alergias": ["GLUTEN"],
+                  "preferenciasAlimentares": [
+                    "ITALIANA",
+                    "DOCES",
+                    "JAPONESA"
+                  ],
+                  "alergias": [
+                    "GLUTEN",
+                    "PEIXE"
+                  ],
                   "metodoPagamentoPreferido": "PIX",
                   "clienteVip": true,
                   "notificacoesAtivas": true,
-                  "nome": "João da Silva",
-                  "email": "joao@email.com",
-                  "login": "joaosilva",
+                  "nome": "Rafael",
+                  "email": "rafael@gmail.com",
+                  "login": "rafaelLogin",
                   "senha": "senhaSegura123",
                   "enderecos": [
                     {
                       "estado": "SP",
                       "cidade": "São Paulo",
                       "bairro": "Centro",
-                      "rua": "Rua das Rosas",
+                      "rua": "Rua das Flores",
                       "numero": 123,
-                      "complemento": "Apto 42",
+                      "complemento": "Apto 45",
                       "cep": "01000-000"
+                    },
+                    {
+                      "estado": "SP",
+                      "cidade": "São Paulo",
+                      "bairro": "Vila Mariana",
+                      "rua": "Rua São Paulo",
+                      "numero": 129,
+                      "complemento": "Apto 35",
+                      "cep": "09888-010"
                     }
                   ]
                 }
+                
                 """;
 
         //ACT
