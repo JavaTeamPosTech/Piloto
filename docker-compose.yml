@@ -1,13 +1,11 @@
-
 services:
   db:
     image: postgres:15
     container_name: postgres_container
     environment:
-      POSTGRES_DB: meuMenu
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      #POSTGRES_PASSWORD: senha123
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     env_file:
       - .env
     ports:
@@ -15,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - minha_rede
+      - auth-network
 
   app:
     build: .
@@ -25,12 +23,10 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - minha_rede
-    volumes:
-      - ./logs:/var/log/app
+      - auth-network
 
 volumes:
   postgres_data:
 
 networks:
-  minha_rede:
+  auth-network:
