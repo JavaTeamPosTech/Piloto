@@ -12,6 +12,7 @@ import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.PasswordService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,4 +44,11 @@ public class ClienteServiceImpl implements ClienteService {
         return UsuarioMapper.toClienteResponseDTO(cliente);
     }
 
+    @Override
+    public List<ClienteResponseDTO> buscarClientes() {
+        List<Cliente> clientes = clienteRepository.findAll();
+        return clientes.stream()
+                .map(UsuarioMapper::toClienteResponseDTO)
+                .toList();
+    }
 }
