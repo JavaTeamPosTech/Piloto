@@ -1,9 +1,12 @@
 package com.techchallenge.user_manager_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -12,8 +15,9 @@ import lombok.NoArgsConstructor;
 public class Endereco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name =  "id", columnDefinition = "uuid", updatable = false, nullable = false)
+    private UUID id;
     private String estado;
     private String cidade;
     private String bairro;
@@ -23,6 +27,7 @@ public class Endereco {
     private String cep;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

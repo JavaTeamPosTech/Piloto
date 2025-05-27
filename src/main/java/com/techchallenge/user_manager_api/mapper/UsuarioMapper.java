@@ -79,7 +79,6 @@ public class UsuarioMapper {
                 cliente.getNome(),
                 cliente.getEmail(),
                 cliente.getLogin(),
-                cliente.getUltimaAlteracao(),
                 toEnderecoResponseDTO(cliente.getEnderecos()));
     }
 
@@ -110,7 +109,6 @@ public class UsuarioMapper {
                 proprietario.getNome(),
                 proprietario.getEmail(),
                 proprietario.getLogin(),
-                proprietario.getUltimaAlteracao(),
                 toEnderecoResponseDTO(proprietario.getEnderecos())
         );
     }
