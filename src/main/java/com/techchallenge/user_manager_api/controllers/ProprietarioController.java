@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/proprietario")
+@RequestMapping("/proprietarios")
 public class ProprietarioController {
 
     private final ProprietarioService proprietarioService;
