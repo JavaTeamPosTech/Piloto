@@ -10,6 +10,8 @@ import com.techchallenge.user_manager_api.services.PasswordService;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ProprietarioServiceImpl implements ProprietarioService {
 
@@ -29,7 +31,7 @@ public class ProprietarioServiceImpl implements ProprietarioService {
     }
 
     @Override
-    public ProprietarioResponseDTO buscarProprietarioPorId(Long id) {
+    public ProprietarioResponseDTO buscarProprietarioPorId(UUID id) {
         Proprietario proprietario = proprietarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Proprietario não encontrado"));
         return UsuarioMapper.toProprietarioResponseDTO(proprietario);
     }

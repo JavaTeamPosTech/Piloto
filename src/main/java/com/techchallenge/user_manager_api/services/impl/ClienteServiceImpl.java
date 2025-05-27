@@ -10,27 +10,31 @@ import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.PasswordService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final PasswordService  passwordService;
+    private final TokenService tokenService;
 
-    public ClienteServiceImpl(ClienteRepository clienteRepository, PasswordService passwordService) {
+    public ClienteServiceImpl(ClienteRepository clienteRepository, PasswordService passwordService, TokenService tokenService) {
         this.clienteRepository = clienteRepository;
         this.passwordService = passwordService;
+        this.tokenService = tokenService;
     }
 
-
     @Override
-    public void cadastrarCliente(ClienteRequestDTO clienteDTO) {
+    public Cliente cadastrarCliente(ClienteRequestDTO clienteDTO) {
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());
         Cliente cliente = UsuarioMapper.toCliente(clienteDTO, senhaCriptografada);
-        clienteRepository.save(cliente);
+        String token = tokenService.generateToken(cliente.getLogin());
+        return clienteRepository.save(cliente);
     }
 
     @Override
-    public ClienteResponseDTO buscarCliente(Long id) {
+    public ClienteResponseDTO buscarCliente(UUID id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
         return UsuarioMapper.toClienteResponseDTO(cliente);
     }

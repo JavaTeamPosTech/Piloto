@@ -6,6 +6,8 @@ import com.techchallenge.user_manager_api.services.ProprietarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/proprietario")
 public class ProprietarioController {
@@ -23,7 +25,7 @@ public class ProprietarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProprietarioResponseDTO> buscarProprietarioPorId(@PathVariable Long id) {
+    public ResponseEntity<ProprietarioResponseDTO> buscarProprietarioPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(proprietarioService.buscarProprietarioPorId(id));
     }
 
