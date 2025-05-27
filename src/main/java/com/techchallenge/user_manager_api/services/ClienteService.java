@@ -2,10 +2,12 @@ package com.techchallenge.user_manager_api.services;
 
 import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 public interface ClienteService {
-    void cadastrarCliente(ClienteRequestDTO clienteDTO);
+    ClienteResponseDTO cadastrarCliente(ClienteRequestDTO clienteDTO);
 
     ClienteResponseDTO buscarCliente(Long id);
 

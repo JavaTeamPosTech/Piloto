@@ -12,6 +12,7 @@ import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.entities.Usuario;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UsuarioMapper {
@@ -77,10 +78,14 @@ public class UsuarioMapper {
         return new ClienteResponseDTO(
                 cliente.getId(),
                 cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getDataNascimento(),
                 cliente.getEmail(),
                 cliente.getLogin(),
-                cliente.getUltimaAlteracao(),
+                cliente.getTelefone(),
                 toEnderecoResponseDTO(cliente.getEnderecos()));
+
+
     }
 
     private static List<EnderecoResponseDTO> toEnderecoResponseDTO(List<Endereco> enderecos) {
@@ -99,6 +104,7 @@ public class UsuarioMapper {
 
     public static ProprietarioResponseDTO toProprietarioResponseDTO(Proprietario proprietario) {
         return new ProprietarioResponseDTO(
+                proprietario.getId(),
                 proprietario.getCnpj(),
                 proprietario.getRazaoSocial(),
                 proprietario.getNomeFantasia(),
@@ -106,11 +112,9 @@ public class UsuarioMapper {
                 proprietario.getTelefoneComercial(),
                 proprietario.getWhatsapp(),
                 proprietario.getStatusConta(),
-                proprietario.getId(),
                 proprietario.getNome(),
                 proprietario.getEmail(),
                 proprietario.getLogin(),
-                proprietario.getUltimaAlteracao(),
                 toEnderecoResponseDTO(proprietario.getEnderecos())
         );
     }

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ProprietarioResponseDTO(
+        Long id,
         String cnpj,
         String razaoSocial,
         String nomeFantasia,
@@ -13,11 +14,9 @@ public record ProprietarioResponseDTO(
         String telefoneComercial,
         String whatsapp,
         StatusContaEnum statusConta,
-        Long id,
         String nome,
         String email,
         String login,
-        LocalDate ultimaAlteracao,
         List<EnderecoResponseDTO> enderecos
 ) {
 }

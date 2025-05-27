@@ -22,10 +22,11 @@ public class ProprietarioServiceImpl implements ProprietarioService {
     }
 
     @Override
-    public void cadastrarProprietario(ProprietarioRequestDTO proprietarioDTO) {
+    public ProprietarioResponseDTO cadastrarProprietario(ProprietarioRequestDTO proprietarioDTO) {
         String senhaCriptografada = passwordService.encryptPassword(proprietarioDTO.senha());
         Proprietario proprietario = UsuarioMapper.toProprietario(proprietarioDTO, senhaCriptografada);
         proprietarioRepository.save(proprietario);
+        return UsuarioMapper.toProprietarioResponseDTO(proprietario);
     }
 
     @Override

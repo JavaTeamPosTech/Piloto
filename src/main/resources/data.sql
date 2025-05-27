@@ -83,25 +83,25 @@ CREATE TABLE IF NOT EXISTS status_conta (
 
 INSERT INTO generos (descricao) VALUES
   ('MASCULINO'),
-  ('FEMININO');
+  ('FEMININO') ON CONFLICT (descricao) DO NOTHING;
 
 INSERT INTO metodo_pagamento (descricao) VALUES
 ('DINHEIRO'),
 ('CREDITO'),
 ('DEBITO'),
-('PIX');
+('PIX') ON CONFLICT (descricao) DO NOTHING;
 
 INSERT INTO roles (descricao) VALUES
      ('ADMIN'),
      ('PROPRIETARIO'),
-     ('CLIENTE');
+     ('CLIENTE') ON CONFLICT (descricao) DO NOTHING;
 
 INSERT INTO status_conta (descricao) VALUES
     ('ATIVO'),
     ('BLOQUEADO'),
     ('PENDENTE_APROVACAO'),
     ('PENDENTE_PAGAMENTO'),
-    ('DESATIVADO');
+    ('DESATIVADO') ON CONFLICT (descricao) DO NOTHING;
 
 
 

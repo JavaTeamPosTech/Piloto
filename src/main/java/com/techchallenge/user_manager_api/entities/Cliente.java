@@ -17,7 +17,8 @@ import java.util.Set;
 @Getter
 @Table(name = "clientes",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")
+                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf"),
+                @UniqueConstraint(name = "uk_cliente_telefone", columnNames = "telefone")
         })
 public class Cliente extends Usuario {
 

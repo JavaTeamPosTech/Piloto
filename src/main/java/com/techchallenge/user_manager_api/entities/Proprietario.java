@@ -13,7 +13,9 @@ import java.util.List;
 @Entity
 @Table(name = "proprietarios",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")
+                @UniqueConstraint(name = "uk_proprietario_cnpj", columnNames = "cnpj"),
+                @UniqueConstraint(name = "uk_proprietario_inscricao_estadual", columnNames = "inscricao_estadual"),
+                @UniqueConstraint(name = "uk_proprietario_razao_social", columnNames = "razao_social")
         })
 public class Proprietario extends Usuario {
 

@@ -8,7 +8,9 @@ import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
 import com.techchallenge.user_manager_api.repositories.ClienteRepository;
 import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.PasswordService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -22,10 +24,11 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void cadastrarCliente(ClienteRequestDTO clienteDTO) {
+    public ClienteResponseDTO cadastrarCliente(ClienteRequestDTO clienteDTO) {
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());
         Cliente cliente = UsuarioMapper.toCliente(clienteDTO, senhaCriptografada);
         clienteRepository.save(cliente);
+        return UsuarioMapper.toClienteResponseDTO(cliente);
     }
 
     @Override
