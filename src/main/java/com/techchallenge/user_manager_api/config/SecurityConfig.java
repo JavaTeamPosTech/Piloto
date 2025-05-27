@@ -31,12 +31,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/proprietarios").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/proprietario").permitAll()
                                 //.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").hasRole("ADMIN")
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-//                                .requestMatchers(HttpMethod.GET, "/proprietario").hasRole("PROPRIETARIO")
-//                                .requestMatchers(HttpMethod.GET, "/clientes/").hasRole("CLIENTE")
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
