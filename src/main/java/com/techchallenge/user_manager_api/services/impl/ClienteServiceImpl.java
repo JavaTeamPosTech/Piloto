@@ -1,7 +1,9 @@
 package com.techchallenge.user_manager_api.services.impl;
 
 import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
+import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
+import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
@@ -26,11 +28,13 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente cadastrarCliente(ClienteRequestDTO clienteDTO) {
+    public CadastroResponseDTO cadastrarCliente(ClienteRequestDTO clienteDTO) {
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());
         Cliente cliente = UsuarioMapper.toCliente(clienteDTO, senhaCriptografada);
-        String token = tokenService.generateToken(cliente.getLogin());
-        return clienteRepository.save(cliente);
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        String token = tokenService.generateToken(clienteSalvo.getLogin());
+
+        return new CadastroResponseDTO(UsuarioResponseDTO.deCliente(clienteSalvo), token);
     }
 
     @Override
