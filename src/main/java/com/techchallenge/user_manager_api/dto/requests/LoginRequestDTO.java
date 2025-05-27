@@ -7,6 +7,7 @@ public record LoginRequestDTO(
         @Schema(description = "Login da pessoa precisa estar preenchido")
         @NotBlank(message = "Login da pessoa precisa estar preenchido")
         String login,
+
         @Schema(description = "Senha da pessoa precisa estar preenchido")
         @NotBlank(message = "Senha da pessoa precisa estar preenchido")
         String senha

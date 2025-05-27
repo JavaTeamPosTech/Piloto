@@ -2,8 +2,8 @@ package com.techchallenge.user_manager_api.dto.response;
 
 import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public record ProprietarioResponseDTO(
         String cnpj,
@@ -13,11 +13,10 @@ public record ProprietarioResponseDTO(
         String telefoneComercial,
         String whatsapp,
         StatusContaEnum statusConta,
-        Long id,
+        UUID id,
         String nome,
         String email,
         String login,
-        LocalDate ultimaAlteracao,
         List<EnderecoResponseDTO> enderecos
 ) {
 }

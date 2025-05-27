@@ -1,7 +1,9 @@
 package com.techchallenge.user_manager_api.dto.response;
 
+import java.util.UUID;
+
 public record EnderecoResponseDTO(
-        Long id,
+        UUID id,
         String estado,
         String cidade,
         String bairro,

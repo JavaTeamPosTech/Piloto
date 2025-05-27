@@ -5,13 +5,13 @@ import com.techchallenge.user_manager_api.entities.enums.GeneroEnum;
 import com.techchallenge.user_manager_api.entities.enums.MetodoPagamentoEnum;
 import com.techchallenge.user_manager_api.entities.enums.TiposComidaEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -36,12 +36,13 @@ public record ClienteRequestDTO(
         String login,
 
         @Schema(description = "Data de nascimento da pessoa precisa estar preenchido", example = "1990-01-01")
-        Date dataNascimento,
+        LocalDate dataNascimento,
 
         @Schema(description = "Gênero da pessoa precisa estar preenchido")
         GeneroEnum genero,
 
-        @Schema(description = "Telefone da pessoa precisa estar preenchido", example = "(11) 91234-5678")
+        @Schema(description = "Telefone da pessoa precisa estar preenchido", example = "+5581999992345")
+        @Pattern(regexp = "\\+?[0-9]{8,15}", message = "Numero de telefone inválido")
         @NotBlank(message = "Telefone da pessoa precisa estar preenchido")
         String telefone,
 
