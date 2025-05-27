@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,13 +24,10 @@ public class UsuarioController {
         this.authorizationServiceImpl = authorizationServiceImpl;
     }
 
-    @Operation(
-            summary = "Atualiza a senha do usuário",
-            description = "Este endpoint permite que um usuário atualize sua senha, fornecendo a senha atual e a nova senha."
-    )
-    @PutMapping("/atualizarSenha")
-    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO) {
-        usuarioService.atualizarSenha(atualizarSenhaRequestDTO);
+    @Operation(summary = "Atualizar senha", description = "Permite o usuário logado atualizar sua senha.")
+    @PutMapping("/atualizar-senha")
+    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO, Authentication authentication) {
+        usuarioService.atualizarSenha(atualizarSenhaRequestDTO, authentication);
         return ResponseEntity.noContent().build();
     }
 

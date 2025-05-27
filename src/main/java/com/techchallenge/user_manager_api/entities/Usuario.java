@@ -64,7 +64,6 @@ public class Usuario implements UserDetails {
 
     public void atualizarSenha(String senha) {
         this.senha = senha;
-        this.dataAtualizacao = LocalDateTime.now();
     }
 
     @PrePersist
