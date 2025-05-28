@@ -5,8 +5,8 @@ COPY . .
 RUN mvn clean package -e -DskipTests -Dfile.encoding=UTF-8
 
 
-# Verifique o conteúdo do arquivo application.properties
-RUN cat /app/target/classes/application.properties
+# Verifique o conteúdo do arquivo application.yml
+RUN cat /app/target/classes/application.yml
 
 # Etapa 2: rodar o .jar gerado
 FROM eclipse-temurin:21

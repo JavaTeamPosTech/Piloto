@@ -1,47 +1,81 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.techchallenge.user_manager_api.entities.Usuario;
-import org.apache.catalina.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 @Service
 public class TokenService {
 
+    private final String secret;
+    private final long prazoExpiracao;
 
-    private String secret;
+    public TokenService(@Value("${jwt.secret}") String secret,
+                        @Value("${jwt.prazoExpiracao}") long prazoExpiracao) {
+        this.secret = secret;
+        this.prazoExpiracao = prazoExpiracao;
+    }
 
-    public String generateToken(Usuario user) {
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String generateToken(String login) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
-            String token = JWT.create()
-                    .withIssuer("auth-api")
-                    .withSubject(user.getLogin())
-                    .withExpiresAt(genExpirationDate())
-                    .sign(algorithm);
-            return token;
-        } catch (JWTCreationException exception) {
+            return Jwts.builder()
+                    .setIssuer("user-manager-api")
+                    .setSubject(login)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + prazoExpiracao))
+                    .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                    .compact();
+
+        } catch (Exception exception) {
             throw new RuntimeException("JWT generation failed", exception);
         }
     }
 
-    public String validateToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
-            return JWT.require(algorithm).withIssuer("auth-api")
-                    .build()
-                    .verify(token)
-                    .getSubject();
-        } catch (JWTVerificationException exception) {
-            throw new RuntimeException("JWT verification failed", exception);
+    public Claims extractClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String extractUsername(String token) {
+        Claims claims = extractClaims(token);
+        if (claims == null) throw new JwtException("Invalid or Expired Token");
+        return claims.getSubject();
+    }
+
+    public boolean isTokenExpired(String token) {
+        Claims claims = extractClaims(token);
+        if (claims == null || claims.getExpiration() == null) {
+            throw new JwtException("Invalid or Expired Token");
         }
+        return claims.getExpiration().before(new Date());
+    }
+
+    public boolean validateToken(String token, String username) {
+        return (username.equals(extractUsername(token)) && !isTokenExpired(token));
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        String username = extractUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private Instant genExpirationDate() {

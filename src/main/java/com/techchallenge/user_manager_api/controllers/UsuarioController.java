@@ -3,13 +3,13 @@ package com.techchallenge.user_manager_api.controllers;
 import com.techchallenge.user_manager_api.dto.LoginResponseDTO;
 import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
-import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.services.UsuarioService;
-import com.techchallenge.user_manager_api.services.impl.TokenService;
+import com.techchallenge.user_manager_api.services.impl.AuthorizationServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,35 +17,26 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final AuthorizationServiceImpl authorizationServiceImpl;
 
-    public UsuarioController(UsuarioService usuarioService, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public UsuarioController(UsuarioService usuarioService, AuthorizationServiceImpl authorizationServiceImpl) {
         this.usuarioService = usuarioService;
-        this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
+        this.authorizationServiceImpl = authorizationServiceImpl;
     }
 
-
-    @PostMapping("/login")
-    public ResponseEntity<Void> fazerLogin(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
-        usuarioService.fazerLogin(loginRequestDTO);
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("/atualizarSenha")
-    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO) {
-        usuarioService.atualizarSenha(atualizarSenhaRequestDTO);
+    @Operation(summary = "Atualizar senha", description = "Permite o usuário logado atualizar sua senha.")
+    @PutMapping("/atualizar-senha")
+    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO, Authentication authentication) {
+        usuarioService.atualizarSenha(atualizarSenhaRequestDTO, authentication);
         return ResponseEntity.noContent().build();
     }
 
-
-    @PostMapping("/login2")
-    public ResponseEntity<LoginResponseDTO> fazerLogin2(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
-        var user = new UsernamePasswordAuthenticationToken(loginRequestDTO.login(), loginRequestDTO.senha());
-        var auth = authenticationManager.authenticate(user);
-
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+    @Operation(
+            summary = "Realiza o login de um usuário",
+            description = "Este endpoint permite que um usuário faça login no sistema, retornando um token JWT se as credenciais forem válidas."
+    )
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        return ResponseEntity.ok(authorizationServiceImpl.login(loginRequestDTO));
     }
 }

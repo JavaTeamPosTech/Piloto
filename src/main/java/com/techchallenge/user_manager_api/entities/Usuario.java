@@ -1,7 +1,8 @@
 package com.techchallenge.user_manager_api.entities;
 
-import com.techchallenge.user_manager_api.entities.enums.RolesEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,40 +29,57 @@ import java.util.List;
 public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name =  "id", columnDefinition = "uuid", updatable = false, nullable = false)
+    private UUID id;
+
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
     private String nome;
+
     @Column(unique = true)
     private String email;
+
     @Column(unique = true)
     private String login;
+
     private String senha;
-    @Column(name = "ultima_alteracao")
-    private LocalDate ultimaAlteracao;
-    @Column(name = "role_descricao")
-    private RolesEnum role;
+
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "data_criacao")
+    private LocalDateTime dataCriacao;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos = new ArrayList<>();
 
-
-    public Usuario(String nome, String email, String login, String senha, List<Endereco> enderecos, RolesEnum role) {
+    public Usuario(String nome, String email, String login, String senha, List<Endereco> enderecos) {
         this.nome = nome;
         this.email = email;
         this.login = login;
         this.senha = senha;
         this.enderecos = enderecos;
-        this.role = role;
     }
 
     public void atualizarSenha(String senha) {
         this.senha = senha;
-        this.ultimaAlteracao = LocalDate.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriacao = dataCriacao.now();
+        this.dataAtualizacao = this.dataCriacao;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataAtualizacao = LocalDateTime.now();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == RolesEnum.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.getClass().getSimpleName().toUpperCase()));
     }
 
     @Override
