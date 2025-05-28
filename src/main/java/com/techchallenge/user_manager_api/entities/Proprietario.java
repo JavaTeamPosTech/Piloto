@@ -2,10 +2,7 @@ package com.techchallenge.user_manager_api.entities;
 
 import com.techchallenge.user_manager_api.entities.enums.RolesEnum;
 import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +30,7 @@ public class Proprietario extends Usuario {
     private String telefoneComercial;
     private String whatsapp;
     @Column(name = "status_conta")
+    @Enumerated(EnumType.STRING)
     private StatusContaEnum statusConta;
 
     public Proprietario(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,

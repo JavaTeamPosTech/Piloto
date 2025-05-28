@@ -6,8 +6,8 @@ CREATE TABLE if not exists usuarios  (
     email VARCHAR(60) NOT NULL,
     login VARCHAR(60) NOT NULL,
     senha VARCHAR(60) NOT NULL,
-    ultima_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    role_descricao VARCHAR(30) NOT NULL,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uk_usuario_email UNIQUE (email),
     CONSTRAINT uk_usuario_login UNIQUE (login)
     );
