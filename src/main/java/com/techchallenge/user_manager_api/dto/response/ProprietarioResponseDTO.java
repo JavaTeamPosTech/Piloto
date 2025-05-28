@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 public record ProprietarioResponseDTO(
+        UUID id,
         String cnpj,
         String razaoSocial,
         String nomeFantasia,
         String inscricaoEstadual,
         String telefoneComercial,
         String whatsapp,
-        StatusContaEnum statusConta,
-        UUID id,
         String nome,
         String email,
         String login,

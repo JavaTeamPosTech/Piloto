@@ -5,6 +5,7 @@ import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +14,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "proprietarios")
+@Table(name = "proprietarios",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_proprietario_cnpj", columnNames = "cnpj"),
+                @UniqueConstraint(name = "uk_proprietario_inscricao_estadual", columnNames = "inscricao_estadual"),
+                @UniqueConstraint(name = "uk_proprietario_razao_social", columnNames = "razao_social")
+        })
 public class Proprietario extends Usuario {
 
     private String cnpj;
