@@ -3,6 +3,7 @@ package com.techchallenge.user_manager_api.entities;
 import com.techchallenge.user_manager_api.entities.enums.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -14,9 +15,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
 @Table(name = "clientes",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf")
+                @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf"),
+                @UniqueConstraint(name = "uk_cliente_telefone", columnNames = "telefone")
         })
 public class Cliente extends Usuario {
 

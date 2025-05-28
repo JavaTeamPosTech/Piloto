@@ -77,8 +77,11 @@ public class UsuarioMapper {
         return new ClienteResponseDTO(
                 cliente.getId(),
                 cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getDataNascimento(),
                 cliente.getEmail(),
                 cliente.getLogin(),
+                cliente.getTelefone(),
                 toEnderecoResponseDTO(cliente.getEnderecos()));
     }
 
@@ -98,14 +101,13 @@ public class UsuarioMapper {
 
     public static ProprietarioResponseDTO toProprietarioResponseDTO(Proprietario proprietario) {
         return new ProprietarioResponseDTO(
+                proprietario.getId(),
                 proprietario.getCnpj(),
                 proprietario.getRazaoSocial(),
                 proprietario.getNomeFantasia(),
                 proprietario.getInscricaoEstadual(),
                 proprietario.getTelefoneComercial(),
                 proprietario.getWhatsapp(),
-                proprietario.getStatusConta(),
-                proprietario.getId(),
                 proprietario.getNome(),
                 proprietario.getEmail(),
                 proprietario.getLogin(),
