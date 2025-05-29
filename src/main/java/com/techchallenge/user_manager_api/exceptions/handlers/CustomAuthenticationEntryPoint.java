@@ -34,7 +34,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                 "timestamp", LocalDateTime.now(),
                 "status", HttpServletResponse.SC_UNAUTHORIZED,
                 "error", "Unauthorized",
-                "message", authException.getLocalizedMessage(),
+                "message", "Token invalido ou ausente.",
                 "path", request.getRequestURI(),
                 "method", request.getMethod()
         );
