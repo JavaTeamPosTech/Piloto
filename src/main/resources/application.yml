@@ -14,17 +14,20 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-  sql:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+#  sql:
 #    init:
-#      data-locations: classpath:data.sql
-      mode: always
+#      mode: always
   logging:
     file:
       name: /var/log/app/application.log
+  output:
+    ansi:
+      enabled: Always
 
 jwt:
     secret: ${JWT_SECRET_KEY:minhaChaveUltraSecretaComMaisDe32Bytes}

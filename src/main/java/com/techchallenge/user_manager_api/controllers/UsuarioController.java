@@ -24,7 +24,7 @@ public class UsuarioController {
         this.authorizationServiceImpl = authorizationServiceImpl;
     }
 
-    @Operation(summary = "Atualizar senha", description = "Permite o usuário logado atualizar sua senha.")
+    @Operation(summary = "Atualiza a senha do usuário", description = "Permite o usuário logado atualizar sua senha.")
     @PutMapping("/atualizar-senha")
     public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO, Authentication authentication) {
         usuarioService.atualizarSenha(atualizarSenhaRequestDTO, authentication);
