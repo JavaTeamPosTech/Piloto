@@ -1,6 +1,6 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.LoginResponseDTO;
+import com.techchallenge.user_manager_api.dto.response.LoginResponseDTO;
 import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
 import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
