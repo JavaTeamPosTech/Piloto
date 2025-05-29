@@ -60,8 +60,6 @@ class ClienteControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    UUID uuidCliente = UUID.randomUUID();
-
     @MockBean
     private ClienteServiceImpl clienteService;
 
@@ -87,47 +85,37 @@ class ClienteControllerTest {
         // ARRANGE
         String json = """
                 {
-                   "cpf": "311.258.789-01",
-                   "dataNascimento": "1990-05-20",
-                   "genero": "MASCULINO",
-                   "telefone": "(11) 91284-5671",
-                   "preferenciasAlimentares": [
-                     "ITALIANA",
-                     "DOCES",
-                     "JAPONESA"
-                   ],
-                   "alergias": [
-                     "GLUTEN",
-                     "PEIXE"
-                   ],
-                   "metodoPagamentoPreferido": "PIX",
-                   "clienteVip": true,
-                   "notificacoesAtivas": true,
-                   "nome": "Rafael",
-                   "email": "rafael1@gmail.com",
-                   "login": "rafael1Login",
-                   "senha": "senhaSegura123",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Centro",
-                       "rua": "Rua das Flores",
-                       "numero": 123,
-                       "complemento": "Apto 45",
-                       "cep": "01000-000"
-                     },
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Vila Mariana",
-                       "rua": "Rua São Paulo",
-                       "numero": 129,
-                       "complemento": "Apto 35",
-                       "cep": "09888-010"
-                     }
-                   ]
-                 }
+                  "nome": "João da Silva",
+                  "cpf": "123.456.789-00",
+                  "email": "joaodasilva@email.com",
+                  "login": "joaodasilva",
+                  "dataNascimento": "1990-01-01",
+                  "genero": "MASCULINO",
+                  "telefone": "+5581999992345",
+                  "preferenciasAlimentares": [
+                    "VEGETARIANA",
+                    "SAUDAVEL"
+                  ],
+                  "alergias": [
+                    "AMENDOIM",
+                    "LACTOSE"
+                  ],
+                  "metodoPagamentoPreferido": "CREDITO",
+                  "clienteVip": true,
+                  "notificacoesAtivas": true,
+                  "senha": "SenhaForte123!",
+                  "enderecos": [
+                    {
+                      "estado": "SP",
+                      "cidade": "Sao Paulo",
+                      "bairro": "Jardim Paulista",
+                      "rua": "Avenida Paulista",
+                      "numero": 123,
+                      "complemento": "Apt 101",
+                      "cep": "01311-000"
+                    }
+                  ]
+                }
                 """;
         UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO( UUID.randomUUID(),
                 "Rafael",
@@ -141,7 +129,6 @@ class ClienteControllerTest {
         //ACT
         var response = mvc.perform(
                         post("/clientes")
-                                .header("Authorization", "Bearer fake-token")
                                 .content(json)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
@@ -171,47 +158,37 @@ class ClienteControllerTest {
         // ARRANGE
         String json = """
                 {
-                   "cpf": "",
-                   "dataNascimento": "1990-05-20",
-                   "genero": "MASCULINO",
-                   "telefone": "(11) 91284-5671",
-                   "preferenciasAlimentares": [
-                     "ITALIANA",
-                     "DOCES",
-                     "JAPONESA"
-                   ],
-                   "alergias": [
-                     "GLUTEN",
-                     "PEIXE"
-                   ],
-                   "metodoPagamentoPreferido": "PIX",
-                   "clienteVip": true,
-                   "notificacoesAtivas": true,
-                   "nome": "Rafael",
-                   "email": "",
-                   "login": "rafael1Login",
-                   "senha": "senhaSegura123",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Centro",
-                       "rua": "Rua das Flores",
-                       "numero": 123,
-                       "complemento": "Apto 45",
-                       "cep": "01000-000"
-                     },
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Vila Mariana",
-                       "rua": "Rua São Paulo",
-                       "numero": 129,
-                       "complemento": "Apto 35",
-                       "cep": "09888-010"
-                     }
-                   ]
-                 }
+                  "nome": "João da Silva",
+                  "cpf": "",
+                  "email": "",
+                  "login": "joaodasilva",
+                  "dataNascimento": "1990-01-01",
+                  "genero": "MASCULINO",
+                  "telefone": "+5581999992345",
+                  "preferenciasAlimentares": [
+                    "VEGETARIANA",
+                    "SAUDAVEL"
+                  ],
+                  "alergias": [
+                    "AMENDOIM",
+                    "LACTOSE"
+                  ],
+                  "metodoPagamentoPreferido": "CREDITO",
+                  "clienteVip": true,
+                  "notificacoesAtivas": true,
+                  "senha": "SenhaForte123!",
+                  "enderecos": [
+                    {
+                      "estado": "SP",
+                      "cidade": "Sao Paulo",
+                      "bairro": "Jardim Paulista",
+                      "rua": "Avenida Paulista",
+                      "numero": 123,
+                      "complemento": "Apt 101",
+                      "cep": "01311-000"
+                    }
+                  ]
+                }
                 """;
         //ACT
         var response = mvc.perform(
@@ -246,26 +223,16 @@ class ClienteControllerTest {
 
 
     @Test
-    void deveriaRetornar400AoBuscarClientePorId() throws Exception {
+    void deveriaRetornar404AoBuscarProprietarioInexistente() throws Exception {
         UUID uuidCliente = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
-        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO(
-                uuidCliente,
-                "Rafael",
-                "311.258.789-01",
-                LocalDate.now(),
-                "rafael@gmail.com",
-                "rafaelLogin123",
-                "(11) 91284-5671",
-                List.of()
-        );
+        when(clienteService.buscarCliente(uuidCliente))
+                .thenThrow(new ResourceNotFoundException("Cliente não encontrado"));
 
-        when(clienteService.buscarCliente(uuidCliente)).thenThrow(new ResourceNotFoundException("Cliente não encontrado"));
-
-        mvc.perform(get("/clientes/" + uuidCliente))
+        var response = mvc.perform(get("/clientes/" + uuidCliente))
                 .andReturn().getResponse();
 
-        assertThrows(ResourceNotFoundException.class, () -> clienteService.buscarCliente(uuidCliente));
+        assertEquals(404, response.getStatus());
     }
 
     @Test
@@ -273,47 +240,37 @@ class ClienteControllerTest {
         //ARRANGE
         String json = """
                 {
-                   "cpf": "311.258.789-01",
-                   "dataNascimento": "1990-05-20",
-                   "genero": "MASCULINO",
-                   "telefone": "(11) 91284-5671",
-                   "preferenciasAlimentares": [
-                     "ITALIANA",
-                     "DOCES",
-                     "JAPONESA"
-                   ],
-                   "alergias": [
-                     "GLUTEN",
-                     "PEIXE"
-                   ],
-                   "metodoPagamentoPreferido": "PIX",
-                   "clienteVip": true,
-                   "notificacoesAtivas": true,
-                   "nome": "Rafael",
-                   "email": "rafael1@gmail.com",
-                   "login": "rafael1Login",
-                   "senha": "senhaSegura123",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Centro",
-                       "rua": "Rua das Flores",
-                       "numero": 123,
-                       "complemento": "Apto 45",
-                       "cep": "01000-000"
-                     },
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Vila Mariana",
-                       "rua": "Rua São Paulo",
-                       "numero": 129,
-                       "complemento": "Apto 35",
-                       "cep": "09888-010"
-                     }
-                   ]
-                 }
+                    "nome": "João da Silva",
+                    "cpf": "123.456.789-00",
+                    "email": "joaodasilva@email.com",
+                    "login": "joaodasilva",
+                    "dataNascimento": "1990-01-01",
+                    "genero": "MASCULINO",
+                    "telefone": "+5581999992345",
+                    "preferenciasAlimentares": [
+                      "VEGETARIANA",
+                      "SAUDAVEL"
+                    ],
+                    "alergias": [
+                      "AMENDOIM",
+                      "LACTOSE"
+                    ],
+                    "metodoPagamentoPreferido": "CREDITO",
+                    "clienteVip": true,
+                    "notificacoesAtivas": true,
+                    "senha": "SenhaForte123!",
+                    "enderecos": [
+                      {
+                        "estado": "SP",
+                        "cidade": "Sao Paulo",
+                        "bairro": "Jardim Paulista",
+                        "rua": "Avenida Paulista",
+                        "numero": 123,
+                        "complemento": "Apt 101",
+                        "cep": "01311-000"
+                      }
+                    ]
+                  }
                 """;
 
         //ACT
@@ -336,47 +293,37 @@ class ClienteControllerTest {
         //ARRANGE
         String json = """
                 {
-                   "cpf": "311.258.789-01",
-                   "dataNascimento": "1990-05-20",
-                   "genero": "MASCULINO",
-                   "telefone": "(11) 91284-5671",
-                   "preferenciasAlimentares": [
-                     "ITALIANA",
-                     "DOCES",
-                     "JAPONESA"
-                   ],
-                   "alergias": [
-                     "GLUTEN",
-                     "PEIXE"
-                   ],
-                   "metodoPagamentoPreferido": "PIX",
-                   "clienteVip": true,
-                   "notificacoesAtivas": true,
-                   "nome": "Rafael",
-                   "email": "rafael1@gmail.com",
-                   "login": "rafael1Login",
-                   "senha": "senhaSegura123",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Centro",
-                       "rua": "Rua das Flores",
-                       "numero": 123,
-                       "complemento": "Apto 45",
-                       "cep": "01000-000"
-                     },
-                     {
-                       "estado": "SP",
-                       "cidade": "São Paulo",
-                       "bairro": "Vila Mariana",
-                       "rua": "Rua São Paulo",
-                       "numero": 129,
-                       "complemento": "Apto 35",
-                       "cep": "09888-010"
-                     }
-                   ]
-                 }
+                    "nome": "João da Silva",
+                    "cpf": "123.456.789-00",
+                    "email": "joaodasilva@email.com",
+                    "login": "joaodasilva",
+                    "dataNascimento": "1990-01-01",
+                    "genero": "MASCULINO",
+                    "telefone": "+5581999992345",
+                    "preferenciasAlimentares": [
+                      "VEGETARIANA",
+                      "SAUDAVEL"
+                    ],
+                    "alergias": [
+                      "AMENDOIM",
+                      "LACTOSE"
+                    ],
+                    "metodoPagamentoPreferido": "CREDITO",
+                    "clienteVip": true,
+                    "notificacoesAtivas": true,
+                    "senha": "SenhaForte123!",
+                    "enderecos": [
+                      {
+                        "estado": "SP",
+                        "cidade": "Sao Paulo",
+                        "bairro": "Jardim Paulista",
+                        "rua": "Avenida Paulista",
+                        "numero": 123,
+                        "complemento": "Apt 101",
+                        "cep": "01311-000"
+                      }
+                    ]
+                  }
                 """;
 
         //ACT

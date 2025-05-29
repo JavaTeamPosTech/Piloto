@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ProprietarioController {
             description = "Este endpoint cria um novo usuário do tipo Proprietário no sistema, gerando um token JWT após o cadastro bem-sucedido"
     )
     @PostMapping
-    public ResponseEntity<CadastroResponseDTO> cadastrarProprietario(@RequestBody ProprietarioRequestDTO proprietarioDTO) {
+    public ResponseEntity<CadastroResponseDTO> cadastrarProprietario(@RequestBody @Valid ProprietarioRequestDTO proprietarioDTO) {
         CadastroResponseDTO cadastroResponse = proprietarioService.cadastrarProprietario(proprietarioDTO);
         return ResponseEntity.ok(cadastroResponse);
     }
