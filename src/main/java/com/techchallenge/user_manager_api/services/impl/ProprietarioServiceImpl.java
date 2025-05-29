@@ -35,7 +35,7 @@ public class ProprietarioServiceImpl implements ProprietarioService {
     public CadastroResponseDTO cadastrarProprietario(ProprietarioRequestDTO proprietarioDTO) {
 
         if (usuarioService.existsByLogin(proprietarioDTO.login())) {
-            throw new DataIntegrityViolationException("O login '" + proprietarioDTO.login() + "' já está em uso.");
+            throw new DataIntegrityViolationException("uk_proprietario_login:  O login '" + proprietarioDTO.login() + "' já está em uso.");
         }
 
         String senhaCriptografada = passwordService.encryptPassword(proprietarioDTO.senha());

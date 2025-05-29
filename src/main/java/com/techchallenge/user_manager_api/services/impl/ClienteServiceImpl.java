@@ -36,7 +36,7 @@ public class ClienteServiceImpl implements ClienteService {
     public CadastroResponseDTO cadastrarCliente(ClienteRequestDTO clienteDTO) {
 
         if (usuarioService.existsByLogin(clienteDTO.login())) {
-            throw new DataIntegrityViolationException("O login '" + clienteDTO.login() + "' já está em uso.");
+            throw new DataIntegrityViolationException("uk_usuario_login:  O login '" + clienteDTO.login() + "' já está em uso.");
         }
 
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());

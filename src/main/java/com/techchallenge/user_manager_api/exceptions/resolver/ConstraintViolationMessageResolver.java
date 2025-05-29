@@ -14,6 +14,7 @@ public class ConstraintViolationMessageResolver {
             "uk_usuario_email", "Já existe um cadastro com este e-mail.",
             "uk_usuario_login", "Já existe um cadastro com este login.",
             "uk_proprietario_cnpj", "Já existe um cadastro com este CNPJ.",
+            "uk_proprietario_login", "Já existe um cadastro com este CNPJ.",
             "uk_proprietario_razao_social", "Já existe um cadastro com esta razão social.",
             "uk_proprietario_inscricao_estadual", "Já existe um cadastro com esta inscrição estadual."
     );
