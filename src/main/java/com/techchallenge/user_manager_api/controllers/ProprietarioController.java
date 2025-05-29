@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @Tag(name = "Proprietário Controller", description = "Operações relacionadas ao Proprietário")
+@RequestMapping("/proprietarios")
 public class ProprietarioController {
 
     private final ProprietarioService proprietarioService;
