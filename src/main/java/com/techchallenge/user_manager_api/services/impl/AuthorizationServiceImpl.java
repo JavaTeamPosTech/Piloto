@@ -17,12 +17,9 @@ public class AuthorizationServiceImpl {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    private final UsuarioRepository usuarioRepository;
-
-    public AuthorizationServiceImpl(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public AuthorizationServiceImpl(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
     }
 
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {

@@ -10,6 +10,8 @@ import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
 import com.techchallenge.user_manager_api.repositories.ClienteRepository;
 import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.PasswordService;
+import com.techchallenge.user_manager_api.services.UsuarioService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,15 +23,22 @@ public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
     private final PasswordService  passwordService;
     private final TokenService tokenService;
+    private final UsuarioService usuarioService;
 
-    public ClienteServiceImpl(ClienteRepository clienteRepository, PasswordService passwordService, TokenService tokenService) {
+    public ClienteServiceImpl(ClienteRepository clienteRepository, PasswordService passwordService, TokenService tokenService, UsuarioService usuarioService) {
         this.clienteRepository = clienteRepository;
         this.passwordService = passwordService;
         this.tokenService = tokenService;
+        this.usuarioService = usuarioService;
     }
 
     @Override
     public CadastroResponseDTO cadastrarCliente(ClienteRequestDTO clienteDTO) {
+
+        if (usuarioService.existsByLogin(clienteDTO.login())) {
+            throw new DataIntegrityViolationException("O login '" + clienteDTO.login() + "' já está em uso.");
+        }
+
         String senhaCriptografada = passwordService.encryptPassword(clienteDTO.senha());
         Cliente cliente = UsuarioMapper.toCliente(clienteDTO, senhaCriptografada);
         Cliente clienteSalvo = clienteRepository.save(cliente);

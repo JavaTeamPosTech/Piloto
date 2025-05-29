@@ -15,11 +15,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordService passwordService;
 
-
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordService passwordService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordService = passwordService;
-
     }
 
     @Override
@@ -31,5 +29,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuario.atualizarSenha(passwordService.encryptPassword(atualizarSenhaDTO.novaSenha()));
         usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public boolean existsByLogin(String login) {
+        return usuarioRepository.existsByLogin(login);
     }
 }
