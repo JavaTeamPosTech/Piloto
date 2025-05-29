@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.config;
 
+import com.techchallenge.user_manager_api.exceptions.handlers.CustomAuthenticationEntryPoint;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.services.impl.TokenService;
 import jakarta.servlet.FilterChain;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +26,13 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
     private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository, UserDetailsService userDetailsService) {
+    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository, UserDetailsService userDetailsService, CustomAuthenticationEntryPoint authenticationEntryPoint) {
         this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
         this.userDetailsService = userDetailsService;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Override
@@ -38,7 +40,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         try {
-
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String jwtToken = authHeader.substring(7);
                 String username = tokenService.extractUsername(jwtToken);
@@ -60,8 +61,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
 
-        } catch (JwtException | IllegalArgumentException e) {
+        } catch (JwtException e) {
             SecurityContextHolder.clearContext();
+            authenticationEntryPoint.commence(
+                    request,
+                    response,
+                    new BadCredentialsException("Token inválido ou expirado.")
+            );
         }
     }
 }

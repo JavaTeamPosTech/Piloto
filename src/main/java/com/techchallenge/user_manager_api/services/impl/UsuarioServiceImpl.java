@@ -1,9 +1,7 @@
 package com.techchallenge.user_manager_api.services.impl;
 
 import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
-import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.entities.Usuario;
-import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
 import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.services.PasswordService;
@@ -23,17 +21,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void login(LoginRequestDTO loginRequestDTO) {
-        Usuario usuario = usuarioRepository.findByLoginAndSenha(loginRequestDTO.login(), null)
-                .orElseThrow(() -> new ResourceNotFoundException("Login ou senha incorreta"));
-
-        boolean isLoginValid = passwordService.matches(loginRequestDTO.senha(), usuario.getSenha());
-        if (!isLoginValid) {
-            throw new UnauthorizedException("Senha incorreta");
-        }
-    }
-
-    @Override
     public void atualizarSenha(AtualizarSenhaRequestDTO atualizarSenhaDTO, Authentication authentication) {
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
@@ -42,5 +29,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuario.atualizarSenha(passwordService.encryptPassword(atualizarSenhaDTO.novaSenha()));
         usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public boolean existsByLogin(String login) {
+        return usuarioRepository.existsByLogin(login);
     }
 }

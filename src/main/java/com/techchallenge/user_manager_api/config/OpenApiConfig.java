@@ -26,8 +26,8 @@ public class OpenApiConfig {
                                         .scheme("bearer")
                                         .bearerFormat("JWT")))
                 .info(
-                        new Info().title("Meu menu API")
-                                .description("Projeto desenvolvido para sistema de restaurantes")
+                        new Info().title("Meu Menu - Auth User API")
+                                .description("Meu Menu - API de Registro, Autenticação e Gerenciamento de Usuários")
                                 .version("v0.0.1")
                                 .license(new License().name("FIAP").url("https://github.com/JavaTeamPosTech/Piloto"))
                 );
