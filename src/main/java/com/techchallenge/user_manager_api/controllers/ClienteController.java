@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.services.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@Tag(name = "Cliente Controller", description = "Operações relacionadas ao Cliente")
 @RequestMapping("/clientes")
 public class ClienteController {
 

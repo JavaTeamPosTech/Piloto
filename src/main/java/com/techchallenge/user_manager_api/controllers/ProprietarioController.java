@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/proprietarios")
+@Tag(name = "Proprietário Controller", description = "Operações relacionadas ao Proprietário")
 public class ProprietarioController {
 
     private final ProprietarioService proprietarioService;
