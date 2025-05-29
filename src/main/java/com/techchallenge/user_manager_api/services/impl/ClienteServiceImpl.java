@@ -40,7 +40,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO buscarCliente(UUID id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Cliente com id '%s' não encontrado", id)));
         return UsuarioMapper.toClienteResponseDTO(cliente);
     }
 

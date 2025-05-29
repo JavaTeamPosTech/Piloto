@@ -40,7 +40,7 @@ public class ProprietarioServiceImpl implements ProprietarioService {
 
     @Override
     public ProprietarioResponseDTO buscarProprietarioPorId(UUID id) {
-        Proprietario proprietario = proprietarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Proprietario não encontrado"));
+        Proprietario proprietario = proprietarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Proprietário com id '%s' não encontrado", id)));
         return UsuarioMapper.toProprietarioResponseDTO(proprietario);
     }
 }
