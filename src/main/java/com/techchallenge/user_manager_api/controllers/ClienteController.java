@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.controllers;
 
+import com.techchallenge.user_manager_api.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
@@ -42,6 +43,14 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorId(@PathVariable UUID id){
         return ResponseEntity.ok(clienteService.buscarCliente(id));
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> editarCliente(@PathVariable UUID id, @RequestBody @Valid AtualizarClienteRequestDTO clienteRequestDTO){
+        return ResponseEntity.ok(clienteService.editarCliente(id, clienteRequestDTO));
     }
 
     @PreAuthorize("hasRole('PROPRIETARIO')")
