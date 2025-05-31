@@ -13,4 +13,5 @@ public interface ClienteService {
     ClienteResponseDTO buscarCliente(UUID id);
     List<ClienteResponseDTO> buscarClientes();
     ClienteResponseDTO editarCliente(UUID id, AtualizarClienteRequestDTO clienteRequestDTO);
+    void deletarCliente(UUID id);
 }

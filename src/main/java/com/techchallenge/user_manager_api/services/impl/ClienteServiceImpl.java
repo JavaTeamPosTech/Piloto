@@ -76,7 +76,17 @@ public class ClienteServiceImpl implements ClienteService {
 
         Cliente clienteAtualizado = clienteRepository.save(cliente);
         return UsuarioMapper.toClienteResponseDTO(clienteRepository.save(clienteAtualizado));
+    }
 
+    @Override
+    public void deletarCliente(UUID id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Cliente com id '%s' não encontrado", id)));
+        clienteRepository.delete(cliente);
+
+        if (clienteRepository.existsById(id)) {
+            throw new ResourceNotFoundException(String.format("Cliente com id '%s' não foi removido", id));
+        }
     }
 
     private void atualizarDadosCliente(Cliente cliente, AtualizarClienteRequestDTO clienteDTO) {

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,14 @@ public class ClienteController {
     @GetMapping()
     public ResponseEntity<List<ClienteResponseDTO>> buscarClientes(){
         return ResponseEntity.ok(clienteService.buscarClientes());
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> deletarCliente(@PathVariable UUID id){
+        clienteService.deletarCliente(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
