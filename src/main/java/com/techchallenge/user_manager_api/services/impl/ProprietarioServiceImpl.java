@@ -1,9 +1,11 @@
 package com.techchallenge.user_manager_api.services.impl;
 
+import com.techchallenge.user_manager_api.dto.requests.AtualizarProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.entities.Endereco;
 import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.mapper.UsuarioMapper;
@@ -50,5 +52,45 @@ public class ProprietarioServiceImpl implements ProprietarioService {
     public ProprietarioResponseDTO buscarProprietarioPorId(UUID id) {
         Proprietario proprietario = proprietarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Proprietário com id '%s' não encontrado", id)));
         return UsuarioMapper.toProprietarioResponseDTO(proprietario);
+    }
+
+    @Override
+    public void deletarProprietario(UUID id) {
+        proprietarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Proprietário com id '%s' não encontrado", id)));
+        proprietarioRepository.deleteById(id);
+    }
+
+    @Override
+    public ProprietarioResponseDTO editarProprietario(UUID id, AtualizarProprietarioRequestDTO proprietarioRequestDTO) {
+        Proprietario proprietario = proprietarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Proprietario com id '%s' não encontrado", id)));
+
+        if (usuarioService.existsByLogin(proprietarioRequestDTO.login()) && !proprietario.getLogin().equals(proprietarioRequestDTO.login())) {
+            throw new DataIntegrityViolationException("uk_usuario_login: O login '" + proprietarioRequestDTO.login() + "' já está em uso.");
+        }
+        atualizarDadosProprietario(proprietario, proprietarioRequestDTO);
+        Proprietario proprietarioAtualizado = proprietarioRepository.save(proprietario);
+        return UsuarioMapper.toProprietarioResponseDTO(proprietarioAtualizado);
+    }
+
+    private void atualizarDadosProprietario(Proprietario proprietario, AtualizarProprietarioRequestDTO proprietarioRequestDTO) {
+        proprietario.setNome(proprietarioRequestDTO.nome());
+        proprietario.setEmail(proprietarioRequestDTO.email());
+        proprietario.setLogin(proprietarioRequestDTO.login());
+        proprietario.setCnpj(proprietarioRequestDTO.cnpj());
+        proprietario.setRazaoSocial(proprietarioRequestDTO.razaoSocial());
+        proprietario.setNomeFantasia(proprietarioRequestDTO.nomeFantasia());
+        proprietario.setInscricaoEstadual(proprietarioRequestDTO.inscricaoEstadual());
+        proprietario.setTelefoneComercial(proprietarioRequestDTO.telefoneComercial());
+        proprietario.setWhatsapp(proprietarioRequestDTO.whatsapp());
+        proprietario.setStatusConta(proprietarioRequestDTO.statusConta());
+
+        if (proprietarioRequestDTO.enderecos() != null && !proprietarioRequestDTO.enderecos().isEmpty()) {
+            proprietario.getEnderecos().clear();
+            proprietarioRequestDTO.enderecos().forEach(enderecoDTO -> {
+                Endereco endereco = new Endereco(enderecoDTO, proprietario);
+                proprietario.getEnderecos().add(endereco);
+            });
+        }
     }
 }

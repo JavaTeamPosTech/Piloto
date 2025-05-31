@@ -1,13 +1,17 @@
 package com.techchallenge.user_manager_api.controllers;
 
+import com.techchallenge.user_manager_api.dto.requests.AtualizarClienteRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.AtualizarProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
+import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +45,22 @@ public class ProprietarioController {
     @GetMapping("/{id}")
     public ResponseEntity<ProprietarioResponseDTO> buscarProprietarioPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(proprietarioService.buscarProprietarioPorId(id));
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Deletar proprietário", description = "Deleta um Proprietário pelo ID. Somente um Proprietário pode executar.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProprietario(@PathVariable UUID id) {
+        proprietarioService.deletarProprietario(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Editar proprietário", description = "Editar um Proprietário pelo ID. Apenas o próprio Proprietário pode executar.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ProprietarioResponseDTO> editarCliente(@PathVariable UUID id, @RequestBody @Valid AtualizarProprietarioRequestDTO proprietarioRequestDTO){
+        return ResponseEntity.ok(proprietarioService.editarProprietario(id, proprietarioRequestDTO));
     }
 }
