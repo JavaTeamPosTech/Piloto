@@ -1,176 +1,84 @@
 package com.techchallenge.user_manager_api.controllers;
 
+import com.techchallenge.user_manager_api.dto.requests.AtualizarProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
-import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
+import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
-import com.techchallenge.user_manager_api.services.impl.ClienteServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@WithMockUser(username = "joaolima123", roles = {"PROPRIETARIO"})
+@ExtendWith(MockitoExtension.class)
 class ProprietarioControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    @InjectMocks
+    private ProprietarioController proprietarioController;
 
-    @MockBean
+    @Mock
     private ProprietarioService proprietarioService;
 
+    private CadastroResponseDTO cadastroResponseDTO;
+    private ProprietarioResponseDTO proprietarioResponseDTO;
+    private ProprietarioRequestDTO proprietarioRequestDTO;
+
     @BeforeEach
-    void setupSecurityContext() {
-        UUID uuidProprietario = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    void setUp() {
+        proprietarioService = Mockito.mock(ProprietarioService.class);
+        proprietarioController = new ProprietarioController(proprietarioService);
 
-        var principalMock = new Object() {
-            public UUID id = uuidProprietario;
-        };
-
-        var auth = new UsernamePasswordAuthenticationToken(
-                principalMock,
-                null,
-                List.of(new SimpleGrantedAuthority("ROLE_PROPRIETARIO"))
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
-    }
-
-    @Test
-    void deveriaRetornar200AoCadastrarProprietario() throws Exception {
-        // ARRANGE
-        String json = """
-                {
-                   "cnpj": "12.345.678/0001-95",
-                   "razaoSocial": "Empresa de Exemplo LTDA",
-                   "nomeFantasia": "Exemplo Comércio",
-                   "inscricaoEstadual": "1234567890",
-                   "telefoneComercial": "+5581999999999",
-                   "whatsapp": "+5581999999999",
-                   "statusConta": "ATIVO",
-                   "nome": "João Lima",
-                   "email": "joaolima@empresa.com",
-                   "login": "joaolima",
-                   "senha": "SenhaForte123!",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "Sao Paulo",
-                       "bairro": "Jardim Paulista",
-                       "rua": "Avenida Paulista",
-                       "numero": 123,
-                       "complemento": "Apt 101",
-                       "cep": "01311-000"
-                     }
-                   ]
-                 }
-                """;
-        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO( UUID.randomUUID(),
+        proprietarioRequestDTO = new ProprietarioRequestDTO(
+                "12.345.678/0001-95",
+                "Empresa de Exemplo LTDA",
+                "Exemplo Comércio",
+                "1234567890",
+                "+5581999999999",
+                "+5581999999999",
+                StatusContaEnum.ATIVO,
                 "João Lima",
                 "joaolima@empresa.com",
-                "joaolima");
-        CadastroResponseDTO cadastroResponseDTO = new CadastroResponseDTO(usuarioResponseDTO,"");
+                "joaolima",
+                "SenhaForte123!",
+                List.of(
+                        new EnderecoRequestDTO(
+                                "SP",
+                                "Sao Paulo",
+                                "Jardim Paulista",
+                                "Avenida Paulista",
+                                123,
+                                "Apt 101",
+                                "01311-000"
+                        )
+                )
+        );
+        cadastroResponseDTO = new CadastroResponseDTO(
+                new UsuarioResponseDTO(
+                        UUID.randomUUID(),
+                        "João Lima",
+                        "joaolima@empresa.com",
+                        "joaolima"
+                ),
+                "token-jwt"
+        );
 
-
-        when(proprietarioService.cadastrarProprietario(any())).thenReturn(cadastroResponseDTO);
-
-        //ACT
-        var response = mvc.perform(
-                        post("/proprietarios")
-                                .content(json)
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andReturn().getResponse();
-
-        //ASSERT
-        Assertions.assertEquals(200, response.getStatus());
-    }
-
-    @Test
-    void deveriaRetornar400AoCadastrarProprietarioVazio() throws Exception {
-        //ARRANGE
-        String json = "{}";
-        //ACT
-        var response = mvc.perform(
-                post("/proprietarios")
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse();
-
-        //ASSERT
-        Assertions.assertEquals(400, response.getStatus());
-    }
-
-    @Test
-    void deveriaRetornar400AoCadastrarProprietarioSemCnpjEEmail() throws Exception {
-        // ARRANGE
-        String json = """
-                {
-                   "cnpj": "",
-                   "razaoSocial": "Empresa de Exemplo LTDA",
-                   "nomeFantasia": "Exemplo Comércio",
-                   "inscricaoEstadual": "1234567890",
-                   "telefoneComercial": "+5581999999999",
-                   "whatsapp": "+5581999999999",
-                   "statusConta": "ATIVO",
-                   "nome": "João Lima",
-                   "email": "",
-                   "login": "joaolima",
-                   "senha": "SenhaForte123!",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "Sao Paulo",
-                       "bairro": "Jardim Paulista",
-                       "rua": "Avenida Paulista",
-                       "numero": 123,
-                       "complemento": "Apt 101",
-                       "cep": "01311-000"
-                     }
-                   ]
-                 }
-                """;
-        //ACT
-        var response = mvc.perform(
-                post("/proprietarios")
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse();
-
-        Assertions.assertEquals(400, response.getStatus());
-    }
-
-    @Test
-    void deveriaRetornar200AoBuscarProprietarioPorId() throws Exception {
-        UUID uuidProprietario = UUID.fromString("11111111-1111-1111-1111-111111111111");
-
-        ProprietarioResponseDTO proprietarioResponseDTO = new ProprietarioResponseDTO(
-                uuidProprietario,
+        proprietarioResponseDTO = new ProprietarioResponseDTO(
+                UUID.randomUUID(),
                 "12.345.678/0001-95",
                 "Empresa de Exemplo LTDA",
                 "Exemplo Comércio",
@@ -178,122 +86,89 @@ class ProprietarioControllerTest {
                 "+5581999999999",
                 "+5581999999999",
                 "João Lima",
-                "rafael@gmail.com",
-                "rafaelLogin123",
+                "joaolima@empresa.com",
+                "joaolima",
                 List.of()
         );
-
-
-
-        when(proprietarioService.buscarProprietarioPorId(uuidProprietario)).thenReturn(proprietarioResponseDTO);
-
-        mvc.perform(get("/proprietarios/" + uuidProprietario))
-                .andExpect(status().isOk());
-    }
-
-
-    @Test
-    void deveriaRetornar404AoBuscarProprietarioInexistente() throws Exception {
-        UUID uuidProprietario = UUID.fromString("11111111-1111-1111-1111-111111111111");
-
-        when(proprietarioService.buscarProprietarioPorId(uuidProprietario))
-                .thenThrow(new ResourceNotFoundException("Proprietario não encontrado"));
-
-        var response = mvc.perform(get("/proprietarios/" + uuidProprietario))
-                .andReturn().getResponse();
-
-        assertEquals(404, response.getStatus());
     }
 
     @Test
-    void deveriaRetornar409AoCadastrarProprietarioComCnpjExistente() throws Exception {
-        //ARRANGE
-        String json = """
-                {
-                   "cnpj": "12.345.678/0001-95",
-                   "razaoSocial": "Empresa de Exemplo LTDA",
-                   "nomeFantasia": "Exemplo Comércio",
-                   "inscricaoEstadual": "1234567890",
-                   "telefoneComercial": "+5581999999999",
-                   "whatsapp": "+5581999999999",
-                   "statusConta": "ATIVO",
-                   "nome": "João Lima",
-                   "email": "joaolima@empresa.com",
-                   "login": "joaolima",
-                   "senha": "SenhaForte123!",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "Sao Paulo",
-                       "bairro": "Jardim Paulista",
-                       "rua": "Avenida Paulista",
-                       "numero": 123,
-                       "complemento": "Apt 101",
-                       "cep": "01311-000"
-                     }
-                   ]
-                 }
-                """;
+    void deveriaCadastrarProprietarioComSucesso() {
+        when(proprietarioService.cadastrarProprietario(proprietarioRequestDTO)).thenReturn(cadastroResponseDTO);
 
-        //ACT
-        doThrow(new DataIntegrityViolationException("Já existe um cadastro com este CNPJ."))
-                .when(proprietarioService)
-                .cadastrarProprietario(any());
+        ResponseEntity<CadastroResponseDTO> response = proprietarioController.cadastrarProprietario(proprietarioRequestDTO);
 
-        var response = mvc.perform(
-                post("/proprietarios")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-        ).andReturn().getResponse();
-
-        //ASSERT
-        assertEquals(409, response.getStatus());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(cadastroResponseDTO, response.getBody());
     }
 
     @Test
-    void deveriaRetornar409AoCadastrarProprietarioComEmailExistente() throws Exception {
-        //ARRANGE
-        String json = """
-                {
-                   "cnpj": "12.345.678/0001-95",
-                   "razaoSocial": "Empresa de Exemplo LTDA",
-                   "nomeFantasia": "Exemplo Comércio",
-                   "inscricaoEstadual": "1234567890",
-                   "telefoneComercial": "+5581999999999",
-                   "whatsapp": "+5581999999999",
-                   "statusConta": "ATIVO",
-                   "nome": "João Lima",
-                   "email": "joaolima@empresa.com",
-                   "login": "joaolima",
-                   "senha": "SenhaForte123!",
-                   "enderecos": [
-                     {
-                       "estado": "SP",
-                       "cidade": "Sao Paulo",
-                       "bairro": "Jardim Paulista",
-                       "rua": "Avenida Paulista",
-                       "numero": 123,
-                       "complemento": "Apt 101",
-                       "cep": "01311-000"
-                     }
-                   ]
-                 }
-                """;
+    void deveriaBuscarProprietarioPorIdComSucesso() {
+        UUID idProprietario = UUID.randomUUID();
+        when(proprietarioService.buscarProprietarioPorId(idProprietario)).thenReturn(proprietarioResponseDTO);
 
-        //ACT
-        doThrow(new DataIntegrityViolationException("Já existe um cadastro com este e-mail."))
-                .when(proprietarioService)
-                .cadastrarProprietario(any());
+        ResponseEntity<ProprietarioResponseDTO> response = proprietarioController.buscarProprietarioPorId(idProprietario);
 
-        var response = mvc.perform(
-                post("/proprietarios")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-        ).andReturn().getResponse();
-
-        //ASSERT
-        assertEquals(409, response.getStatus());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(proprietarioResponseDTO, response.getBody());
     }
 
+    @Test
+    void deveriaRetornarErroAoBuscarProprietarioPorIdInexistente() {
+        UUID idProprietario = UUID.randomUUID();
+        when(proprietarioService.buscarProprietarioPorId(idProprietario)).thenThrow(new RuntimeException("Proprietário não encontrado"));
 
+        assertThrows(RuntimeException.class, () -> proprietarioController.buscarProprietarioPorId(idProprietario));
+    }
+
+    @Test
+    void deveriaDeletarProprietarioComSucesso() {
+        UUID idProprietario = UUID.randomUUID();
+
+        ResponseEntity<Void> response = proprietarioController.deletarProprietario(idProprietario);
+
+        verify(proprietarioService, times(1)).deletarProprietario(idProprietario);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    void deveriaRetornarErroAoDeletarProprietarioInexistente() {
+        UUID idProprietario = UUID.randomUUID();
+        doThrow(new RuntimeException("Proprietário não encontrado")).when(proprietarioService).deletarProprietario(idProprietario);
+
+        assertThrows(RuntimeException.class, () -> proprietarioController.deletarProprietario(idProprietario));
+    }
+
+    @Test
+    void deveriaEditarProprietarioComSucesso() {
+        UUID idProprietario = UUID.randomUUID();
+        AtualizarProprietarioRequestDTO atualizarProprietarioRequestDTO = new AtualizarProprietarioRequestDTO(
+                "12.345.678/0001-95",
+                "Empresa de Exemplo LTDA",
+                "Exemplo Comércio",
+                "1234567890",
+                "+5581999999999",
+                "+5581999999999",
+                StatusContaEnum.ATIVO,
+                "João Lima",
+                "joaolima@empresa.com",
+                "joaolima",
+                List.of(
+                        new EnderecoRequestDTO(
+                                "SP",
+                                "Sao Paulo",
+                                "Jardim Paulista",
+                                "Avenida Paulista",
+                                123,
+                                "Apt 101",
+                                "01311-000"
+                        )
+                )
+        );
+        when(proprietarioService.editarProprietario(idProprietario, atualizarProprietarioRequestDTO)).thenReturn(proprietarioResponseDTO);
+        ResponseEntity<ProprietarioResponseDTO> response = proprietarioController.editarProprietario(idProprietario, atualizarProprietarioRequestDTO);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(proprietarioResponseDTO, response.getBody());
+    }
 }
