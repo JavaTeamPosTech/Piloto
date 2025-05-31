@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.services.UsuarioService;
 import com.techchallenge.user_manager_api.services.impl.AuthorizationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Atualizar senha", description = "Permite o usuário logado atualizar sua senha.")
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/atualizar-senha")
     public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaRequestDTO atualizarSenhaRequestDTO, Authentication authentication) {
         usuarioService.atualizarSenha(atualizarSenhaRequestDTO, authentication);
