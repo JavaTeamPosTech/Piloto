@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+@Schema(description = "DTO para criação de um Cliente")
 public record ClienteRequestDTO(
 
         @Schema(description = "Nome da pessoa precisa estar preenchido", example = "João da Silva")
