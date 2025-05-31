@@ -75,7 +75,7 @@ public class ClienteServiceImpl implements ClienteService {
         atualizarDadosCliente(cliente, clienteDTO);
 
         Cliente clienteAtualizado = clienteRepository.save(cliente);
-        return UsuarioMapper.toClienteResponseDTO(clienteRepository.save(clienteAtualizado));
+        return UsuarioMapper.toClienteResponseDTO(clienteAtualizado);
     }
 
     @Override

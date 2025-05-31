@@ -66,7 +66,7 @@ public class ClienteController {
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ClienteResponseDTO> deletarCliente(@PathVariable UUID id){
+    public ResponseEntity<Void> deletarCliente(@PathVariable UUID id){
         clienteService.deletarCliente(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
