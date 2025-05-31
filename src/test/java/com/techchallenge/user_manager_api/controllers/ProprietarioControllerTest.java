@@ -5,6 +5,7 @@ import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
+import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
 import com.techchallenge.user_manager_api.services.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -44,6 +46,9 @@ class ProprietarioControllerTest {
 
     @MockBean
     private ProprietarioService proprietarioService;
+
+    @MockBean
+    private ClienteService clienteService;
 
     @BeforeEach
     void setupSecurityContext() {
@@ -295,5 +300,18 @@ class ProprietarioControllerTest {
         assertEquals(409, response.getStatus());
     }
 
+    @Test
+    void deveriaRetornar200AoListarTodosClientes() throws Exception {
+        //ARRANGE
+        when(clienteService.buscarClientes()).thenReturn(List.of());
+
+        //ACT
+        var response = mvc.perform(
+                get("/clientes")
+        ).andReturn().getResponse();
+
+        //ASSERT
+        assertEquals(200, response.getStatus());
+    }
 
 }

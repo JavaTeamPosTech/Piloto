@@ -53,11 +53,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ExcecaoDTO> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
         ExcecaoDTO response = new ExcecaoDTO(
                 "Violação de integridade",
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.CONFLICT.value(),
                 LocalDateTime.now(),
                 List.of(new ErroValidacaoDTO(messageResolver.resolveField(e), messageResolver.resolveMessage(e)))
         );
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
