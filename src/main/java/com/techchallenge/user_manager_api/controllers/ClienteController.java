@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.controllers;
 
+import com.techchallenge.user_manager_api.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +46,28 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.buscarCliente(id));
     }
 
+    @PreAuthorize("#id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> editarCliente(@PathVariable UUID id, @RequestBody @Valid AtualizarClienteRequestDTO clienteRequestDTO){
+        return ResponseEntity.ok(clienteService.editarCliente(id, clienteRequestDTO));
+    }
+
     @PreAuthorize("hasRole('PROPRIETARIO')")
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Buscar todos os cliente", description = "Busca todos os clientes cadastrados. Somente um Proprietário pode executar.")
     @GetMapping()
     public ResponseEntity<List<ClienteResponseDTO>> buscarClientes(){
         return ResponseEntity.ok(clienteService.buscarClientes());
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCliente(@PathVariable UUID id){
+        clienteService.deletarCliente(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

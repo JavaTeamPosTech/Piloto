@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,13 +34,16 @@ public class Usuario implements UserDetails {
     @Column(name =  "id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
+    @Setter
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
     private String nome;
 
+    @Setter
     @Column(unique = true)
     private String email;
 
+    @Setter
     @Column(unique = true)
     private String login;
 
@@ -51,6 +55,7 @@ public class Usuario implements UserDetails {
     @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
 
+    @Setter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos = new ArrayList<>();
 

@@ -17,7 +17,6 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI getOpenAPI() {
         return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
                                 new SecurityScheme()

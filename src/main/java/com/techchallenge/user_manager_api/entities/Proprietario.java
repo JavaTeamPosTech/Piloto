@@ -1,16 +1,17 @@
 package com.techchallenge.user_manager_api.entities;
 
-import com.techchallenge.user_manager_api.entities.enums.RolesEnum;
 import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@Setter
 @Table(name = "proprietarios",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_proprietario_cnpj", columnNames = "cnpj"),
@@ -20,15 +21,21 @@ import java.util.List;
 public class Proprietario extends Usuario {
 
     private String cnpj;
+
     @Column(name = "razao_social")
     private String razaoSocial;
+
     @Column(name = "nome_fantasia")
     private String nomeFantasia;
+
     @Column(name = "inscricao_estadual")
     private String inscricaoEstadual;
+
     @Column(name = "telefone_comercial")
     private String telefoneComercial;
+
     private String whatsapp;
+
     @Column(name = "status_conta")
     @Enumerated(EnumType.STRING)
     private StatusContaEnum statusConta;
