@@ -1,15 +1,11 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
-import com.techchallenge.user_manager_api.entities.Cliente;
 import com.techchallenge.user_manager_api.entities.Proprietario;
 import com.techchallenge.user_manager_api.entities.enums.*;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
-import com.techchallenge.user_manager_api.repositories.ClienteRepository;
 import com.techchallenge.user_manager_api.repositories.ProprietarioRepository;
 import com.techchallenge.user_manager_api.services.PasswordService;
 import com.techchallenge.user_manager_api.services.UsuarioService;
@@ -20,13 +16,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

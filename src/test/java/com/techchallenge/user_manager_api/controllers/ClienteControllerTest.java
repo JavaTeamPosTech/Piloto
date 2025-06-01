@@ -1,29 +1,15 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.jayway.jsonpath.JsonPath;
-import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
-import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.EnderecoResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
-import com.techchallenge.user_manager_api.entities.Cliente;
-import com.techchallenge.user_manager_api.entities.enums.AlergiaAlimentarEnum;
-import com.techchallenge.user_manager_api.entities.enums.GeneroEnum;
-import com.techchallenge.user_manager_api.entities.enums.MetodoPagamentoEnum;
-import com.techchallenge.user_manager_api.entities.enums.TiposComidaEnum;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
-import com.techchallenge.user_manager_api.repositories.ClienteRepository;
 import com.techchallenge.user_manager_api.services.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -33,23 +19,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc

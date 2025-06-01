@@ -1,13 +1,11 @@
 package com.techchallenge.user_manager_api.controllers;
 
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.services.ClienteService;
 import com.techchallenge.user_manager_api.services.ProprietarioService;
-import com.techchallenge.user_manager_api.services.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,11 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 

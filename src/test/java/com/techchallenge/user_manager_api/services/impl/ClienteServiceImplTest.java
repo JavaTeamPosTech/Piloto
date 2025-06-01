@@ -1,12 +1,9 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.config.SecurityFilter;
 import com.techchallenge.user_manager_api.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.entities.Cliente;
-import com.techchallenge.user_manager_api.entities.Endereco;
 import com.techchallenge.user_manager_api.entities.enums.AlergiaAlimentarEnum;
 import com.techchallenge.user_manager_api.entities.enums.GeneroEnum;
 import com.techchallenge.user_manager_api.entities.enums.MetodoPagamentoEnum;
@@ -22,14 +19,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 import java.util.Set;
 import java.time.LocalDate;
 import java.util.*;

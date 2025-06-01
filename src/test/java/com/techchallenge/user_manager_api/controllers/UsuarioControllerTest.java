@@ -1,6 +1,5 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
 import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.LoginResponseDTO;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.security.config.http.MatcherType.mvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 

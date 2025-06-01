@@ -15,7 +15,7 @@ services:
     networks:
       - auth-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -33,6 +33,16 @@ services:
       - .env
     depends_on:
       - db
+
+  maven-test:
+    image: maven:3.9.6-eclipse-temurin-21
+    container_name: maven_test_container
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: tail -f /dev/null
+    networks:
+      - auth-network
 
 volumes:
   postgres_data:
