@@ -218,4 +218,73 @@ class ProprietarioServiceImplTest {
         assertThrows(ResourceNotFoundException.class, () -> proprietarioService.deletarProprietario(id));
         verify(proprietarioRepository, never()).deleteById(any(UUID.class));
     }
+
+    //Adicoes teste
+    @Test
+    void deveriaRetornarErroAoCadastrarProprietarioComCnpjExistente() {
+        this.proprietarioRequestDTO = new ProprietarioRequestDTO(
+                "12.345.678/0001-90",
+                "Empresa Exemplo LTDA",
+                "Empresa Exemplo",
+                "123456789",
+                "(11) 1234-5678",
+                "(11) 91234-5678",
+                StatusContaEnum.ATIVO,
+                "Carlos Silva",
+                "carlos.silva@email.com",
+                "carloss",
+                "senhaForte123",
+                List.of(
+                        new EnderecoRequestDTO(
+                                "SP",
+                                "São Paulo",
+                                "Centro",
+                                "Rua das Flores",
+                                100,
+                                "Sala 10",
+                                "01000-000"
+                        )
+                )
+        );
+
+        when(proprietarioRepository.save(any())).thenThrow(new DataIntegrityViolationException("Já existe um cadastro com este CNPJ."));
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            proprietarioService.cadastrarProprietario(proprietarioRequestDTO);
+        });
+    }
+
+    @Test
+    void deveriaRetornarErroAoCadastrarProprietarioComEmailExistente() {
+        this.proprietarioRequestDTO = new ProprietarioRequestDTO(
+                "12.345.678/0001-90",
+                "Empresa Exemplo LTDA",
+                "Empresa Exemplo",
+                "123456789",
+                "(11) 1234-5678",
+                "(11) 91234-5678",
+                StatusContaEnum.ATIVO,
+                "Carlos Silva",
+                "carlos.silva@email.com",
+                "carloss",
+                "senhaForte123",
+                List.of(
+                        new EnderecoRequestDTO(
+                                "SP",
+                                "São Paulo",
+                                "Centro",
+                                "Rua das Flores",
+                                100,
+                                "Sala 10",
+                                "01000-000"
+                        )
+                )
+        );
+
+        when(proprietarioRepository.save(any())).thenThrow(new DataIntegrityViolationException("Já existe um cadastro com este e-mail."));
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            proprietarioService.cadastrarProprietario(proprietarioRequestDTO);
+        });
+    }
 }
