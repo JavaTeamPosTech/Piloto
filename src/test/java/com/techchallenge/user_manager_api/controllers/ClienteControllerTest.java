@@ -3,6 +3,7 @@ package com.techchallenge.user_manager_api.controllers;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.services.ClienteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,9 +73,9 @@ class ClienteControllerTest {
     @Test
     void deveriaRetornarErroAoBuscarClientePorIdInexistente() {
         UUID idCliente = UUID.randomUUID();
-        when(clienteService.buscarCliente(idCliente)).thenThrow(new RuntimeException("Cliente não encontrado"));
+        when(clienteService.buscarCliente(idCliente)).thenThrow(new ResourceNotFoundException("Cliente não encontrado"));
 
-        assertThrows(RuntimeException.class, () -> clienteController.buscarClientePorId(idCliente));
+        assertThrows(ResourceNotFoundException.class, () -> clienteController.buscarClientePorId(idCliente));
     }
 
     @Test
@@ -101,8 +102,8 @@ class ClienteControllerTest {
     @Test
     void deveriaRetornarErroAoDeletarClienteInexistente() {
         UUID idCliente = UUID.randomUUID();
-        doThrow(new RuntimeException("Cliente não encontrado")).when(clienteService).deletarCliente(idCliente);
+        doThrow(new ResourceNotFoundException("Cliente não encontrado")).when(clienteService).deletarCliente(idCliente);
 
-        assertThrows(RuntimeException.class, () -> clienteController.deletarCliente(idCliente));
+        assertThrows(ResourceNotFoundException.class, () -> clienteController.deletarCliente(idCliente));
     }
 }

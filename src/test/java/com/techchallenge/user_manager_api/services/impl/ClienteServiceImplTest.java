@@ -14,9 +14,11 @@ import com.techchallenge.user_manager_api.services.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.ArgumentCaptor;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,6 +51,9 @@ class ClienteServiceImplTest {
     private ClienteServiceImpl clienteService;
 
     private ClienteRequestDTO clienteRequestDTO;
+
+    @Captor
+    private ArgumentCaptor<Cliente> clienteArgumentCaptor;
 
     @BeforeEach
     void setUp() {
@@ -243,4 +249,80 @@ class ClienteServiceImplTest {
         assertThrows(ResourceNotFoundException.class, () -> clienteService.deletarCliente(id));
         verify(clienteRepository, never()).delete(any(Cliente.class));
     }
+
+    //Adicoes teste
+    @Test
+    void deveRetornarErroCadastrarComCpfJaExistente() {
+        this.clienteRequestDTO = new ClienteRequestDTO(
+                "João da Silva",
+                "123.456.789-00",
+                "joaodasilva@email.com",
+                "joaodasilva",
+                LocalDate.now(),
+                GeneroEnum.MASCULINO,
+                "+5581999992345",
+                Set.of(TiposComidaEnum.CHURRASCO, TiposComidaEnum.JAPONESA),
+                Set.of(AlergiaAlimentarEnum.GLUTEN),
+                MetodoPagamentoEnum.PIX,
+                true,
+                true,
+                "SenhaForte123!",
+                List.of(new EnderecoRequestDTO(
+                        "SP", "São Paulo", "Centro", "Rua das Rosas", 123, "Apto 42", "01000-000"
+                ))
+        );
+
+        when(clienteRepository.save(any())).thenThrow(new DataIntegrityViolationException("Já existe um cadastro com este CPF."));
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            clienteService.cadastrarCliente(clienteRequestDTO);
+        });
+    }
+
+    @Test
+    void deveRetornarSucessoCadastrarCliente() {
+        this.clienteRequestDTO = new ClienteRequestDTO(
+                "João da Silva",
+                "123.456.789-00",
+                "joaodasilva@email.com",
+                "joaodasilva",
+                LocalDate.now(),
+                GeneroEnum.MASCULINO,
+                "+5581999992345",
+                Set.of(TiposComidaEnum.CHURRASCO, TiposComidaEnum.JAPONESA),
+                Set.of(AlergiaAlimentarEnum.GLUTEN),
+                MetodoPagamentoEnum.PIX,
+                true,
+                true,
+                "SenhaForte123!",
+                List.of(new EnderecoRequestDTO(
+                        "SP", "São Paulo", "Centro", "Rua das Rosas", 123, "Apto 42", "01000-000"
+                ))
+        );
+
+        when(clienteRepository.save(any(Cliente.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+        clienteService.cadastrarCliente(clienteRequestDTO);
+
+        then(clienteRepository).should().save(clienteArgumentCaptor.capture());
+        Cliente clienteSalvo = clienteArgumentCaptor.getValue();
+
+        assertEquals("123.456.789-00", clienteSalvo.getCpf());
+        assertEquals("joaodasilva@email.com", clienteSalvo.getEmail());
+    }
+
+    @Test
+    void deveriaRetornarErroAoBuscarClientePorId() throws Exception {
+        // ARRANGE
+        UUID id = UUID.randomUUID();
+
+        //ACT
+        when(clienteRepository.findById(id)).thenReturn(Optional.empty());
+
+        //ASSERT
+        assertThrows(ResourceNotFoundException.class, () -> {
+            clienteService.buscarCliente(id);
+        });
+    }
+
 }
