@@ -1,0 +1,3123 @@
+{
+	"info": {
+		"_postman_id": "c4ae1d51-f019-4ad5-a283-fc85cdf4a0c6",
+		"name": "Meu Menu - Auth User API",
+		"description": "API de Registro, Autenticação e Gerenciamento de Usuários",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44411418",
+		"_collection_link": "https://fernanda-3302659.postman.co/workspace/Fernanda's-Workspace~527d23e4-1c5c-42ae-89c3-d61f4a58647f/collection/44411418-c4ae1d51-f019-4ad5-a283-fc85cdf4a0c6?action=share&source=collection_link&creator=44411418"
+	},
+	"item": [
+		{
+			"name": "1 - Tokens",
+			"item": [
+				{
+					"name": "Clientes",
+					"item": [
+						{
+							"name": "Buscar Clientes",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes"
+									]
+								},
+								"description": "### GET /clientes\n\nEste endpoint recupera uma **lista de clientes**.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/clientes/`\n    \n\n#### Response\n\nA resposta estará no formato **JSON** com o seguinte **schema**:\n\n``` json\n[\n    {\n        \"id\": \"747ba340-9f41-4d35-a07e-988ec5e6c92f\",\n        \"nome\": \"Andre da Costa\",\n        \"cpf\": \"123.456.789-11\",\n        \"dataNascimento\": \"1990-01-01\",\n        \"email\": \"andredacosta@email.com\",\n        \"login\": \"andredacosta\",\n        \"telefone\": \"+5581999992346\",\n        \"enderecos\": [\n            {\n                \"id\": \"57161153-e328-4d07-97eb-8cd100208c97\",\n                \"estado\": \"SP\",\n                \"cidade\": \"Sao Paulo\",\n                \"bairro\": \"Jardim Paulista\",\n                \"rua\": \"Avenida Paulista\",\n                \"numero\": 123,\n                \"complemento\": \"Apt 101\",\n                \"cep\": \"01311-000\"\n            }\n        ]\n    }\n]\n\n ```"
+							},
+							"response": [
+								{
+									"name": "1 - Token inválido ou Ausente",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/clientes",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"clientes"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "151"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 30 May 2025 00:38:23 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2025-05-29T21:38:23.668129\",\n    \"method\": \"GET\",\n    \"status\": 401,\n    \"message\": \"Token invalido ou ausente.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/clientes\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Buscar Cliente por ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clientes/8997963e-291e-403b-892d-516d764b5ae5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes",
+										"8997963e-291e-403b-892d-516d764b5ae5"
+									]
+								},
+								"description": "### Buscar Cliente por ID\n\nEste endpoint recupera os **detalhes de um cliente específico**.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/clientes/{id}`\n    \n\n#### Response\n\nThe response will have a status code of 403 and a JSON body with the following structure:\n\n``` json\n{\n    \"timestamp\": \"\",\n    \"method\": \"\",\n    \"status\": \"\",\n    \"message\": \"\",\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```\n\nIn addition, an example of a successful response body is as follows:\n\n``` json\n{\n    \"id\": \"\",\n    \"nome\": \"\",\n    \"cpf\": \"\",\n    \"dataNascimento\": \"\",\n    \"email\": \"\",\n    \"login\": \"\",\n    \"telefone\": \"\",\n    \"enderecos\": [\n        {\n            \"id\": \"\",\n            \"estado\": \"\",\n            \"cidade\": \"\",\n            \"bairro\": \"\",\n            \"rua\": \"\",\n            \"numero\": 0,\n            \"complemento\": \"\",\n            \"cep\": \"\"\n        }\n    ]\n}\n\n ```"
+							},
+							"response": [
+								{
+									"name": "2 - Token Inválido ou Ausente",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/clientes/cbfc9c28-1155-4c39-83e5-3314080e8022",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"clientes",
+												"cbfc9c28-1155-4c39-83e5-3314080e8022"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "188"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 30 May 2025 00:25:55 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2025-05-29T21:25:55.785659\",\n    \"method\": \"GET\",\n    \"status\": 401,\n    \"message\": \"Token invalido ou ausente.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/clientes/cbfc9c28-1155-4c39-83e5-3314080e8022\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Atualizar Cliente",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"José da Silveira\",\n  \"cpf\": \"123.456.789-33\",\n  \"email\": \"josedasilveira@email.com\",\n  \"login\": \"josedasilveira\",\n  \"dataNascimento\": \"1911-11-11\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992342\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"FRUTOS_DO_MAR\",\n    \"SOJA\",\n    \"GLUTEN\"\n\n  ],\n  \"metodoPagamentoPreferido\": \"PIX\",\n  \"notificacoesAtivas\": false,\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n{\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/clientes/965212f5-9f6e-4a75-8952-08cd796996da",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes",
+										"965212f5-9f6e-4a75-8952-08cd796996da"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "3 - Token Inválido ou Ausente",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nome\": \"José da Silveira\",\n  \"cpf\": \"123.456.789-33\",\n  \"email\": \"josedasilveira@email.com\",\n  \"login\": \"josedasilveira\",\n  \"dataNascimento\": \"1911-11-11\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992342\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"FRUTOS_DO_MAR\",\n    \"SOJA\",\n    \"GLUTEN\"\n\n  ],\n  \"metodoPagamentoPreferido\": \"PIX\",\n  \"notificacoesAtivas\": false,\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n{\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/clientes/9e8ce239-45c9-416e-b306-5259059f21c2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"clientes",
+												"9e8ce239-45c9-416e-b306-5259059f21c2"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "188"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 30 May 2025 23:39:38 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"error\": \"Unauthorized\",\n    \"message\": \"Token invalido ou ausente.\",\n    \"status\": 401,\n    \"method\": \"PUT\",\n    \"timestamp\": \"2025-05-30T20:39:38.294171\",\n    \"path\": \"/clientes/9e8ce239-45c9-416e-b306-5259059f21c2\"\n}"
+								}
+							]
+						}
+					],
+					"description": "Operações relacionadas ao Cliente"
+				},
+				{
+					"name": "Proprietarios",
+					"item": [
+						{
+							"name": "Buscar Proprietário por ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"proprietarios",
+										"a7673df6-d1e0-420e-88fb-68275a3805bf"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "4 - Token invalido ou ausente.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"proprietarios",
+												"a7673df6-d1e0-420e-88fb-68275a3805bf"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "193"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 30 May 2025 00:37:55 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2025-05-29T21:37:55.745661\",\n    \"method\": \"GET\",\n    \"status\": 401,\n    \"message\": \"Token invalido ou ausente.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Deletar Proprietário",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/proprietarios/91afc5a6-a63c-4159-88cb-a85fb66ac428",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"proprietarios",
+										"91afc5a6-a63c-4159-88cb-a85fb66ac428"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "5 - Token Inválido ou Ausente",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/proprietarios/91afc5a6-a63c-4159-88cb-a85fb66ac428",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"proprietarios",
+												"91afc5a6-a63c-4159-88cb-a85fb66ac428"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "151"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 31 May 2025 00:45:47 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"path\": \"/error\",\n    \"timestamp\": \"2025-05-30T21:45:47.621702\",\n    \"method\": \"DELETE\",\n    \"status\": 401,\n    \"message\": \"Token invalido ou ausente.\",\n    \"error\": \"Unauthorized\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Atualizar Proprietário",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"12.345.678/0001-33\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n  \"nomeFantasia\": \"Exemplo Comércio\",\n  \"inscricaoEstadual\": \"3214567833\",\n  \"telefoneComercial\": \"+5581999999321\",\n  \"whatsapp\": \"+5581999999321\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João A.Lima\",\n  \"email\": \"joaolima@corp.com\",\n  \"login\": \"joaolima\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n    {\n      \"estado\": \"PE\",\n      \"cidade\": \"Recife\",\n      \"bairro\": \"Jardim Recife\",\n      \"rua\": \"Avenida Recife\",\n      \"numero\": 432,\n      \"complemento\": \"Apt 43\",\n      \"cep\": \"11311-100\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/proprietarios/79b1699e-32f6-4043-bd1c-1ea5b4059119",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"proprietarios",
+										"79b1699e-32f6-4043-bd1c-1ea5b4059119"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "6 - Token Inválido ou Ausente",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cnpj\": \"12.345.678/0001-33\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n  \"nomeFantasia\": \"Exemplo Comércio\",\n  \"inscricaoEstadual\": \"3214567833\",\n  \"telefoneComercial\": \"+5581999999321\",\n  \"whatsapp\": \"+5581999999321\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João A.Lima\",\n  \"email\": \"joaolima@corp.com\",\n  \"login\": \"joaolima\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n    {\n      \"estado\": \"PE\",\n      \"cidade\": \"Recife\",\n      \"bairro\": \"Jardim Recife\",\n      \"rua\": \"Avenida Recife\",\n      \"numero\": 432,\n      \"complemento\": \"Apt 43\",\n      \"cep\": \"11311-100\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/proprietarios/79b1699e-32f6-4043-bd1c-1ea5b4059119",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"proprietarios",
+												"79b1699e-32f6-4043-bd1c-1ea5b4059119"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=ISO-8859-1"
+										},
+										{
+											"key": "Content-Length",
+											"value": "193"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 31 May 2025 01:10:30 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"path\": \"/proprietarios/79b1699e-32f6-4043-bd1c-1ea5b4059119\",\n    \"timestamp\": \"2025-05-30T22:10:30.410528\",\n    \"method\": \"PUT\",\n    \"status\": 401,\n    \"message\": \"Token invalido ou ausente.\",\n    \"error\": \"Unauthorized\"\n}"
+								}
+							]
+						}
+					],
+					"description": "Operações relacionadas ao Proprietário"
+				}
+			]
+		},
+		{
+			"name": "2 - Proprietarios",
+			"item": [
+				{
+					"name": "Cadastrar Proprietário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"pm.environment.set(\"bearerToken\", jsonData.token);",
+									"pm.variables.set(\"bearerToken\", jsonData.token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cnpj\": \"12.345.678/0001-32\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDAa\",\n  \"nomeFantasia\": \"Exemplo Comércioa\",\n  \"inscricaoEstadual\": \"1234567833\",\n  \"telefoneComercial\": \"+5581999999394\",\n  \"whatsapp\": \"+5581999999934\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João Lima\",\n  \"email\": \"joaolima@empresa.com\",\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaFraca123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/proprietarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"proprietarios"
+							]
+						},
+						"description": "### Criar Novo Proprietário\n\nEste endpoint permite que o cliente **crie um novo registro** com os detalhes fornecidos.\n\n#### Request Body\n\n- **nome**: _(string)_ O nome do proprietário.\n    \n- **cpf**: _(string)_ O número de CPF do proprietário.\n    \n- **email**: _(string)_ O endereço de e-mail do proprietário.\n    \n- **login**: _(string)_ O nome de usuário para login do proprietário.\n    \n- **dataNascimento**: _(string)_ A data de nascimento do proprietário.\n    \n- **genero**: _(string)_ O gênero do proprietário.\n    \n- **telefone**: _(string)_ O número de telefone do proprietário.\n    \n- **preferenciasAlimentares**: _(array)_ Lista de preferências alimentares.\n    \n- **alergias**: _(array)_ Lista de alergias.\n    \n- **metodoPagamentoPreferido**: _(string)_ Método de pagamento preferido.\n    \n- **proprietarioVip**: _(boolean)_ Indica se o proprietário é um membro VIP.\n    \n- **notificacoesAtivas**: _(boolean)_ Indica se as notificações estão ativas para o proprietário.\n    \n- **senha**: _(string)_ A senha do proprietário.\n    \n- **enderecos**: _(array)_ Lista de endereços, incluindo estado, cidade, bairro, rua, número, complemento e CEP."
+					},
+					"response": [
+						{
+							"name": "7 - Cadastro Sucesso João Lima",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"12.345.678/0001-32\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDAa\",\n  \"nomeFantasia\": \"Exemplo Comércioa\",\n  \"inscricaoEstadual\": \"1234567833\",\n  \"telefoneComercial\": \"+5581999999394\",\n  \"whatsapp\": \"+5581999999934\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João Lima\",\n  \"email\": \"joaolima@empresa.com\",\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaFraca123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/proprietarios",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:54:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"id\": \"8ca62baf-5f6a-4dc1-9e5b-d794fa5d7024\",\n        \"nome\": \"João Lima\",\n        \"email\": \"joaolima@empresa.com\",\n        \"login\": \"joaolima\"\n    },\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						},
+						{
+							"name": "8  - Erro de Validação",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"12.345.678/0001-95\",\n  \"whatsapp\": \"+5581999999999\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João Lima\",\n  \"email\": \"joaolima@empresa.com\",\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/proprietarios",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:54:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Erro de validação\",\n    \"status\": 400,\n    \"timestamp\": \"2025-05-29T23:54:09.919694253\",\n    \"erros\": [\n        {\n            \"campo\": \"nomeFantasia\",\n            \"mensagem\": \"Nome fantasia precisa estar preenchido\"\n        },\n        {\n            \"campo\": \"razaoSocial\",\n            \"mensagem\": \"Razão Social precisa estar preenchido\"\n        },\n        {\n            \"campo\": \"telefoneComercial\",\n            \"mensagem\": \"Telefone comercial precisa estar preenchido\"\n        },\n        {\n            \"campo\": \"inscricaoEstadual\",\n            \"mensagem\": \"Inscrição estadual precisa estar preenchido\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "9  - Violação de Integridade",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"12.345.678/0001-95\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n  \"nomeFantasia\": \"Exemplo Comércio\",\n  \"inscricaoEstadual\": \"1234567890\",\n  \"telefoneComercial\": \"+5581999999999\",\n  \"whatsapp\": \"+5581999999999\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João Lima\",\n  \"email\": \"joaolima@empresa.com\",\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/proprietarios",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:54:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Violação de integridade\",\n    \"status\": 400,\n    \"timestamp\": \"2025-05-29T23:54:57.771715054\",\n    \"erros\": [\n        {\n            \"campo\": \"uk_proprietario_login\",\n            \"mensagem\": \"Já existe um cadastro com este CNPJ.\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "10 e 15 - Cadastro Sucesso João da Silva, copie o ID do retorno para usar no get",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"98.765.432/0002-10\",\n  \"razaoSocial\": \"Comércio Silva e Filhos LTDA\",\n  \"nomeFantasia\": \"Silva Utilidades\",\n  \"inscricaoEstadual\": \"5678901234\",\n  \"telefoneComercial\": \"+5511987654321\",\n  \"whatsapp\": \"+5511987654321\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João da Silva\",\n  \"email\": \"contato@silvautilidades.com.br\",\n  \"login\": \"jdsilva\",\n  \"senha\": \"SenhaForte456!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"RJ\",\n      \"cidade\": \"Rio de Janeiro\",\n      \"bairro\": \"Copacabana\",\n      \"rua\": \"Rua Barata Ribeiro\",\n      \"numero\": 789,\n      \"complemento\": \"Cobertura 3\",\n      \"cep\": \"22040-002\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/proprietarios",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:54:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"id\": \"8ca62baf-5f6a-4dc1-9e5b-d794fa5d7024\",\n        \"nome\": \"João Lima\",\n        \"email\": \"joaolima@empresa.com\",\n        \"login\": \"joaolima\"\n    },\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar Proprietário por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"proprietarios",
+								"a7673df6-d1e0-420e-88fb-68275a3805bf"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "11 - Busca Sucesso João da Silva, cole o ID na URL",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/proprietarios/dbcbab8e-18d8-4d0f-b63f-ebc817aea7cc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios",
+										"dbcbab8e-18d8-4d0f-b63f-ebc817aea7cc"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:35:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a7673df6-d1e0-420e-88fb-68275a3805bf\",\n    \"cnpj\": \"12.345.678/0001-33\",\n    \"razaoSocial\": \"Empresa de Exemplo LTDA2\",\n    \"nomeFantasia\": \"Exemplo Comérc2io\",\n    \"inscricaoEstadual\": \"1234567830\",\n    \"telefoneComercial\": \"+5581999999399\",\n    \"whatsapp\": \"+5581999999939\",\n    \"nome\": \"João Lima\",\n    \"email\": \"joaolimaa@empresa.com\",\n    \"login\": \"joaolimaa\",\n    \"enderecos\": [\n        {\n            \"id\": \"d575c0cf-c4ae-4a7f-a877-a88176e320fe\",\n            \"estado\": \"SP\",\n            \"cidade\": \"Sao Paulo\",\n            \"bairro\": \"Jardim Paulista\",\n            \"rua\": \"Avenida Paulista\",\n            \"numero\": 123,\n            \"complemento\": \"Apt 101\",\n            \"cep\": \"01311-000\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "12 - Proprietário Não Encontrado, mantenha o ID errado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/proprietarios/bc113324-d4c0-4d97-bdc5-0734e1f817e9",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios",
+										"bc113324-d4c0-4d97-bdc5-0734e1f817e9"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:34:28 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Proprietário com id '8997963e-291e-403b-892d-516d764b5ae5' não encontrado\",\n    \"status\": 404,\n    \"timestamp\": \"2025-05-29T21:34:28.199777\",\n    \"erros\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletar Proprietário",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/proprietarios/91afc5a6-a63c-4159-88cb-a85fb66ac428",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"proprietarios",
+								"91afc5a6-a63c-4159-88cb-a85fb66ac428"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "13 - Deletar Sucesso  o João da Silva",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/proprietarios/dbcbab8e-18d8-4d0f-b63f-ebc817aea7cc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"proprietarios",
+										"dbcbab8e-18d8-4d0f-b63f-ebc817aea7cc"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 31 May 2025 00:45:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Atualizar Proprietário",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cnpj\": \"12.345.678/0001-33\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n  \"nomeFantasia\": \"Exemplo Comércio\",\n  \"inscricaoEstadual\": \"3214567833\",\n  \"telefoneComercial\": \"+5581999999321\",\n  \"whatsapp\": \"+5581999999321\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João A.Lima\",\n  \"email\": \"joaolima@corp.com\",\n  \"login\": \"joaolima\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n    {\n      \"estado\": \"PE\",\n      \"cidade\": \"Recife\",\n      \"bairro\": \"Jardim Recife\",\n      \"rua\": \"Avenida Recife\",\n      \"numero\": 432,\n      \"complemento\": \"Apt 43\",\n      \"cep\": \"11311-100\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/proprietarios/79b1699e-32f6-4043-bd1c-1ea5b4059119",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"proprietarios",
+								"79b1699e-32f6-4043-bd1c-1ea5b4059119"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "14 - Atualizar Sucesso João Lima",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cnpj\": \"12.345.678/0001-33\",\n  \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n  \"nomeFantasia\": \"Exemplo Comércio\",\n  \"inscricaoEstadual\": \"3214567833\",\n  \"telefoneComercial\": \"+5581999999321\",\n  \"whatsapp\": \"+5581999999321\",\n  \"statusConta\": \"ATIVO\",\n  \"nome\": \"João A.Lima\",\n  \"email\": \"joaolima@corp.com\",\n  \"login\": \"joaolima\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n    {\n      \"estado\": \"PE\",\n      \"cidade\": \"Recife\",\n      \"bairro\": \"Jardim Recife\",\n      \"rua\": \"Avenida Recife\",\n      \"numero\": 432,\n      \"complemento\": \"Apt 43\",\n      \"cep\": \"11311-100\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/proprietarios/9a99bf35-8735-45b5-a5d9-7f708b70d966",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"proprietarios",
+										"9a99bf35-8735-45b5-a5d9-7f708b70d966"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 31 May 2025 01:07:03 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"79b1699e-32f6-4043-bd1c-1ea5b4059119\",\n    \"cnpj\": \"12.345.678/0001-33\",\n    \"razaoSocial\": \"Empresa de Exemplo LTDA\",\n    \"nomeFantasia\": \"Exemplo Comércio\",\n    \"inscricaoEstadual\": \"3214567833\",\n    \"telefoneComercial\": \"+5581999999321\",\n    \"whatsapp\": \"+5581999999321\",\n    \"nome\": \"João A.Lima\",\n    \"email\": \"joaolima@corp.com\",\n    \"login\": \"joaolima\",\n    \"enderecos\": [\n        {\n            \"id\": \"a1b3d435-5259-4581-b4d8-06472bbc4a43\",\n            \"estado\": \"SP\",\n            \"cidade\": \"Sao Paulo\",\n            \"bairro\": \"Jardim Paulista\",\n            \"rua\": \"Avenida Paulista\",\n            \"numero\": 123,\n            \"complemento\": \"Apt 101\",\n            \"cep\": \"01311-000\"\n        },\n        {\n            \"id\": \"eb3d0fe0-b281-4358-9739-6046b0e5cce2\",\n            \"estado\": \"PE\",\n            \"cidade\": \"Recife\",\n            \"bairro\": \"Jardim Recife\",\n            \"rua\": \"Avenida Recife\",\n            \"numero\": 432,\n            \"complemento\": \"Apt 43\",\n            \"cep\": \"11311-100\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Operações relacionadas ao Proprietário"
+		},
+		{
+			"name": "3 - Clientes",
+			"item": [
+				{
+					"name": "Cadastrar Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"pm.environment.set(\"bearerToken\", jsonData.token);",
+									"pm.variables.set(\"bearerToken\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Andre da Costa\",\n  \"cpf\": \"123.456.789-11\",\n  \"email\": \"andredacosta@email.com\",\n  \"login\": \"andredacosta\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992346\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"AMENDOIM\",\n    \"LACTOSE\"\n  ],\n  \"metodoPagamentoPreferido\": \"CREDITO\",\n  \"clienteVip\": true,\n  \"notificacoesAtivas\": true,\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "### Criar Novo Cliente\n\nEste endpoint permite que o cliente **crie um novo registro** com os detalhes fornecidos.\n\n#### Request Body\n\n- **nome**: _(string)_ O nome do cliente.\n    \n- **cpf**: _(string)_ O número de CPF do cliente.\n    \n- **email**: _(string)_ O endereço de e-mail do cliente.\n    \n- **login**: _(string)_ O nome de usuário para login do cliente.\n    \n- **dataNascimento**: _(string)_ A data de nascimento do cliente.\n    \n- **genero**: _(string)_ O gênero do cliente.\n    \n- **telefone**: _(string)_ O número de telefone do cliente.\n    \n- **preferenciasAlimentares**: _(array)_ Lista de preferências alimentares.\n    \n- **alergias**: _(array)_ Lista de alergias.\n    \n- **metodoPagamentoPreferido**: _(string)_ Método de pagamento preferido.\n    \n- **clienteVip**: _(boolean)_ Indica se o cliente é um membro VIP.\n    \n- **notificacoesAtivas**: _(boolean)_ Indica se as notificações estão ativas para o cliente.\n    \n- **senha**: _(string)_ A senha do cliente.\n    \n- **enderecos**: _(array)_ Lista de endereços, incluindo estado, cidade, bairro, rua, número, complemento e CEP.\n    \n\n#### Response\n\nThe response will include the following JSON schema:\n\n``` json\n{\n    \"usuario\": {\n        \"id\": \"367f19e3-8722-4d63-875d-966786d1b99d\",\n        \"nome\": \"Andre da Costa\",\n        \"email\": \"andredacosta@email.com\",\n        \"login\": \"andredacosta\"\n    },\n    \"token\": \"{{vault:json-web-token}}\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "16 - Cadastro Sucesso do Andre da Costa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"Andre da Costa\",\n  \"cpf\": \"123.456.789-11\",\n  \"email\": \"andredacosta@email.com\",\n  \"login\": \"andredacosta\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992346\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"AMENDOIM\",\n    \"LACTOSE\"\n  ],\n  \"metodoPagamentoPreferido\": \"CREDITO\",\n  \"clienteVip\": true,\n  \"notificacoesAtivas\": true,\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/clientes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 22:03:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"id\": \"367f19e3-8722-4d63-875d-966786d1b99d\",\n        \"nome\": \"Andre da Costa\",\n        \"email\": \"andredacosta@email.com\",\n        \"login\": \"andredacosta\"\n    },\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						},
+						{
+							"name": "17 - Erro de Validação Dados Faltando",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"Andre da Costa\",\n  \"email\": \"andredacosta@email.com\",\n  \"login\": \"andredacosta\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"genero\": \"MASCULINO\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"AMENDOIM\",\n    \"LACTOSE\"\n  ],\n  \"clienteVip\": true,\n  \"notificacoesAtivas\": true,\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/clientes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 22:00:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Erro de validação\",\n    \"status\": 400,\n    \"timestamp\": \"2025-05-29T22:00:33.562125585\",\n    \"erros\": [\n        {\n            \"campo\": \"telefone\",\n            \"mensagem\": \"Telefone da pessoa precisa estar preenchido\"\n        },\n        {\n            \"campo\": \"cpf\",\n            \"mensagem\": \"CPF da pessoa precisa estar preenchido\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "18 - Erro Violação Integridade - usar mesmo login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"Andre da Costa\",\n  \"cpf\": \"123.456.789-11\",\n  \"email\": \"andredacosta@email.com\",\n  \"login\": \"andredacosta\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992346\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"AMENDOIM\",\n    \"LACTOSE\"\n  ],\n  \"metodoPagamentoPreferido\": \"CREDITO\",\n  \"clienteVip\": true,\n  \"notificacoesAtivas\": true,\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/clientes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 21:58:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Violação de integridade\",\n    \"status\": 400,\n    \"timestamp\": \"2025-05-29T21:58:11.88204138\",\n    \"erros\": [\n        {\n            \"campo\": \"uk_usuario_login\",\n            \"mensagem\": \"Já existe um cadastro com este login.\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar Cliente por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clientes/8997963e-291e-403b-892d-516d764b5ae5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes",
+								"8997963e-291e-403b-892d-516d764b5ae5"
+							]
+						},
+						"description": "### Buscar Cliente por ID\n\nEste endpoint recupera os **detalhes de um cliente específico**.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/clientes/{id}`\n    \n\n#### Response\n\nThe response will have a status code of 403 and a JSON body with the following structure:\n\n``` json\n{\n    \"timestamp\": \"\",\n    \"method\": \"\",\n    \"status\": \"\",\n    \"message\": \"\",\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```\n\nIn addition, an example of a successful response body is as follows:\n\n``` json\n{\n    \"id\": \"\",\n    \"nome\": \"\",\n    \"cpf\": \"\",\n    \"dataNascimento\": \"\",\n    \"email\": \"\",\n    \"login\": \"\",\n    \"telefone\": \"\",\n    \"enderecos\": [\n        {\n            \"id\": \"\",\n            \"estado\": \"\",\n            \"cidade\": \"\",\n            \"bairro\": \"\",\n            \"rua\": \"\",\n            \"numero\": 0,\n            \"complemento\": \"\",\n            \"cep\": \"\"\n        }\n    ]\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "20 - Busca Sucesso para perfil Cliente",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/clientes/8bddb97a-9cc1-403c-a08f-978fd582af66",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes",
+										"8bddb97a-9cc1-403c-a08f-978fd582af66"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:23:12 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"cbfc9c28-1155-4c39-83e5-3314080e8014\",\n    \"nome\": \"João da Silva\",\n    \"cpf\": \"123.456.789-00\",\n    \"dataNascimento\": \"1990-01-01\",\n    \"email\": \"joaodasilva@email.com\",\n    \"login\": \"joaodasilva\",\n    \"telefone\": \"+5581999992345\",\n    \"enderecos\": [\n        {\n            \"id\": \"000d2fff-45a8-47b7-9f43-9a9214bce425\",\n            \"estado\": \"SP\",\n            \"cidade\": \"Sao Paulo\",\n            \"bairro\": \"Jardim Paulista\",\n            \"rua\": \"Avenida Paulista\",\n            \"numero\": 123,\n            \"complemento\": \"Apt 101\",\n            \"cep\": \"01311-000\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "22 - Acesso Negado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/clientes/8997963e-291e-403b-892d-516d764b5ae5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes",
+										"8997963e-291e-403b-892d-516d764b5ae5"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "228"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:28:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-05-29T21:28:08.835530\",\n    \"method\": \"GET\",\n    \"status\": \"403\",\n    \"message\": \"Acesso negado. Voce nao tem permissao para acessar este recurso.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/clientes/8997963e-291e-403b-892d-516d764b5ae5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Atualizar Cliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"José da Silveira\",\n  \"cpf\": \"123.456.789-33\",\n  \"email\": \"josedasilveira@email.com\",\n  \"login\": \"josedasilveira\",\n  \"dataNascimento\": \"1911-11-11\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992342\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"FRUTOS_DO_MAR\",\n    \"SOJA\",\n    \"GLUTEN\"\n\n  ],\n  \"metodoPagamentoPreferido\": \"PIX\",\n  \"notificacoesAtivas\": false,\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n{\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clientes/965212f5-9f6e-4a75-8952-08cd796996da",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes",
+								"965212f5-9f6e-4a75-8952-08cd796996da"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "21 - Atualizar Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"Andre da Costa\",\n  \"cpf\": \"123.456.789-11\",\n  \"email\": \"andredacosta@email.com\",\n  \"login\": \"andredacosta\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992346\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"AMENDOIM\",\n    \"LACTOSE\"\n  ],\n  \"metodoPagamentoPreferido\": \"CREDITO\",\n  \"clienteVip\": true,\n  \"notificacoesAtivas\": true,\n  \"senha\": \"SenhaForte123!\",\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n    {\n      \"estado\": \"SC\",\n      \"cidade\": \"Santa Catarina\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/clientes/8bddb97a-9cc1-403c-a08f-978fd582af66",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes",
+										"8bddb97a-9cc1-403c-a08f-978fd582af66"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 23:37:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"9e8ce239-45c9-416e-b306-5259059f21cf\",\n    \"nome\": \"José da Silveira\",\n    \"cpf\": \"123.456.789-33\",\n    \"dataNascimento\": \"1911-11-11\",\n    \"email\": \"josedasilveira@email.com\",\n    \"login\": \"josedasilveira\",\n    \"telefone\": \"+5581999992342\",\n    \"enderecos\": [\n        {\n            \"id\": \"5a35329b-0f5e-4351-a663-d89ba7f85694\",\n            \"estado\": \"SP\",\n            \"cidade\": \"Sao Paulo\",\n            \"bairro\": \"Jardim Paulista\",\n            \"rua\": \"Avenida Paulista\",\n            \"numero\": 123,\n            \"complemento\": \"Apt 101\",\n            \"cep\": \"01311-000\"\n        },\n        {\n            \"id\": \"b84fe2d8-8440-44ea-82ad-0bebeb029e14\",\n            \"estado\": \"SP\",\n            \"cidade\": \"Sao Paulo\",\n            \"bairro\": \"Jardim Paulista\",\n            \"rua\": \"Avenida Paulista\",\n            \"numero\": 123,\n            \"complemento\": \"Apt 101\",\n            \"cep\": \"01311-000\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "23 - Acesso Negado",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"José da Silveira\",\n  \"cpf\": \"123.456.789-33\",\n  \"email\": \"josedasilveira@email.com\",\n  \"login\": \"josedasilveira\",\n  \"dataNascimento\": \"1911-11-11\",\n  \"genero\": \"MASCULINO\",\n  \"telefone\": \"+5581999992342\",\n  \"preferenciasAlimentares\": [\n    \"VEGETARIANA\",\n    \"SAUDAVEL\"\n  ],\n  \"alergias\": [\n    \"FRUTOS_DO_MAR\",\n    \"SOJA\",\n    \"GLUTEN\"\n\n  ],\n  \"metodoPagamentoPreferido\": \"PIX\",\n  \"notificacoesAtivas\": false,\n  \"enderecos\": [\n    {\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    },\n{\n      \"estado\": \"SP\",\n      \"cidade\": \"Sao Paulo\",\n      \"bairro\": \"Jardim Paulista\",\n      \"rua\": \"Avenida Paulista\",\n      \"numero\": 123,\n      \"complemento\": \"Apt 101\",\n      \"cep\": \"01311-000\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/clientes/9e8ce239-45c9-416e-b306-5259059f21c2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes",
+										"9e8ce239-45c9-416e-b306-5259059f21c2"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "228"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 23:38:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\",\n    \"message\": \"Acesso negado. Voce nao tem permissao para acessar este recurso.\",\n    \"status\": \"403\",\n    \"method\": \"PUT\",\n    \"timestamp\": \"2025-05-30T20:38:10.752198\",\n    \"path\": \"/clientes/9e8ce239-45c9-416e-b306-5259059f21c2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletar Cliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clientes/2cd2e1e0-3c34-4ef7-895f-39eaf319229e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes",
+								"2cd2e1e0-3c34-4ef7-895f-39eaf319229e"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "24 - Deletar Sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clientes/8bddb97a-9cc1-403c-a08f-978fd582af66",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes",
+										"8bddb97a-9cc1-403c-a08f-978fd582af66"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 23:42:19 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Operações relacionadas ao Cliente"
+		},
+		{
+			"name": "4 - Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"pm.environment.set(\"bearerToken\", jsonData.token);",
+									"pm.variables.set(\"bearerToken\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaForte123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"login"
+							]
+						},
+						"description": "### Login\n\nEste endpoint permite que os usuários realizem login enviando uma requisição **POST** para a URL especificada. A requisição deve incluir um **payload JSON** com os campos **\"login\"** e **\"senha\"** (password).\n\nApós a execução bem-sucedida, o servidor responde com o código de status **200** e um objeto **JSON** contendo um **\"token\"** para autenticação.\n\n### Request Body\n\n- `login`: (string) O nome de usuário para login.\n    \n- `senha`: (string) A senha do usuário.\n    \n\n### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- `token`: (string) Um token para autenticação.\n    \n\n#### Example Response\n\n``` json\n{\"token\":\"    \"token\": \"{{vault:json-web-token}}\"\"}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "19 - Faça Login como Andre da Costa (C)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"andredacosta\",\n  \"senha\": \"SenhaForte123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:49:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						},
+						{
+							"name": "25 - Usuário Não Encontrado João da Silva (P)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"joaodasilva\",\n  \"senha\": \"SenhaFraca123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:15:53 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Usuário com login 'joaodasilvaa' não encontrado.\",\n    \"status\": 404,\n    \"timestamp\": \"2025-05-29T21:15:53.379235\",\n    \"erros\": null\n}"
+						},
+						{
+							"name": "26 - Senha Incorreta (P)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaForte123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:17:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Senha incorreta.\",\n    \"status\": 401,\n    \"timestamp\": \"2025-05-29T21:17:33.864426\",\n    \"erros\": null\n}"
+						},
+						{
+							"name": "27 - Login Sucesso João Lima (P)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"joaolima\",\n  \"senha\": \"SenhaFraca123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:49:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						},
+						{
+							"name": "28 - Login Sucesso João da Silva (P)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"jdsilva\",\n  \"senha\": \"SenhaForte456!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:49:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						},
+						{
+							"name": "30 - Login Sucesso João da Silva com a Senha Alterada (P)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"jdsilva\",\n  \"senha\": \"SenhaForte123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/usuarios/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:49:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"{{vault:json-web-token}}\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Alterar Senha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"senhaAtual\": \"SenhaForte123!\",\n  \"novaSenha\": \"SenhaForte123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuarios/atualizar-senha",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"atualizar-senha"
+							]
+						},
+						"description": "### Alterar Senha do Usuário\n\nEste endpoint é utilizado para **atualizar a senha de um usuário**.\n\n#### Request Body\n\n- `senhaAtual` (string): A senha atual do usuário.\n    \n- `novaSenha` (string): A nova senha para o usuário.\n    \n\n#### Response\n\n- Status: 204\n    \n- Content-Type: text/xml"
+					},
+					"response": [
+						{
+							"name": "29 - Senha Alterada Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"senhaAtual\": \"SenhaForte456!\",\n  \"novaSenha\": \"SenhaForte123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios/atualizar-senha",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"atualizar-senha"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 01:00:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Operações relacionadas ao Usuário (Cliente ou Proprietário)"
+		},
+		{
+			"name": "5 - Permissões",
+			"item": [
+				{
+					"name": "Buscar Proprietário por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"proprietarios",
+								"a7673df6-d1e0-420e-88fb-68275a3805bf"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "31 - Acesso Negado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"proprietarios",
+										"a7673df6-d1e0-420e-88fb-68275a3805bf"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:36:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-05-29T21:36:43.124689\",\n    \"method\": \"GET\",\n    \"status\": \"403\",\n    \"message\": \"Acesso negado. Voce nao tem permissao para acessar este recurso.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/proprietarios/a7673df6-d1e0-420e-88fb-68275a3805bf\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar Clientes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "### GET /clientes\n\nEste endpoint recupera uma **lista de clientes**.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/clientes/`\n    \n\n#### Response\n\nA resposta estará no formato **JSON** com o seguinte **schema**:\n\n``` json\n[\n    {\n        \"id\": \"747ba340-9f41-4d35-a07e-988ec5e6c92f\",\n        \"nome\": \"Andre da Costa\",\n        \"cpf\": \"123.456.789-11\",\n        \"dataNascimento\": \"1990-01-01\",\n        \"email\": \"andredacosta@email.com\",\n        \"login\": \"andredacosta\",\n        \"telefone\": \"+5581999992346\",\n        \"enderecos\": [\n            {\n                \"id\": \"57161153-e328-4d07-97eb-8cd100208c97\",\n                \"estado\": \"SP\",\n                \"cidade\": \"Sao Paulo\",\n                \"bairro\": \"Jardim Paulista\",\n                \"rua\": \"Avenida Paulista\",\n                \"numero\": 123,\n                \"complemento\": \"Apt 101\",\n                \"cep\": \"01311-000\"\n            }\n        ]\n    }\n]\n\n ```"
+					},
+					"response": [
+						{
+							"name": "32 - Busca Sucesso (C)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/clientes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:57:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"747ba340-9f41-4d35-a07e-988ec5e6c92f\",\n        \"nome\": \"Andre da Costa\",\n        \"cpf\": \"123.456.789-11\",\n        \"dataNascimento\": \"1990-01-01\",\n        \"email\": \"andredacosta@email.com\",\n        \"login\": \"andredacosta\",\n        \"telefone\": \"+5581999992346\",\n        \"enderecos\": [\n            {\n                \"id\": \"57161153-e328-4d07-97eb-8cd100208c97\",\n                \"estado\": \"SP\",\n                \"cidade\": \"Sao Paulo\",\n                \"bairro\": \"Jardim Paulista\",\n                \"rua\": \"Avenida Paulista\",\n                \"numero\": 123,\n                \"complemento\": \"Apt 101\",\n                \"cep\": \"01311-000\"\n            }\n        ]\n    }\n]"
+						},
+						{
+							"name": "33 - Acesso Negado a perfil Cliente",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/clientes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "194"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 May 2025 23:52:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"method\": \"GET\",\n    \"status\": \"403\",\n    \"message\": \"Acesso negado. Voce nao tem permissao para acessar este recurso.\",\n    \"error\": \"Unauthorized\",\n    \"path\": \"/clientes\",\n    \"timestamp\": \"2025-05-29T23:52:04.418651959\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar Cliente por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clientes/8997963e-291e-403b-892d-516d764b5ae5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clientes",
+								"8997963e-291e-403b-892d-516d764b5ae5"
+							]
+						},
+						"description": "### Buscar Cliente por ID\n\nEste endpoint recupera os **detalhes de um cliente específico**.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/clientes/{id}`\n    \n\n#### Response\n\nThe response will have a status code of 403 and a JSON body with the following structure:\n\n``` json\n{\n    \"timestamp\": \"\",\n    \"method\": \"\",\n    \"status\": \"\",\n    \"message\": \"\",\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```\n\nIn addition, an example of a successful response body is as follows:\n\n``` json\n{\n    \"id\": \"\",\n    \"nome\": \"\",\n    \"cpf\": \"\",\n    \"dataNascimento\": \"\",\n    \"email\": \"\",\n    \"login\": \"\",\n    \"telefone\": \"\",\n    \"enderecos\": [\n        {\n            \"id\": \"\",\n            \"estado\": \"\",\n            \"cidade\": \"\",\n            \"bairro\": \"\",\n            \"rua\": \"\",\n            \"numero\": 0,\n            \"complemento\": \"\",\n            \"cep\": \"\"\n        }\n    ]\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "34 - Cliente Não Encontrado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/clientes/cbfc9c28-1155-4c39-83e5-3314080e8022",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"clientes",
+										"cbfc9c28-1155-4c39-83e5-3314080e8022"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 30 May 2025 00:23:42 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensagem\": \"Cliente com id 'cbfc9c28-1155-4c39-83e5-3314080e8022' não encontrado\",\n    \"status\": 404,\n    \"timestamp\": \"2025-05-29T21:23:42.750515\",\n    \"erros\": null\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
