@@ -1,5 +1,7 @@
 package com.techchallenge.user_manager_api.infra.security.config;
 
+import com.techchallenge.user_manager_api.application.exceptions.handlers.CustomAccessDeniedHandler;
+import com.techchallenge.user_manager_api.application.exceptions.handlers.CustomAuthenticationEntryPoint;
 import com.techchallenge.user_manager_api.infra.security.filter.SecurityFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

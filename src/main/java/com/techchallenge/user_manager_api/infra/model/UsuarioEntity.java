@@ -1,6 +1,5 @@
 package com.techchallenge.user_manager_api.infra.model;
 
-import com.techchallenge.user_manager_api.naousar.entities.Endereco;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -58,9 +57,9 @@ public class UsuarioEntity implements UserDetails {
 
     @Setter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Endereco> enderecos = new ArrayList<>();
+    private List<EnderecoEntity> enderecos = new ArrayList<>();
 
-    public UsuarioEntity(String nome, String email, String login, String senha, List<Endereco> enderecos) {
+    public UsuarioEntity(String nome, String email, String login, String senha, List<EnderecoEntity> enderecos) {
         this.nome = nome;
         this.email = email;
         this.login = login;

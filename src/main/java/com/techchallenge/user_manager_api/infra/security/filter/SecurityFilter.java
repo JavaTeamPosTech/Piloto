@@ -1,7 +1,8 @@
 package com.techchallenge.user_manager_api.infra.security.filter;
 
-import com.techchallenge.user_manager_api.naousar.repositories.UsuarioRepository;
-import com.techchallenge.user_manager_api.naousar.services.impl.TokenService;
+import com.techchallenge.user_manager_api.application.exceptions.handlers.CustomAuthenticationEntryPoint;
+import com.techchallenge.user_manager_api.infra.repositories.UsuarioRepository;
+import com.techchallenge.user_manager_api.infra.security.token.TokenService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

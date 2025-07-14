@@ -1,11 +1,8 @@
 package com.techchallenge.user_manager_api.infra.model;
 
-import com.techchallenge.user_manager_api.naousar.entities.Endereco;
-import com.techchallenge.user_manager_api.naousar.entities.enums.AlergiaAlimentarEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.GeneroEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.MetodoPagamentoEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.TiposComidaEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.*;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -17,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@Getter
 @Table(name = "clientes",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_cliente_cpf", columnNames = "cpf"),
@@ -24,52 +22,40 @@ import java.util.Set;
         })
 public class ClienteEntity extends UsuarioEntity {
 
-    @Setter
     private String cpf;
 
-    @Setter
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    @Setter
     @Enumerated(EnumType.STRING)
     private GeneroEnum genero;
 
-    @Setter
     private String telefone;
 
-    @Setter
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Column(name = "preferencias_alimentares")
     private Set<TiposComidaEnum> preferenciasAlimentares = new HashSet<>();
 
-    @Setter
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<AlergiaAlimentarEnum> alergias = new HashSet<>();
 
-    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pagamento_preferido")
     private MetodoPagamentoEnum metodoPagamentoPreferido;
 
-    @Setter
     private Date ultimoPedido;
 
-    @Setter
     @Column(name = "saldo_pontos")
     private Integer saldoPontos;
 
-    @Setter
     @Column(name = "cliente_vip")
     private Boolean clienteVip;
 
-    @Setter
     @Column(name = "avaliacoes_feitas")
     private Integer avaliacoesFeitas;
 
-    @Setter
     @Column(name = "notificacoes_ativas")
     private Boolean notificacoesAtivas;
 
@@ -77,7 +63,7 @@ public class ClienteEntity extends UsuarioEntity {
                          Set<TiposComidaEnum> preferenciasAlimentares, Set<AlergiaAlimentarEnum> alergias,
                          MetodoPagamentoEnum metodoPagamentoPreferido, Boolean clienteVip,
                          Boolean notificacoesAtivas, String nome, String email, String login, String senha,
-                         List<Endereco> enderecos) {
+                         List<EnderecoEntity> enderecos) {
 
         super(nome, email, login, senha, enderecos);
         this.cpf = cpf;

@@ -1,6 +1,6 @@
 package com.techchallenge.user_manager_api.domain.dto.requests;
 
-import com.techchallenge.user_manager_api.naousar.entities.enums.StatusContaEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.StatusContaEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -1,7 +1,6 @@
 package com.techchallenge.user_manager_api.domain.entities;
 
-import com.techchallenge.user_manager_api.naousar.dto.requests.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.naousar.entities.Usuario;
+import com.techchallenge.user_manager_api.domain.dto.requests.EnderecoRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +18,9 @@ public class EnderecoDomain {
     private Integer numero;
     private String complemento;
     private String cep;
+    private UsuarioDomain usuario;
 
-    private Usuario usuario;
-
-    public EnderecoDomain(EnderecoRequestDTO dto, Usuario usuario) {
+    public EnderecoDomain(EnderecoRequestDTO dto, UsuarioDomain usuario) {
         this.estado = dto.estado();
         this.cidade = dto.cidade();
         this.bairro = dto.bairro();

@@ -1,11 +1,13 @@
 package com.techchallenge.user_manager_api.infra.security.authorization.impl;
 
+import com.techchallenge.user_manager_api.application.exceptions.ResourceNotFoundException;
+import com.techchallenge.user_manager_api.application.exceptions.UnauthorizedException;
+import com.techchallenge.user_manager_api.application.services.UsuarioService;
+import com.techchallenge.user_manager_api.domain.dto.requests.LoginRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
+import com.techchallenge.user_manager_api.infra.model.UsuarioEntity;
 import com.techchallenge.user_manager_api.infra.security.authorization.AuthorizationService;
-import com.techchallenge.user_manager_api.naousar.dto.requests.LoginRequestDTO;
-import com.techchallenge.user_manager_api.naousar.dto.response.LoginResponseDTO;
-import com.techchallenge.user_manager_api.naousar.entities.Usuario;
-import com.techchallenge.user_manager_api.naousar.services.UsuarioService;
-import com.techchallenge.user_manager_api.naousar.services.impl.TokenService;
+import com.techchallenge.user_manager_api.infra.security.token.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,7 +41,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                             loginRequestDTO.senha()
                     )
             );
-            Usuario user = (Usuario) authentication.getPrincipal();
+            UsuarioEntity user = (UsuarioEntity) authentication.getPrincipal();
             return new LoginResponseDTO(tokenService.generateToken(user.getLogin()));
 
         } catch (BadCredentialsException e) {

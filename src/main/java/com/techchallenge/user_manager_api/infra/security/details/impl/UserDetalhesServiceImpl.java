@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.infra.security.details.impl;
 
+import com.techchallenge.user_manager_api.infra.repositories.UsuarioRepository;
 import com.techchallenge.user_manager_api.infra.security.details.UserDetalhesService;
-import com.techchallenge.user_manager_api.naousar.repositories.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

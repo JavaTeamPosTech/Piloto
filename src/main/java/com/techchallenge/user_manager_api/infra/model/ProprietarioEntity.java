@@ -1,8 +1,6 @@
 package com.techchallenge.user_manager_api.infra.model;
 
-import com.techchallenge.user_manager_api.naousar.entities.Endereco;
-import com.techchallenge.user_manager_api.naousar.entities.Usuario;
-import com.techchallenge.user_manager_api.naousar.entities.enums.StatusContaEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.StatusContaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +42,7 @@ public class ProprietarioEntity extends UsuarioEntity {
 
     public ProprietarioEntity(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
                               String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,
-                              String email, String login, String senha, List<Endereco> enderecos) {
+                              String email, String login, String senha, List<EnderecoEntity> enderecos) {
         super(nome, email, login, senha, enderecos);
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;

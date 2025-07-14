@@ -1,7 +1,10 @@
 package com.techchallenge.user_manager_api.api.controllers.handlers;
 
-import com.techchallenge.user_manager_api.naousar.dto.response.ErroValidacaoDTO;
-import com.techchallenge.user_manager_api.naousar.dto.response.ExcecaoDTO;
+import com.techchallenge.user_manager_api.application.exceptions.ResourceNotFoundException;
+import com.techchallenge.user_manager_api.application.exceptions.UnauthorizedException;
+import com.techchallenge.user_manager_api.application.exceptions.resolver.ConstraintViolationMessageResolver;
+import com.techchallenge.user_manager_api.domain.dto.response.ErroValidacaoDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.ExcecaoDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

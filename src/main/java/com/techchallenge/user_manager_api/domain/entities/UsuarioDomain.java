@@ -1,6 +1,5 @@
 package com.techchallenge.user_manager_api.domain.entities;
 
-import com.techchallenge.user_manager_api.naousar.entities.Endereco;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

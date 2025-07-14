@@ -1,9 +1,6 @@
 package com.techchallenge.user_manager_api.domain.dto.requests;
 
-import com.techchallenge.user_manager_api.naousar.entities.enums.AlergiaAlimentarEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.GeneroEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.MetodoPagamentoEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.TiposComidaEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -1,9 +1,10 @@
 package com.techchallenge.user_manager_api.application.services;
 
-import com.techchallenge.user_manager_api.naousar.dto.requests.AtualizarProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.naousar.dto.requests.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.naousar.dto.response.CadastroResponseDTO;
-import com.techchallenge.user_manager_api.naousar.dto.response.ProprietarioResponseDTO;
+
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.CadastroResponseDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.ProprietarioResponseDTO;
 
 import java.util.UUID;
 

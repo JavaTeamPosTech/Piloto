@@ -1,10 +1,6 @@
 package com.techchallenge.user_manager_api.domain.entities;
 
-import com.techchallenge.user_manager_api.naousar.entities.Endereco;
-import com.techchallenge.user_manager_api.naousar.entities.enums.AlergiaAlimentarEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.GeneroEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.MetodoPagamentoEnum;
-import com.techchallenge.user_manager_api.naousar.entities.enums.TiposComidaEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,13 +38,13 @@ public class ClienteDomain extends UsuarioDomain {
 
     private Boolean notificacoesAtivas;
 
+
     public ClienteDomain(String cpf, LocalDate dataNascimento, GeneroEnum genero, String telefone,
                          Set<TiposComidaEnum> preferenciasAlimentares, Set<AlergiaAlimentarEnum> alergias,
                          MetodoPagamentoEnum metodoPagamentoPreferido, Boolean clienteVip,
-                         Boolean notificacoesAtivas, String nome, String email, String login, String senha,
-                         List<Endereco> enderecos) {
+                         Boolean notificacoesAtivas, String nome, String email, String login, String senhaCriptografada) {
 
-        super(nome, email, login, senha, enderecos);
+        super(nome, email, login, senhaCriptografada);
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.genero = genero;

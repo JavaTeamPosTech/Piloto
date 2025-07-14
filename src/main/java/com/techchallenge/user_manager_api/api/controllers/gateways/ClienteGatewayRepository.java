@@ -1,11 +1,12 @@
 package com.techchallenge.user_manager_api.api.controllers.gateways;
 
+import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
+import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ClienteGatewayRepository {
 
-    CadastroResponseDTO cadastrarCliente(ClienteRequestDTO clienteRequestDTO);
+    ClienteDomain cadastrarCliente(ClienteDomain clienteRequestDTO, String senhaCriptografada);
 
     boolean existsByLogin(String login);
 

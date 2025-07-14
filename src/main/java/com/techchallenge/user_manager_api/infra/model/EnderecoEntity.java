@@ -1,8 +1,7 @@
 package com.techchallenge.user_manager_api.infra.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.techchallenge.user_manager_api.naousar.dto.requests.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.naousar.entities.Usuario;
+import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,16 +29,16 @@ public class EnderecoEntity {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private UsuarioEntity usuario;
 
-    public EnderecoEntity(EnderecoRequestDTO dto, Usuario usuario) {
-        this.estado = dto.estado();
-        this.cidade = dto.cidade();
-        this.bairro = dto.bairro();
-        this.rua = dto.rua();
-        this.numero = dto.numero();
-        this.complemento = dto.complemento();
-        this.cep = dto.cep();
+    public EnderecoEntity(EnderecoDomain enderecoDomain, UsuarioEntity usuario) {
+        this.estado = enderecoDomain.getEstado();
+        this.cidade = enderecoDomain.getCidade();
+        this.bairro = enderecoDomain.getBairro();
+        this.rua = enderecoDomain.getRua();
+        this.numero = enderecoDomain.getNumero();
+        this.complemento = enderecoDomain.getComplemento();
+        this.cep = enderecoDomain.getCep();
         this.usuario = usuario;
     }
 }

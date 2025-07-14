@@ -1,6 +1,6 @@
 package com.techchallenge.user_manager_api.application.services;
 
-import com.techchallenge.user_manager_api.naousar.dto.requests.AtualizarSenhaRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarSenhaRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 

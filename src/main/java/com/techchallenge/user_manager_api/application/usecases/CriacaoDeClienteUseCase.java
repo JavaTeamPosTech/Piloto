@@ -16,11 +16,13 @@ public class CriacaoDeClienteUseCase {
     private final ClienteGatewayRepository repositorio;
     private final PasswordService passwordService;
     private final TokenService tokenService;
+    private final ClientePresenter clientePresenter;
 
-    public CriacaoDeClienteUseCase(ClienteGatewayRepository repositorio, PasswordService passwordService, TokenService tokenService) {
+    public CriacaoDeClienteUseCase(ClienteGatewayRepository repositorio, PasswordService passwordService, TokenService tokenService, ClientePresenter clientePresenter) {
         this.repositorio = repositorio;
         this.passwordService = passwordService;
         this.tokenService = tokenService;
+        this.clientePresenter = clientePresenter;
     }
 
     public void cadastrarCliente(ClienteRequestDTO clienteRequestDTO) {
@@ -31,6 +33,10 @@ public class CriacaoDeClienteUseCase {
         String senhaCriptografada = passwordService.encryptPassword(clienteRequestDTO.senha());
 
         ClienteDomain clienteDomain = UsuarioMapper.toClienteDomain(clienteRequestDTO, senhaCriptografada);
+        repositorio.cadastrarCliente(clienteDomain, senhaCriptografada);
+        //String token = tokenService.generateToken(clienteDomain.getLogin());
+        clientePresenter.apresentar(clienteDomain);
+
 
 //        ClienteDomain cliente = new ClienteDomain(clienteRequestDTO.cpf(), clienteRequestDTO.dataNascimento(), clienteRequestDTO.genero(),
 //                clienteRequestDTO.telefone(), clienteRequestDTO.preferenciasAlimentares(),
@@ -39,13 +45,11 @@ public class CriacaoDeClienteUseCase {
 //                clienteRequestDTO.email(), clienteRequestDTO.login(), clienteRequestDTO.senha(), clienteRequestDTO.enderecos());
 
 
-        UsuarioMapper.toCliente(cliente, senhaCriptografada);
+        //toCliente(cliente, senhaCriptografada);
 
-        ClienteEntity clienteSalvo = repositorio.cadastrarCliente(cliente);
 
-        String token = tokenService.generateToken(clienteSalvo.getLogin());
 
-        clientePresenter.apresentarCliente(clienteSalvo, token);
+        //clientePresenter.apresentarCliente(clienteSalvo, token);
 
         //return new CadastroResponseDTO(UsuarioResponseDTO.deCliente(clienteSalvo), token);
     }

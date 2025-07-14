@@ -1,5 +1,6 @@
 package com.techchallenge.user_manager_api.infra.security.token.impl;
 
+import com.techchallenge.user_manager_api.infra.security.token.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +18,7 @@ import java.time.ZoneOffset;
 import java.util.Date;
 
 @Service
-public class TokenServiceImpl {
+public class TokenServiceImpl implements TokenService {
 
     private final String secret;
     private final long prazoExpiracao;
@@ -32,6 +33,7 @@ public class TokenServiceImpl {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
+    @Override
     public String generateToken(String login) {
         try {
             return Jwts.builder()
@@ -47,6 +49,7 @@ public class TokenServiceImpl {
         }
     }
 
+    @Override
     public Claims extractClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -55,12 +58,14 @@ public class TokenServiceImpl {
                 .getBody();
     }
 
+    @Override
     public String extractUsername(String token) {
         Claims claims = extractClaims(token);
         if (claims == null) throw new JwtException("Invalid or Expired Token");
         return claims.getSubject();
     }
 
+    @Override
     public boolean isTokenExpired(String token) {
         Claims claims = extractClaims(token);
         if (claims == null || claims.getExpiration() == null) {
@@ -69,10 +74,12 @@ public class TokenServiceImpl {
         return claims.getExpiration().before(new Date());
     }
 
+    @Override
     public boolean validateToken(String token, String username) {
         return (username.equals(extractUsername(token)) && !isTokenExpired(token));
     }
 
+    @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
