@@ -1,11 +1,11 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.requests.LoginRequestDTO;
-import com.techchallenge.user_manager_api.dto.response.LoginResponseDTO;
-import com.techchallenge.user_manager_api.entities.Usuario;
-import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
-import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
-import com.techchallenge.user_manager_api.services.UsuarioService;
+import com.techchallenge.user_manager_api.naousar.dto.requests.LoginRequestDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.LoginResponseDTO;
+import com.techchallenge.user_manager_api.naousar.entities.Usuario;
+import com.techchallenge.user_manager_api.naousar.services.UsuarioService;
+import com.techchallenge.user_manager_api.naousar.services.impl.AuthorizationServiceImpl;
+import com.techchallenge.user_manager_api.naousar.services.impl.TokenService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

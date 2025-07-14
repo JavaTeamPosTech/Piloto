@@ -1,13 +1,14 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.techchallenge.user_manager_api.dto.requests.AtualizarProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.requests.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
-import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
-import com.techchallenge.user_manager_api.entities.enums.StatusContaEnum;
-import com.techchallenge.user_manager_api.services.ProprietarioService;
+import com.techchallenge.user_manager_api.naousar.controllers.ProprietarioController;
+import com.techchallenge.user_manager_api.naousar.dto.requests.AtualizarProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.naousar.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.naousar.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.CadastroResponseDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.ProprietarioResponseDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.naousar.entities.enums.StatusContaEnum;
+import com.techchallenge.user_manager_api.naousar.services.ProprietarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

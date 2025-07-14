@@ -1,10 +1,10 @@
 package com.techchallenge.user_manager_api.controllers;
 
-import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.ClienteResponseDTO;
-import com.techchallenge.user_manager_api.dto.response.UsuarioResponseDTO;
-import com.techchallenge.user_manager_api.exceptions.ResourceNotFoundException;
-import com.techchallenge.user_manager_api.services.ClienteService;
+import com.techchallenge.user_manager_api.naousar.controllers.ClienteController;
+import com.techchallenge.user_manager_api.naousar.dto.response.CadastroResponseDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.ClienteResponseDTO;
+import com.techchallenge.user_manager_api.naousar.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.naousar.services.ClienteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,11 +1,11 @@
 package com.techchallenge.user_manager_api.services.impl;
 
-import com.techchallenge.user_manager_api.dto.requests.AtualizarSenhaRequestDTO;
-import com.techchallenge.user_manager_api.entities.Usuario;
-import com.techchallenge.user_manager_api.exceptions.UnauthorizedException;
-import com.techchallenge.user_manager_api.repositories.UsuarioRepository;
-import com.techchallenge.user_manager_api.services.PasswordService;
+import com.techchallenge.user_manager_api.naousar.dto.requests.AtualizarSenhaRequestDTO;
+import com.techchallenge.user_manager_api.naousar.entities.Usuario;
+import com.techchallenge.user_manager_api.naousar.repositories.UsuarioRepository;
+import com.techchallenge.user_manager_api.naousar.services.PasswordService;
 
+import com.techchallenge.user_manager_api.naousar.services.impl.UsuarioServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

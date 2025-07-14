@@ -56,7 +56,7 @@ Um sistema de gerenciamento de menus e pedidos para restaurantes, desenvolvido c
     ```
 4. Acesse a aplicação:
 - API: http://localhost:8080
-- Banco de Dados (via DBeaver ou outro cliente): jdbc:postgresql://localhost:5432/meuMenu
+- Banco de Dados (via DBeaver ou outro clienteDomain): jdbc:postgresql://localhost:5432/meuMenu
 
 ## 📂  Estrutura do projeto
 ```plaintext
