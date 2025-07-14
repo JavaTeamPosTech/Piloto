@@ -31,6 +31,9 @@ public class Endereco {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
+    private Restaurante restaurante;
+
     public Endereco(EnderecoRequestDTO dto, Usuario usuario) {
         this.estado = dto.estado();
         this.cidade = dto.cidade();

@@ -40,6 +40,9 @@ public class Proprietario extends Usuario {
     @Enumerated(EnumType.STRING)
     private StatusContaEnum statusConta;
 
+    @OneToMany(mappedBy = "proprietario", fetch = FetchType.LAZY)
+    private List<Restaurante> restaurantes;
+
     public Proprietario(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
                         String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,
                         String email, String login, String senha, List<Endereco> enderecos) {

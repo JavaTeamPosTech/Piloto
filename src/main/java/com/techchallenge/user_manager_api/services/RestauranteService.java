@@ -4,13 +4,9 @@ import com.techchallenge.user_manager_api.dto.requests.AtualizarProprietarioRequ
 import com.techchallenge.user_manager_api.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.dto.response.ProprietarioResponseDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-public interface ProprietarioService {
+public interface RestauranteService {
     CadastroResponseDTO cadastrarProprietario(ProprietarioRequestDTO proprietarioDTO);
-    ProprietarioResponseDTO buscarProprietarioPorId(UUID id);
-    void deletarProprietario(UUID id);
-    ProprietarioResponseDTO editarProprietario(UUID id, AtualizarProprietarioRequestDTO proprietarioRequestDTO);
 }

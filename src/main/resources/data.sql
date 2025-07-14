@@ -106,4 +106,47 @@ INSERT INTO status_conta (descricao) VALUES
     ('DESATIVADO') ON CONFLICT (descricao) DO NOTHING;
 
 
+-- Tabela que armazena os tipos de cozinha (enum-like)
+CREATE TABLE tipo_cozinha (
+                              id SERIAL PRIMARY KEY,
+                              tipo VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Inserindo valores padrão
+INSERT INTO tipo_cozinha (tipo) VALUES
+                                    ('BRASILEIRA'),
+                                    ('ITALIANA'),
+                                    ('JAPONESA'),
+                                    ('MEXICANA'),
+                                    ('CHINESA'),
+                                    ('FRANCES'),
+                                    ('INDIANA'),
+                                    ('TAILANDESA'),
+                                    ('LIBANESA'),
+                                    ('AMERICANA'),
+                                    ('PORTUGUESA'),
+                                    ('MEDITERRANEA');
+
+-- Tabela dos restaurantes
+CREATE TABLE restaurantes (
+                              id SERIAL PRIMARY KEY,
+                              nome VARCHAR(100) NOT NULL,
+                              tipo_cozinha_id INT NOT NULL,
+                              horario_funcionamento VARCHAR(50) NOT NULL,
+                              proprietario_id UUID NOT NULL,
+                              endereco_id UUID NOT NULL,
+
+                              CONSTRAINT fk_tipo_cozinha
+                                  FOREIGN KEY (tipo_cozinha_id) REFERENCES tipo_cozinha(id) ON DELETE RESTRICT,
+
+                              CONSTRAINT fk_proprietario
+                                  FOREIGN KEY (proprietario_id) REFERENCES proprietarios(id) ON DELETE RESTRICT,
+
+                              CONSTRAINT fk_endereco
+                                  FOREIGN KEY (endereco_id) REFERENCES enderecos(id) ON DELETE RESTRICT
+);
+
+
+
+
 
