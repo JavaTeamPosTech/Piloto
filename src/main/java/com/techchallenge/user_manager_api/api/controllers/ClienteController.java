@@ -1,16 +1,19 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
-import com.techchallenge.user_manager_api.application.usecases.ClientePresenter;
+import com.techchallenge.user_manager_api.application.usecases.BuscarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.CriacaoDeClienteUseCase;
+import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,11 +24,13 @@ public class ClienteController {
     //private final ClienteService clienteService;
     private final CriacaoDeClienteUseCase criacaoDeClienteUseCase;
     private final ClientePresenter clientePresenter;
+    private final BuscarClienteUseCase buscarClienteUseCase;
 
     public ClienteController(CriacaoDeClienteUseCase criacaoDeClienteUseCase,
-                             ClientePresenter clientePresenter) {
+                             ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase) {
         this.clientePresenter = clientePresenter;
         this.criacaoDeClienteUseCase = criacaoDeClienteUseCase;
+        this.buscarClienteUseCase = buscarClienteUseCase;
     }
 
     @Operation(
@@ -41,17 +46,20 @@ public class ClienteController {
 //        return ResponseEntity.ok(cadastroResponse);
     }
 
-//
-//    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Buscar cliente", description = "Busca os dados de um Cliente pelo ID. O próprio Cliente ou um Proprietário pode executar.")
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ClienteResponseDTO> buscarClientePorId(
-//            @Parameter(description = "ID do Cliente a ser procurado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id) {
-//        return ResponseEntity.ok(clienteService.buscarCliente(id));
-//    }
-//
+
+    //@PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
+    //@SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Buscar cliente", description = "Busca os dados de um Cliente pelo ID. O próprio Cliente ou um Proprietário pode executar.")
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> buscarClientePorId(
+            @Parameter(description = "ID do Cliente a ser procurado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id) {
+
+
+        ClienteDomain cliente = buscarClienteUseCase.buscarClientePorId(id);
+        return ResponseEntity.ok(clientePresenter.buscarClientePresenterPorId(cliente));
+    }
+
 //    @PreAuthorize("#id == authentication.principal.id")
 //    @SecurityRequirement(name = "bearerAuth")
 //    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")

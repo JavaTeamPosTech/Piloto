@@ -1,9 +1,9 @@
 package com.techchallenge.user_manager_api.application.usecases;
 
 import com.techchallenge.user_manager_api.api.controllers.gateways.ClienteGatewayRepository;
+import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
-import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.application.mappers.UsuarioMapper;
 import com.techchallenge.user_manager_api.infra.security.encrypt.PasswordService;
 import com.techchallenge.user_manager_api.infra.security.token.TokenService;
