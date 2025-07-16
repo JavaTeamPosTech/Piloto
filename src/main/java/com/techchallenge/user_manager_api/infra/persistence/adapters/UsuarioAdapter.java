@@ -2,8 +2,10 @@ package com.techchallenge.user_manager_api.infra.persistence.adapters;
 
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
+import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
 import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.infra.model.EnderecoEntity;
+import com.techchallenge.user_manager_api.infra.model.ProprietarioEntity;
 import com.techchallenge.user_manager_api.infra.model.UsuarioEntity;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class UsuarioAdapter {
 
     public static ClienteDomain toClienteDomain(ClienteEntity clienteEntity) {
         return new ClienteDomain(
+                clienteEntity.getId(),
                 clienteEntity.getCpf(),
                 clienteEntity.getDataNascimento(),
                 clienteEntity.getGenero(),
@@ -49,6 +52,45 @@ public class UsuarioAdapter {
                 clienteEntity.getEmail(),
                 clienteEntity.getLogin(),
                 clienteEntity.getSenha()
+        );
+    }
+
+
+
+    public static ProprietarioEntity toProprietario(ProprietarioDomain proprietarioDomain, String senhaCriptografada) {
+        ProprietarioEntity proprietario = new ProprietarioEntity(
+                proprietarioDomain.getCnpj(),
+                proprietarioDomain.getRazaoSocial(),
+                proprietarioDomain.getNomeFantasia(),
+                proprietarioDomain.getInscricaoEstadual(),
+                proprietarioDomain.getTelefoneComercial(),
+                proprietarioDomain.getWhatsapp(),
+                proprietarioDomain.getStatusConta(),
+                proprietarioDomain.getNome(),
+                proprietarioDomain.getEmail(),
+                proprietarioDomain.getLogin(),
+                senhaCriptografada,
+                new ArrayList<>()
+        );
+
+        adicionarEnderecosAoUsuario(proprietario, proprietarioDomain.getEnderecos());
+        return proprietario;
+    }
+
+    public static ProprietarioDomain toProprietarioDomain(ProprietarioEntity proprietarioEntity) {
+        return new ProprietarioDomain(
+                proprietarioEntity.getId(),
+                proprietarioEntity.getCnpj(),
+                proprietarioEntity.getRazaoSocial(),
+                proprietarioEntity.getNomeFantasia(),
+                proprietarioEntity.getInscricaoEstadual(),
+                proprietarioEntity.getTelefoneComercial(),
+                proprietarioEntity.getWhatsapp(),
+                proprietarioEntity.getStatusConta(),
+                proprietarioEntity.getNome(),
+                proprietarioEntity.getEmail(),
+                proprietarioEntity.getLogin(),
+                proprietarioEntity.getSenha()
         );
     }
 

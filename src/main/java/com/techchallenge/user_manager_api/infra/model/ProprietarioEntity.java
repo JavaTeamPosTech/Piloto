@@ -8,10 +8,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
 @NoArgsConstructor
 @Entity
 @Setter
+@Getter
 @Table(name = "proprietarios",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_proprietario_cnpj", columnNames = "cnpj"),

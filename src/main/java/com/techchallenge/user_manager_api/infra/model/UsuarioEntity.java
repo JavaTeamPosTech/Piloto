@@ -67,6 +67,15 @@ public class UsuarioEntity implements UserDetails {
         this.enderecos = enderecos;
     }
 
+    public UsuarioEntity(UUID id, String nome, String email, String login, String senha, List<EnderecoEntity> enderecos) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.login = login;
+        this.senha = senha;
+        this.enderecos = enderecos;
+    }
+
     public void atualizarSenha(String senha) {
         this.senha = senha;
     }

@@ -3,7 +3,6 @@ package com.techchallenge.user_manager_api.application.usecases;
 import com.techchallenge.user_manager_api.api.controllers.gateways.ClienteGatewayRepository;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
-import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.application.mappers.UsuarioMapper;
 import com.techchallenge.user_manager_api.infra.security.encrypt.PasswordService;
 import com.techchallenge.user_manager_api.infra.security.token.TokenService;
@@ -36,22 +35,6 @@ public class CriacaoDeClienteUseCase {
         repositorio.cadastrarCliente(clienteDomain, senhaCriptografada);
         //String token = tokenService.generateToken(clienteDomain.getLogin());
         clientePresenter.apresentar(clienteDomain);
-
-
-//        ClienteDomain cliente = new ClienteDomain(clienteRequestDTO.cpf(), clienteRequestDTO.dataNascimento(), clienteRequestDTO.genero(),
-//                clienteRequestDTO.telefone(), clienteRequestDTO.preferenciasAlimentares(),
-//                clienteRequestDTO.alergias(), clienteRequestDTO.metodoPagamentoPreferido(),
-//                clienteRequestDTO.clienteVip(), clienteRequestDTO.notificacoesAtivas(), clienteRequestDTO.nome(),
-//                clienteRequestDTO.email(), clienteRequestDTO.login(), clienteRequestDTO.senha(), clienteRequestDTO.enderecos());
-
-
-        //toCliente(cliente, senhaCriptografada);
-
-
-
-        //clientePresenter.apresentarCliente(clienteSalvo, token);
-
-        //return new CadastroResponseDTO(UsuarioResponseDTO.deCliente(clienteSalvo), token);
     }
 
 }
