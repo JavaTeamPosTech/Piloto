@@ -1,11 +1,14 @@
 package com.techchallenge.user_manager_api.infra.security.authorization.impl;
 
+import com.techchallenge.user_manager_api.api.controllers.gateways.UsuarioGatewayRepository;
 import com.techchallenge.user_manager_api.application.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.application.exceptions.UnauthorizedException;
 import com.techchallenge.user_manager_api.application.services.UsuarioService;
 import com.techchallenge.user_manager_api.domain.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
+import com.techchallenge.user_manager_api.domain.entities.UsuarioDomain;
 import com.techchallenge.user_manager_api.infra.model.UsuarioEntity;
+import com.techchallenge.user_manager_api.infra.persistence.adapters.UsuarioAdapter;
 import com.techchallenge.user_manager_api.infra.security.authorization.AuthorizationService;
 import com.techchallenge.user_manager_api.infra.security.token.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +21,13 @@ import org.springframework.stereotype.Service;
 public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final AuthenticationManager authenticationManager;
+    private final UsuarioGatewayRepository repositorio;
     private final TokenService tokenService;
     private final UsuarioService usuarioService;
 
-    public AuthorizationServiceImpl(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioService usuarioService) {
+    public AuthorizationServiceImpl(AuthenticationManager authenticationManager, UsuarioGatewayRepository repositorio, TokenService tokenService, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
+        this.repositorio = repositorio;
         this.tokenService = tokenService;
         this.usuarioService = usuarioService;
     }
@@ -34,7 +39,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new ResourceNotFoundException("Usuário com login '" + loginRequestDTO.login() + "' não encontrado.");
         }
 
-        try  {
+        try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequestDTO.login(),
@@ -46,6 +51,20 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Senha incorreta.");
+        }
+    }
+
+    @Override
+    public UsuarioDomain autenticar(String login, String senha) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(login, senha)
+            );
+
+            UsuarioEntity usuarioEntity = (UsuarioEntity) authentication.getPrincipal();
+            return UsuarioAdapter.toUsuarioDomain(usuarioEntity);
+        } catch (BadCredentialsException e) {
+            throw new UnauthorizedException("Login ou senha inválidos.");
         }
     }
 }

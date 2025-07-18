@@ -1,8 +1,10 @@
 package com.techchallenge.user_manager_api.infra.persistence.adapters;
 
+import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
 import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
+import com.techchallenge.user_manager_api.domain.entities.UsuarioDomain;
 import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.infra.model.EnderecoEntity;
 import com.techchallenge.user_manager_api.infra.model.ProprietarioEntity;
@@ -93,6 +95,30 @@ public class UsuarioAdapter {
                 proprietarioEntity.getSenha()
         );
     }
+
+    public static UsuarioDomain toUsuarioDomain(UsuarioEntity usuarioEntity) {
+        return new UsuarioDomain(
+                usuarioEntity.getId(),
+                usuarioEntity.getNome(),
+                usuarioEntity.getEmail(),
+                usuarioEntity.getLogin(),
+                usuarioEntity.getSenha()
+        );
+    }
+
+    public static LoginResponseDTO toLoginResponseDto(String token) {
+        return new LoginResponseDTO(token);
+    }
+//
+//    public static UsuarioDomain toUsuarioDomain(UsuarioEntity usuarioEntity) {
+//        return new UsuarioDomain(
+//                usuarioEntity.getId(),
+//                usuarioEntity.getNome(),
+//                usuarioEntity.getEmail(),
+//                usuarioEntity.getLogin(),
+//                usuarioEntity.getSenha()
+//        );
+//    }
 
 //    public static Proprietario toProprietario(ProprietarioRequestDTO dto, String senhaCriptografada) {
 //        Proprietario proprietario = new Proprietario(

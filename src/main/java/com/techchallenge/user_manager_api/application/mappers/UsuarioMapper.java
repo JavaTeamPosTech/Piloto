@@ -2,7 +2,9 @@ package com.techchallenge.user_manager_api.application.mappers;
 
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.LoginRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
@@ -87,6 +89,22 @@ public class UsuarioMapper {
         adicionarEnderecosAoUsuario(proprietarioDomain, dto.enderecos());
         return proprietarioDomain;
     }
+
+    public static LoginResponseDTO toLoginResponseDto(String token){
+        return new LoginResponseDTO(
+            token
+        );
+    }
+
+//    public static UsuarioDomain toUsuarioDomain(LoginRequestDTO dto){
+//        return new UsuarioDomain(
+//                null,
+//                dto.nome(),
+//                dto.email(),
+//                dto.login(),
+//                dto.senha()
+//        );
+//    }
 
 //    private static EnderecoResponseDTO toEnderecoResponseDto(List<EnderecoDomain> enderecosDomain) {
 //

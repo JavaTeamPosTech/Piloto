@@ -15,8 +15,8 @@ public class ProprietarioPresenter {
         this.mapper = mapper;
     }
 
-    public void apresentar(ProprietarioDomain usuarioDomain) {
-        this.viewModel = mapper.toProprietarioResponseDto(usuarioDomain);
+    public void apresentar(ProprietarioDomain proprietarioDomain) {
+        this.viewModel = mapper.toProprietarioResponseDto(proprietarioDomain);
     }
 
     public UsuarioResponseDTO getViewModel() {
