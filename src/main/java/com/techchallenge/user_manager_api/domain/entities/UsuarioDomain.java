@@ -29,7 +29,8 @@ public class UsuarioDomain {
 
     private List<EnderecoDomain> enderecos;
 
-    public UsuarioDomain(String nome, String email, String login, String senha) {
+    public UsuarioDomain(UUID id,String nome, String email, String login, String senha) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.login = login;

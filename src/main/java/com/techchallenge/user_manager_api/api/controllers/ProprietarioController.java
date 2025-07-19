@@ -1,37 +1,41 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
+import com.techchallenge.user_manager_api.application.usecases.proprietario.CriacaoDeProprietarioUseCase;
+import com.techchallenge.user_manager_api.application.usecases.proprietario.ProprietarioPresenter;
+import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Proprietário Controller", description = "Operações relacionadas ao Proprietário")
 @RequestMapping("/proprietarios")
 public class ProprietarioController {
 
-//    private final ProprietarioService proprietarioService;
-//
-//    public ProprietarioController(ProprietarioService proprietarioService) {
-//        this.proprietarioService = proprietarioService;
-//    }
-//
-//    @Operation(
-//            summary = "Realiza o cadastro de um novo usuáriodo do tipo Proprietário",
-//            description = "Este endpoint cria um novo usuário do tipo Proprietário no sistema, gerando um token JWT após o cadastro bem-sucedido"
-//    )
-//    @PostMapping
-//    public ResponseEntity<CadastroResponseDTO> cadastrarProprietario(@RequestBody @Valid ProprietarioRequestDTO proprietarioDTO) {
-//        CadastroResponseDTO cadastroResponse = proprietarioService.cadastrarProprietario(proprietarioDTO);
-//        return ResponseEntity.ok(cadastroResponse);
-//    }
+    //private final ProprietarioService proprietarioService;
+    private final CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase;
+    private final ProprietarioPresenter proprietarioPresenter;
+
+    public ProprietarioController(CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase, ProprietarioPresenter proprietarioPresenter) {
+        this.criacaoDeProprietarioUseCase = criacaoDeProprietarioUseCase;
+        this.proprietarioPresenter = proprietarioPresenter;
+    }
+
+    @Operation(
+            summary = "Realiza o cadastro de um novo usuáriodo do tipo Proprietário",
+            description = "Este endpoint cria um novo usuário do tipo Proprietário no sistema, gerando um token JWT após o cadastro bem-sucedido"
+    )
+    @PostMapping
+    public ResponseEntity<UsuarioResponseDTO> cadastrarProprietario(@RequestBody @Valid ProprietarioRequestDTO proprietarioDTO) {
+        criacaoDeProprietarioUseCase.cadastrarProprietario(proprietarioDTO);
+        return ResponseEntity.ok(proprietarioPresenter.getViewModel());
+    }
 //
 //    @PreAuthorize("hasRole('PROPRIETARIO')")
 //    @SecurityRequirement(name = "bearerAuth")

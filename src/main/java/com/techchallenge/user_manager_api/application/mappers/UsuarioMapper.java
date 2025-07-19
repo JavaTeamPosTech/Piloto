@@ -2,11 +2,15 @@ package com.techchallenge.user_manager_api.application.mappers;
 
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.LoginRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.EnderecoResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
+import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
 import com.techchallenge.user_manager_api.domain.entities.UsuarioDomain;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,7 @@ public class UsuarioMapper {
     public static ClienteDomain toClienteDomain(ClienteRequestDTO dto, String senhaCriptografada) {
 
         ClienteDomain clienteDomain = new ClienteDomain(
+                //null,
                 dto.cpf(),
                 dto.dataNascimento(),
                 dto.genero(),
@@ -48,8 +53,7 @@ public class UsuarioMapper {
         usuarioDomain.getEnderecos().addAll(enderecos);
     }
 
-
-    public static UsuarioResponseDTO toResponseDto(ClienteDomain clienteDomain) {
+    public static UsuarioResponseDTO toClienteResponseDto(ClienteDomain clienteDomain) {
         return new UsuarioResponseDTO(
                 clienteDomain.getId(),
                 clienteDomain.getNome(),
@@ -57,6 +61,52 @@ public class UsuarioMapper {
                 clienteDomain.getLogin()
         );
     }
+
+    public static UsuarioResponseDTO toProprietarioResponseDto(ProprietarioDomain proprietarioDomain) {
+        return new UsuarioResponseDTO(
+                proprietarioDomain.getId(),
+                proprietarioDomain.getNome(),
+                proprietarioDomain.getEmail(),
+                proprietarioDomain.getLogin()
+        );
+    }
+
+    public static ProprietarioDomain toProprietarioDomain(ProprietarioRequestDTO dto, String senhaCriptografada) {
+
+        ProprietarioDomain proprietarioDomain = new ProprietarioDomain(
+                null,
+                dto.cnpj(),
+                dto.razaoSocial(),
+                dto.nomeFantasia(),
+                dto.inscricaoEstadual(),
+                dto.telefoneComercial(),
+                dto.whatsapp(),
+                dto.statusConta(),
+                dto.nome(),
+                dto.email(),
+                dto.login(),
+                senhaCriptografada
+        );
+
+        adicionarEnderecosAoUsuario(proprietarioDomain, dto.enderecos());
+        return proprietarioDomain;
+    }
+
+    public static LoginResponseDTO toLoginResponseDto(String token){
+        return new LoginResponseDTO(
+            token
+        );
+    }
+
+//    public static UsuarioDomain toUsuarioDomain(LoginRequestDTO dto){
+//        return new UsuarioDomain(
+//                null,
+//                dto.nome(),
+//                dto.email(),
+//                dto.login(),
+//                dto.senha()
+//        );
+//    }
 
     public static ClienteResponseDTO toClienteResponseDTO(ClienteDomain clienteDomain) {
         return new ClienteResponseDTO(clienteDomain.getId(), clienteDomain.getNome(), clienteDomain.getCpf(),

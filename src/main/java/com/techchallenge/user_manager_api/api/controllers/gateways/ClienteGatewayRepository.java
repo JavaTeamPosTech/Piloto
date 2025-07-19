@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ClienteGatewayRepository {
 
-    ClienteDomain cadastrarCliente(ClienteDomain clienteRequestDTO, String senhaCriptografada);
+    ClienteDomain cadastrarCliente(ClienteDomain clienteDomain, String senhaCriptografada);
 
     boolean existsByLogin(String login);
 

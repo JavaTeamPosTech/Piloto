@@ -36,22 +36,6 @@ public class CriacaoDeClienteUseCase {
         repositorio.cadastrarCliente(clienteDomain, senhaCriptografada);
         //String token = tokenService.generateToken(clienteDomain.getLogin());
         clientePresenter.apresentar(clienteDomain);
-
-
-//        ClienteDomain cliente = new ClienteDomain(clienteRequestDTO.cpf(), clienteRequestDTO.dataNascimento(), clienteRequestDTO.genero(),
-//                clienteRequestDTO.telefone(), clienteRequestDTO.preferenciasAlimentares(),
-//                clienteRequestDTO.alergias(), clienteRequestDTO.metodoPagamentoPreferido(),
-//                clienteRequestDTO.clienteVip(), clienteRequestDTO.notificacoesAtivas(), clienteRequestDTO.nome(),
-//                clienteRequestDTO.email(), clienteRequestDTO.login(), clienteRequestDTO.senha(), clienteRequestDTO.enderecos());
-
-
-        //toCliente(cliente, senhaCriptografada);
-
-
-
-        //clientePresenter.apresentarCliente(clienteSalvo, token);
-
-        //return new CadastroResponseDTO(UsuarioResponseDTO.deCliente(clienteSalvo), token);
     }
 
 }

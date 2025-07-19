@@ -14,14 +14,12 @@ public class ClientePresenter {
     private UsuarioResponseDTO viewModel;
     private final UsuarioMapper mapper;
 
-
-
     public ClientePresenter(UsuarioMapper mapper) {
         this.mapper = mapper;
     }
 
     public void apresentar(ClienteDomain usuarioDomain) {
-        this.viewModel = mapper.toResponseDto(usuarioDomain);
+        this.viewModel = mapper.toClienteResponseDto(usuarioDomain);
     }
 
     public ClienteResponseDTO buscarClientePresenterPorId(ClienteDomain clienteDomain) {

@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -39,12 +36,12 @@ public class ClienteDomain extends UsuarioDomain {
     private Boolean notificacoesAtivas;
 
 
-    public ClienteDomain(String cpf, LocalDate dataNascimento, GeneroEnum genero, String telefone,
+    public ClienteDomain(UUID id, String cpf, LocalDate dataNascimento, GeneroEnum genero, String telefone,
                          Set<TiposComidaEnum> preferenciasAlimentares, Set<AlergiaAlimentarEnum> alergias,
                          MetodoPagamentoEnum metodoPagamentoPreferido, Boolean clienteVip,
                          Boolean notificacoesAtivas, String nome, String email, String login, String senhaCriptografada) {
 
-        super(nome, email, login, senhaCriptografada);
+        super(id, nome, email, login, senhaCriptografada);
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
