@@ -23,7 +23,7 @@ public class UsuarioMapper {
     public static ClienteDomain toClienteDomain(ClienteRequestDTO dto, String senhaCriptografada) {
 
         ClienteDomain clienteDomain = new ClienteDomain(
-                //null,
+                null,
                 dto.cpf(),
                 dto.dataNascimento(),
                 dto.genero(),
