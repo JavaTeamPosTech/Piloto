@@ -10,4 +10,6 @@ public interface UsuarioGatewayRepository {
 
     UsuarioDomain findByLogin(String login);
 
+    void atualizarSenha(String login, String senhaCriptografada);
+
 }

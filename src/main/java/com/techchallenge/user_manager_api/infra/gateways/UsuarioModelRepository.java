@@ -26,4 +26,15 @@ public class UsuarioModelRepository implements UsuarioGatewayRepository {
         UsuarioEntity usuarioEntity = usuarioRepository.findByLogin(login);
         return UsuarioAdapter.toUsuarioDomain(usuarioEntity);
     }
+
+    @Override
+    public void atualizarSenha(String login, String senhaCriptografada) {
+        UsuarioEntity usuarioEntity = usuarioRepository.findByLogin(login);
+        if (usuarioEntity != null) {
+            usuarioEntity.atualizarSenha(senhaCriptografada);
+            usuarioRepository.save(usuarioEntity);
+        } else {
+            throw new IllegalArgumentException("Usuário não encontrado.");
+        }
+    }
 }
