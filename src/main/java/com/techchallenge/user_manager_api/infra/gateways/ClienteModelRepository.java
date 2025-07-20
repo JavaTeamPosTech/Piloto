@@ -39,4 +39,11 @@ public class ClienteModelRepository implements ClienteGatewayRepository {
 
         return UsuarioAdapter.toClienteDomain(cliente);
     }
+
+    @Override
+    public ClienteDomain alterarInformacoesDoCliente(ClienteDomain domain, String senhaCriptografada){
+        ClienteEntity clienteEntity = UsuarioAdapter.toCliente(domain, senhaCriptografada);
+        clienteRepository.save(clienteEntity);
+        return UsuarioAdapter.toClienteDomain(clienteEntity);
+    }
 }

@@ -1,9 +1,6 @@
 package com.techchallenge.user_manager_api.application.mappers;
 
-import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
-import com.techchallenge.user_manager_api.domain.dto.requests.EnderecoRequestDTO;
-import com.techchallenge.user_manager_api.domain.dto.requests.LoginRequestDTO;
-import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.*;
 import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.EnderecoResponseDTO;
@@ -31,7 +28,6 @@ public class UsuarioMapper {
                 dto.preferenciasAlimentares(),
                 dto.alergias(),
                 dto.metodoPagamentoPreferido(),
-                dto.clienteVip(),
                 dto.notificacoesAtivas(),
                 dto.nome(),
                 dto.email(),
@@ -152,5 +148,28 @@ public class UsuarioMapper {
 //                enderecoDomain.getCep()
 //        );
 //    }
+
+    public static ClienteDomain toClienteDomain(AtualizarClienteRequestDTO dto, String senhaCriptografada) {
+
+        ClienteDomain clienteDomain = new ClienteDomain(
+                null,
+                dto.cpf(),
+                dto.dataNascimento(),
+                dto.genero(),
+                dto.telefone(),
+                dto.preferenciasAlimentares(),
+                dto.alergias(),
+                dto.metodoPagamentoPreferido(),
+                dto.notificacoesAtivas(),
+                dto.nome(),
+                dto.email(),
+                dto.login(),
+                senhaCriptografada
+        );
+
+        adicionarEnderecosAoUsuario(clienteDomain, dto.enderecos());
+        return clienteDomain;
+    }
+
 
 }

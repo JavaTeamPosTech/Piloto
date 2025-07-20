@@ -49,12 +49,11 @@ public class UsuarioAdapter {
                 clienteEntity.getAlergias(),
                 clienteEntity.getMetodoPagamentoPreferido(),
                 clienteEntity.getClienteVip(),
-                clienteEntity.getNotificacoesAtivas(),
                 clienteEntity.getNome(),
                 clienteEntity.getEmail(),
                 clienteEntity.getLogin(),
                 clienteEntity.getSenha()
-        );
+                );
     }
 
 

@@ -2,16 +2,20 @@ package com.techchallenge.user_manager_api.api.controllers;
 
 import com.techchallenge.user_manager_api.application.usecases.BuscarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.CriacaoDeClienteUseCase;
+import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -25,12 +29,14 @@ public class ClienteController {
     private final CriacaoDeClienteUseCase criacaoDeClienteUseCase;
     private final ClientePresenter clientePresenter;
     private final BuscarClienteUseCase buscarClienteUseCase;
+    private final AtualizarClienteUseCase atualizarClienteUseCase;
 
     public ClienteController(CriacaoDeClienteUseCase criacaoDeClienteUseCase,
-                             ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase) {
+                             ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase, AtualizarClienteUseCase atualizarClienteUseCase ) {
         this.clientePresenter = clientePresenter;
         this.criacaoDeClienteUseCase = criacaoDeClienteUseCase;
         this.buscarClienteUseCase = buscarClienteUseCase;
+        this.atualizarClienteUseCase = atualizarClienteUseCase;
     }
 
     @Operation(
@@ -47,8 +53,8 @@ public class ClienteController {
     }
 
 
-    //@PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
-    //@SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Buscar cliente", description = "Busca os dados de um Cliente pelo ID. O próprio Cliente ou um Proprietário pode executar.")
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorId(
@@ -57,19 +63,20 @@ public class ClienteController {
 
 
         ClienteDomain cliente = buscarClienteUseCase.buscarClientePorId(id);
-        return ResponseEntity.ok(clientePresenter.buscarClientePresenterPorId(cliente));
+        return ResponseEntity.ok(clientePresenter.retornarCliente(cliente));
     }
 
-//    @PreAuthorize("#id == authentication.principal.id")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ClienteResponseDTO> editarCliente(
-//            @Parameter(description = "ID do Cliente a ser atualizado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id,
-//            @RequestBody @Valid AtualizarClienteRequestDTO clienteRequestDTO) {
-//        return ResponseEntity.ok(clienteService.editarCliente(id, clienteRequestDTO));
-//    }
+    @PreAuthorize("#id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> editarCliente(
+            @Parameter(description = "ID do Cliente a ser atualizado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id,
+            @RequestBody @Valid AtualizarClienteRequestDTO clienteRequestDTO) {
+        ClienteResponseDTO response = atualizarClienteUseCase.executar(id, clienteRequestDTO);
+        return ResponseEntity.ok(response);
+    }
 //
 //    @PreAuthorize("hasRole('PROPRIETARIO')")
 //    @SecurityRequirement(name = "bearerAuth")

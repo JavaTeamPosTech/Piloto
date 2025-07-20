@@ -1,11 +1,17 @@
 package com.techchallenge.user_manager_api.domain.entities;
 
-import com.techchallenge.user_manager_api.infra.model.enums.*;
+import com.techchallenge.user_manager_api.infra.model.enums.AlergiaAlimentarEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.GeneroEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.MetodoPagamentoEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.TiposComidaEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -38,7 +44,7 @@ public class ClienteDomain extends UsuarioDomain {
 
     public ClienteDomain(UUID id, String cpf, LocalDate dataNascimento, GeneroEnum genero, String telefone,
                          Set<TiposComidaEnum> preferenciasAlimentares, Set<AlergiaAlimentarEnum> alergias,
-                         MetodoPagamentoEnum metodoPagamentoPreferido, Boolean clienteVip,
+                         MetodoPagamentoEnum metodoPagamentoPreferido,
                          Boolean notificacoesAtivas, String nome, String email, String login, String senhaCriptografada) {
 
         super(id, nome, email, login, senhaCriptografada);

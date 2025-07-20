@@ -22,7 +22,7 @@ public class ClientePresenter {
         this.viewModel = mapper.toClienteResponseDto(usuarioDomain);
     }
 
-    public ClienteResponseDTO buscarClientePresenterPorId(ClienteDomain clienteDomain) {
+    public ClienteResponseDTO retornarCliente(ClienteDomain clienteDomain) {
         return mapper.toClienteResponseDTO(clienteDomain);
     }
 

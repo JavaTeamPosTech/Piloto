@@ -31,7 +31,7 @@ public class ControllerExceptionHandler {
                 e.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now(),
-    null
+                null
         );
         HttpStatus status = HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status.value()).body(response);
@@ -74,6 +74,12 @@ public class ControllerExceptionHandler {
                 LocalDateTime.now(),
                 errors
         );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExcecaoDTO> handleIllegalArgumentException(IllegalArgumentException e) {
+        ExcecaoDTO response = new ExcecaoDTO(e.getMessage(), HttpStatus.CONFLICT.value(), LocalDateTime.now(), null);
         return ResponseEntity.badRequest().body(response);
     }
 }
