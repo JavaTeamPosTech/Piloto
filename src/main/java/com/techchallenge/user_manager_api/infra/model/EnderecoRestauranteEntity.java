@@ -20,7 +20,7 @@ public class EnderecoRestauranteEntity {
     private String complemento;
     private String cep;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurante_id")
     private RestauranteEntity restaurante;
 }
