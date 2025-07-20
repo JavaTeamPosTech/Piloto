@@ -1,8 +1,6 @@
 package com.techchallenge.user_manager_api.api.controllers.gateways;
 
-import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
@@ -14,4 +12,7 @@ public interface ProprietarioGatewayRepository {
     ProprietarioDomain buscarProprietarioPorId(UUID id);
 
     void deletarProprietarioPorId(UUID id);
+
+    void atualizar(ProprietarioDomain proprietarioDomain);
+
 }

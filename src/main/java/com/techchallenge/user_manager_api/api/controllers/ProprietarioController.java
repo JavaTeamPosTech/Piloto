@@ -1,9 +1,7 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
-import com.techchallenge.user_manager_api.application.usecases.proprietario.BuscarProprietarioPorIdUseCase;
-import com.techchallenge.user_manager_api.application.usecases.proprietario.CriacaoDeProprietarioUseCase;
-import com.techchallenge.user_manager_api.application.usecases.proprietario.DeletarProprietarioPorIdUseCase;
-import com.techchallenge.user_manager_api.application.usecases.proprietario.ProprietarioPresenter;
+import com.techchallenge.user_manager_api.application.usecases.proprietario.*;
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
@@ -29,13 +27,16 @@ public class ProprietarioController {
     private final ProprietarioPresenter proprietarioPresenter;
     private final BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase;
     private final DeletarProprietarioPorIdUseCase deletarProprietarioPorIdUseCase;
+    private final EditarProprietarioUseCase editarProprietarioUseCase;
 
     public ProprietarioController(CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase, ProprietarioPresenter proprietarioPresenter,
-                                  BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase, DeletarProprietarioPorIdUseCase deletarProprietarioPorIdUseCase) {
+                                  BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase, DeletarProprietarioPorIdUseCase deletarProprietarioPorIdUseCase,
+                                  EditarProprietarioUseCase editarProprietarioUseCase) {
         this.criacaoDeProprietarioUseCase = criacaoDeProprietarioUseCase;
         this.proprietarioPresenter = proprietarioPresenter;
         this.buscarProprietarioPorIdUseCase =  buscarProprietarioPorIdUseCase;
         this.deletarProprietarioPorIdUseCase =  deletarProprietarioPorIdUseCase;
+        this.editarProprietarioUseCase = editarProprietarioUseCase;
     }
 
     @Operation(
@@ -70,15 +71,15 @@ public class ProprietarioController {
         deletarProprietarioPorIdUseCase.executar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-//
-//    @PreAuthorize("#id == authentication.principal.id")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Editar proprietário", description = "Editar um Proprietário pelo ID. Apenas o próprio Proprietário pode executar.")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ProprietarioResponseDTO> editarProprietario(
-//            @Parameter(description = "ID do Proprietário a ser atualizado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id,
-//            @RequestBody @Valid AtualizarProprietarioRequestDTO proprietarioRequestDTO){
-//        return ResponseEntity.ok(proprietarioService.editarProprietario(id, proprietarioRequestDTO));
-//    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Editar proprietário", description = "Editar um Proprietário pelo ID. Apenas o próprio Proprietário pode executar.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ProprietarioResponseDTO> editarProprietario(
+            @Parameter(description = "ID do Proprietário a ser atualizado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id,
+            @RequestBody @Valid AtualizarProprietarioRequestDTO proprietarioRequestDTO){
+        return ResponseEntity.ok(editarProprietarioUseCase.executar(id, proprietarioRequestDTO));
+    }
 }

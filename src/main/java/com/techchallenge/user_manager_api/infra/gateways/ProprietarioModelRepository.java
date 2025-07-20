@@ -28,7 +28,7 @@ public class ProprietarioModelRepository implements ProprietarioGatewayRepositor
 
     @Override
     public boolean existsByLogin(String login) {
-        return false;
+       return proprietarioRepository.existsByLogin(login);
     }
 
 
@@ -51,4 +51,11 @@ public class ProprietarioModelRepository implements ProprietarioGatewayRepositor
             throw new ResourceNotFoundException("Falha ao deletar proprietário");
         }
     }
+
+    @Override
+    public void atualizar(ProprietarioDomain proprietarioDomain) {
+        proprietarioRepository.save(UsuarioAdapter.toProprietario(proprietarioDomain, proprietarioDomain.getSenha()));
+    }
+
+
 }
