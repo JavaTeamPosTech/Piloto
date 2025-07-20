@@ -1,9 +1,11 @@
 package com.techchallenge.user_manager_api.infra.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name = "tipo_cozinha")
 public class TipoCozinhaEntity {
