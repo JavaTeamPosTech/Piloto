@@ -2,6 +2,7 @@ package com.techchallenge.user_manager_api.api.controllers.gateways;
 
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ClienteGatewayRepository {
@@ -13,4 +14,6 @@ public interface ClienteGatewayRepository {
     ClienteDomain buscarClientePorId(UUID id);
 
     ClienteDomain alterarInformacoesDoCliente(ClienteDomain entity, String senhaCriptografada);
+
+    List<ClienteDomain> buscarTodosClientes();
 }

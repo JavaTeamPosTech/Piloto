@@ -6,8 +6,11 @@ import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.infra.persistence.adapters.UsuarioAdapter;
 import com.techchallenge.user_manager_api.infra.repositories.ClienteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -45,5 +48,14 @@ public class ClienteModelRepository implements ClienteGatewayRepository {
         ClienteEntity clienteEntity = UsuarioAdapter.toCliente(domain, senhaCriptografada);
         clienteRepository.save(clienteEntity);
         return UsuarioAdapter.toClienteDomain(clienteEntity);
+    }
+
+
+    @Override
+    public List<ClienteDomain> buscarTodosClientes() {
+        Page<ClienteEntity> clientes = clienteRepository.findAll(PageRequest.of(0, 10));
+        return clientes.stream()
+                .map(UsuarioAdapter::toClienteDomain)
+                .toList();
     }
 }

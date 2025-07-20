@@ -3,6 +3,7 @@ package com.techchallenge.user_manager_api.api.controllers;
 import com.techchallenge.user_manager_api.application.usecases.BuscarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.CriacaoDeClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
+import com.techchallenge.user_manager_api.application.usecases.cliente.BuscarTodosClientesUseCase;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,13 +32,16 @@ public class ClienteController {
     private final ClientePresenter clientePresenter;
     private final BuscarClienteUseCase buscarClienteUseCase;
     private final AtualizarClienteUseCase atualizarClienteUseCase;
+    private final BuscarTodosClientesUseCase buscarTodosClientesUseCase;
 
     public ClienteController(CriacaoDeClienteUseCase criacaoDeClienteUseCase,
-                             ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase, AtualizarClienteUseCase atualizarClienteUseCase ) {
+                             ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase,
+                             AtualizarClienteUseCase atualizarClienteUseCase, BuscarTodosClientesUseCase buscarTodosClientesUseCase ) {
         this.clientePresenter = clientePresenter;
         this.criacaoDeClienteUseCase = criacaoDeClienteUseCase;
         this.buscarClienteUseCase = buscarClienteUseCase;
         this.atualizarClienteUseCase = atualizarClienteUseCase;
+        this.buscarTodosClientesUseCase = buscarTodosClientesUseCase;
     }
 
     @Operation(
@@ -77,15 +82,15 @@ public class ClienteController {
         ClienteResponseDTO response = atualizarClienteUseCase.executar(id, clienteRequestDTO);
         return ResponseEntity.ok(response);
     }
-//
-//    @PreAuthorize("hasRole('PROPRIETARIO')")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Buscar todos os cliente", description = "Busca todos os clientes cadastrados. Somente um Proprietário pode executar.")
-//    @GetMapping()
-//    public ResponseEntity<List<ClienteResponseDTO>> buscarClientes() {
-//        return ResponseEntity.ok(clienteService.buscarClientes());
-//    }
-//
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Buscar todos os cliente", description = "Busca todos os clientes cadastrados. Somente um Proprietário pode executar.")
+    @GetMapping()
+    public ResponseEntity<List<ClienteResponseDTO>> buscarClientes() {
+        return ResponseEntity.ok(buscarTodosClientesUseCase.buscarClientes());
+    }
+
 //    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
 //    @SecurityRequirement(name = "bearerAuth")
 //    @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
