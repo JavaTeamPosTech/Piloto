@@ -1,17 +1,21 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
+import com.techchallenge.user_manager_api.application.usecases.proprietario.BuscarProprietarioPorIdUseCase;
 import com.techchallenge.user_manager_api.application.usecases.proprietario.CriacaoDeProprietarioUseCase;
 import com.techchallenge.user_manager_api.application.usecases.proprietario.ProprietarioPresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @Tag(name = "Proprietário Controller", description = "Operações relacionadas ao Proprietário")
@@ -21,10 +25,13 @@ public class ProprietarioController {
     //private final ProprietarioService proprietarioService;
     private final CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase;
     private final ProprietarioPresenter proprietarioPresenter;
+    private final BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase;
 
-    public ProprietarioController(CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase, ProprietarioPresenter proprietarioPresenter) {
+    public ProprietarioController(CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase, ProprietarioPresenter proprietarioPresenter,
+                                  BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase) {
         this.criacaoDeProprietarioUseCase = criacaoDeProprietarioUseCase;
         this.proprietarioPresenter = proprietarioPresenter;
+        this.buscarProprietarioPorIdUseCase =  buscarProprietarioPorIdUseCase;
     }
 
     @Operation(
@@ -36,17 +43,17 @@ public class ProprietarioController {
         criacaoDeProprietarioUseCase.cadastrarProprietario(proprietarioDTO);
         return ResponseEntity.ok(proprietarioPresenter.getViewModel());
     }
-//
-//    @PreAuthorize("hasRole('PROPRIETARIO')")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Buscar proprietário", description = "Busca os dados de um Proprietário pelo ID. Somente um Proprietário pode executar.")
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ProprietarioResponseDTO> buscarProprietarioPorId(
-//            @Parameter(description = "ID do Proprietário a ser procurado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id
-//    ) {
-//        return ResponseEntity.ok(proprietarioService.buscarProprietarioPorId(id));
-//    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Buscar proprietário", description = "Busca os dados de um Proprietário pelo ID. Somente um Proprietário pode executar.")
+    @GetMapping("/{id}")
+    public ResponseEntity<ProprietarioResponseDTO> buscarProprietarioPorId(
+            @Parameter(description = "ID do Proprietário a ser procurado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id
+    ) {
+        return ResponseEntity.ok(buscarProprietarioPorIdUseCase.executar(id));
+    }
 //
 //    @PreAuthorize("hasRole('PROPRIETARIO')")
 //    @SecurityRequirement(name = "bearerAuth")

@@ -1,10 +1,7 @@
 package com.techchallenge.user_manager_api.application.mappers;
 
 import com.techchallenge.user_manager_api.domain.dto.requests.*;
-import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
-import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
-import com.techchallenge.user_manager_api.domain.dto.response.EnderecoResponseDTO;
-import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.*;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
 import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
@@ -12,6 +9,7 @@ import com.techchallenge.user_manager_api.domain.entities.UsuarioDomain;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -111,7 +109,7 @@ public class UsuarioMapper {
         );
     }
 
-    private static List<EnderecoResponseDTO> toEnderecoResponseDTO(List<EnderecoDomain> enderecoDomain) {
+    public static List<EnderecoResponseDTO> toEnderecoResponseDTO(List<EnderecoDomain> enderecoDomain) {
         List<EnderecoResponseDTO> enderecosResponseDTO = new ArrayList<>();
 
         for (EnderecoDomain endereco : enderecoDomain) {
@@ -169,6 +167,41 @@ public class UsuarioMapper {
 
         adicionarEnderecosAoUsuario(clienteDomain, dto.enderecos());
         return clienteDomain;
+    }
+
+    public static ProprietarioResponseDTO toProprietarioResponseDtoComEndereco(ProprietarioDomain proprietarioDomain) {
+        return new ProprietarioResponseDTO(
+                proprietarioDomain.getId(),
+                proprietarioDomain.getCnpj(),
+                proprietarioDomain.getRazaoSocial(),
+                proprietarioDomain.getNomeFantasia(),
+                proprietarioDomain.getInscricaoEstadual(),
+                proprietarioDomain.getTelefoneComercial(),
+                proprietarioDomain.getWhatsapp(),
+                proprietarioDomain.getNome(),
+                proprietarioDomain.getEmail(),
+                proprietarioDomain.getLogin(),
+                toEnderecoResponseDto(proprietarioDomain.getEnderecos())
+        );
+    }
+
+    private static List<EnderecoResponseDTO> toEnderecoResponseDto(List<EnderecoDomain> enderecosDomain) {
+        if (enderecosDomain == null || enderecosDomain.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return enderecosDomain.stream()
+                .map(enderecoDomain -> new EnderecoResponseDTO(
+                        enderecoDomain.getId(),
+                        enderecoDomain.getEstado(),
+                        enderecoDomain.getCidade(),
+                        enderecoDomain.getBairro(),
+                        enderecoDomain.getRua(),
+                        enderecoDomain.getNumero(),
+                        enderecoDomain.getComplemento(),
+                        enderecoDomain.getCep()
+                ))
+                .toList();
     }
 
 

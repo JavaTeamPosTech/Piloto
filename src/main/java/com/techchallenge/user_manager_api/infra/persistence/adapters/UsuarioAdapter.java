@@ -1,6 +1,7 @@
 package com.techchallenge.user_manager_api.infra.persistence.adapters;
 
 import com.techchallenge.user_manager_api.domain.dto.response.LoginResponseDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.ProprietarioResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
 import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
@@ -12,6 +13,8 @@ import com.techchallenge.user_manager_api.infra.model.UsuarioEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.techchallenge.user_manager_api.application.mappers.UsuarioMapper.toEnderecoResponseDTO;
 
 public class UsuarioAdapter {
 
@@ -177,20 +180,21 @@ public class UsuarioAdapter {
 //        )).toList();
 //    }
 //
-//    public static ProprietarioResponseDTO toProprietarioResponseDTO(Proprietario proprietario) {
-//        return new ProprietarioResponseDTO(
-//                proprietario.getId(),
-//                proprietario.getCnpj(),
-//                proprietario.getRazaoSocial(),
-//                proprietario.getNomeFantasia(),
-//                proprietario.getInscricaoEstadual(),
-//                proprietario.getTelefoneComercial(),
-//                proprietario.getWhatsapp(),
-//                proprietario.getNome(),
-//                proprietario.getEmail(),
-//                proprietario.getLogin(),
-//                toEnderecoResponseDTO(proprietario.getEnderecos())
-//        );
-//    }
+    public static ProprietarioResponseDTO toProprietarioResponseDTO(ProprietarioDomain proprietario) {
+        return new ProprietarioResponseDTO(
+                proprietario.getId(),
+                proprietario.getCnpj(),
+                proprietario.getRazaoSocial(),
+                proprietario.getNomeFantasia(),
+                proprietario.getInscricaoEstadual(),
+                proprietario.getTelefoneComercial(),
+                proprietario.getWhatsapp(),
+                proprietario.getNome(),
+                proprietario.getEmail(),
+                proprietario.getLogin(),
+                toEnderecoResponseDTO(proprietario.getEnderecos())
+        );
+
+    }
 
 }

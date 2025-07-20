@@ -23,6 +23,8 @@ public class ProprietarioDomain extends UsuarioDomain {
 
     private StatusContaEnum statusConta;
 
+    private List<EnderecoDomain> enderecos;
+
     public ProprietarioDomain(UUID id, String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
                               String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,
                               String email, String login, String senha) {

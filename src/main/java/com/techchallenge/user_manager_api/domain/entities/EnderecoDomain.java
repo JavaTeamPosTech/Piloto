@@ -30,4 +30,14 @@ public class EnderecoDomain {
         this.cep = dto.cep();
         this.usuario = usuario;
     }
+
+    public EnderecoDomain(EnderecoRequestDTO dto) {
+        this.estado = dto.estado();
+        this.cidade = dto.cidade();
+        this.bairro = dto.bairro();
+        this.rua = dto.rua();
+        this.numero = dto.numero();
+        this.complemento = dto.complemento();
+        this.cep = dto.cep();
+    }
 }

@@ -1,11 +1,14 @@
 package com.techchallenge.user_manager_api.infra.gateways;
 
 import com.techchallenge.user_manager_api.api.controllers.gateways.ProprietarioGatewayRepository;
+import com.techchallenge.user_manager_api.application.exceptions.ResourceNotFoundException;
 import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
 import com.techchallenge.user_manager_api.infra.model.ProprietarioEntity;
 import com.techchallenge.user_manager_api.infra.persistence.adapters.UsuarioAdapter;
 import com.techchallenge.user_manager_api.infra.repositories.ProprietarioRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class ProprietarioModelRepository implements ProprietarioGatewayRepository {
@@ -26,6 +29,14 @@ public class ProprietarioModelRepository implements ProprietarioGatewayRepositor
     @Override
     public boolean existsByLogin(String login) {
         return false;
+    }
+
+
+    @Override
+    public ProprietarioDomain buscarProprietarioPorId(UUID id) {
+        ProprietarioEntity entity =  proprietarioRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Proprietário com o id '%s' não encontrado", id)));
+        return UsuarioAdapter.toProprietarioDomain(entity);
     }
 
 }
