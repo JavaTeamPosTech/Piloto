@@ -6,6 +6,7 @@ import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.infra.persistence.adapters.UsuarioAdapter;
 import com.techchallenge.user_manager_api.infra.repositories.ClienteRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,7 @@ public class ClienteModelRepository implements ClienteGatewayRepository {
 
     @Override
     public ClienteDomain buscarClientePorId(UUID id) {
-        //TODO verificar se podemos lançar exceção no repository
-        ClienteEntity cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Cliente com o id '%s' não encontrado: ", id)));
-
-        return UsuarioAdapter.toClienteDomain(cliente);
+        return UsuarioAdapter.toClienteDomain(verificarClienteExiste(id));
     }
 
     @Override
@@ -57,5 +54,21 @@ public class ClienteModelRepository implements ClienteGatewayRepository {
         return clientes.stream()
                 .map(UsuarioAdapter::toClienteDomain)
                 .toList();
+    }
+
+
+    private ClienteEntity verificarClienteExiste(UUID id){
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Cliente com o id '%s' não encontrado: ", id)));
+    }
+
+    @Override
+    public void deletarClientePorId(UUID id){
+        verificarClienteExiste(id);
+        clienteRepository.deleteById(id);
+        if (clienteRepository.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("Falha ao deletar cliente");
+        }
+
     }
 }

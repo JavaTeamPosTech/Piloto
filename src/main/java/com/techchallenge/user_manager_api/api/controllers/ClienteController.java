@@ -4,6 +4,7 @@ import com.techchallenge.user_manager_api.application.usecases.BuscarClienteUseC
 import com.techchallenge.user_manager_api.application.usecases.CriacaoDeClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.cliente.BuscarTodosClientesUseCase;
+import com.techchallenge.user_manager_api.application.usecases.cliente.DeletarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,15 +35,18 @@ public class ClienteController {
     private final BuscarClienteUseCase buscarClienteUseCase;
     private final AtualizarClienteUseCase atualizarClienteUseCase;
     private final BuscarTodosClientesUseCase buscarTodosClientesUseCase;
+    private final DeletarClienteUseCase deletarClienteUseCase;
 
     public ClienteController(CriacaoDeClienteUseCase criacaoDeClienteUseCase,
                              ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase,
-                             AtualizarClienteUseCase atualizarClienteUseCase, BuscarTodosClientesUseCase buscarTodosClientesUseCase ) {
+                             AtualizarClienteUseCase atualizarClienteUseCase, BuscarTodosClientesUseCase buscarTodosClientesUseCase,
+                             DeletarClienteUseCase deletarClienteUseCase) {
         this.clientePresenter = clientePresenter;
         this.criacaoDeClienteUseCase = criacaoDeClienteUseCase;
         this.buscarClienteUseCase = buscarClienteUseCase;
         this.atualizarClienteUseCase = atualizarClienteUseCase;
         this.buscarTodosClientesUseCase = buscarTodosClientesUseCase;
+        this.deletarClienteUseCase = deletarClienteUseCase;
     }
 
     @Operation(
@@ -91,15 +96,15 @@ public class ClienteController {
         return ResponseEntity.ok(buscarTodosClientesUseCase.buscarClientes());
     }
 
-//    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deletarCliente(
-//            @Parameter(description = "ID do Cliente a ser deletado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id) {
-//        clienteService.deletarCliente(id);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
+    @PreAuthorize("hasRole('PROPRIETARIO') or #id == authentication.principal.id")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Deletar cliente", description = "Deletar um Cliente pelo ID. Apenas o Proprietário ou próprio Cliente pode executar.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCliente(
+            @Parameter(description = "ID do Cliente a ser deletado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id) {
+        deletarClienteUseCase.executar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

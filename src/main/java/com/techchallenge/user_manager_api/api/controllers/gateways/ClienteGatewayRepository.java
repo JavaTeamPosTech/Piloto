@@ -16,4 +16,6 @@ public interface ClienteGatewayRepository {
     ClienteDomain alterarInformacoesDoCliente(ClienteDomain entity, String senhaCriptografada);
 
     List<ClienteDomain> buscarTodosClientes();
+
+    void deletarClientePorId(UUID id);
 }
