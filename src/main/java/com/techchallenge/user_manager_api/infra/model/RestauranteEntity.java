@@ -1,11 +1,12 @@
 package com.techchallenge.user_manager_api.infra.model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
+@NoArgsConstructor
 @Entity
 @Table(name = "restaurante")
 public class RestauranteEntity {
@@ -16,16 +17,25 @@ public class RestauranteEntity {
 
     private String nome;
 
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EnderecoRestauranteEntity> enderecos;
+    @OneToOne(mappedBy = "restaurante")
+    private EnderecoRestauranteEntity endereco;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "restaurante_tipo_cozinha", joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "tipo_cozinha_id")
     )
-    private Set<TipoCozinhaEntity> tiposCozinha;
+    private List<TipoCozinhaEntity> tiposCozinha;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "proprietario_id", referencedColumnName = "id")
     private ProprietarioEntity proprietario;
+
+    public RestauranteEntity(String nome, EnderecoRestauranteEntity endereco, List<TipoCozinhaEntity> tiposCozinha,
+                             ProprietarioEntity proprietario) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tiposCozinha = tiposCozinha;
+        this.proprietario = proprietario;
+    }
+
 }

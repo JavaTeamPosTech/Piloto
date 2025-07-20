@@ -1,5 +1,8 @@
 package com.techchallenge.user_manager_api.domain.entities;
 
+import lombok.Getter;
+
+@Getter
 public class EnderecoRestauranteDomain {
 
 
