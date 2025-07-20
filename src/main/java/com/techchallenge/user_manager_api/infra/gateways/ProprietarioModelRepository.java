@@ -15,7 +15,7 @@ public class ProprietarioModelRepository implements ProprietarioGatewayRepositor
 
     private final ProprietarioRepository proprietarioRepository;
 
-    public  ProprietarioModelRepository(ProprietarioRepository proprietarioRepository) {
+    public ProprietarioModelRepository(ProprietarioRepository proprietarioRepository) {
         this.proprietarioRepository = proprietarioRepository;
     }
 
@@ -34,9 +34,21 @@ public class ProprietarioModelRepository implements ProprietarioGatewayRepositor
 
     @Override
     public ProprietarioDomain buscarProprietarioPorId(UUID id) {
-        ProprietarioEntity entity =  proprietarioRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(String.format("Proprietário com o id '%s' não encontrado", id)));
-        return UsuarioAdapter.toProprietarioDomain(entity);
+        return UsuarioAdapter.toProprietarioDomain(verificarProprietarioExiste(id));
     }
 
+    private ProprietarioEntity verificarProprietarioExiste(UUID id) {
+        return proprietarioRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Proprietário com o id '%s' não encontrado", id)));
+    }
+
+
+    @Override
+    public void deletarProprietarioPorId(UUID id) {
+        verificarProprietarioExiste(id);
+        proprietarioRepository.deleteById(id);
+        if (proprietarioRepository.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("Falha ao deletar proprietário");
+        }
+    }
 }

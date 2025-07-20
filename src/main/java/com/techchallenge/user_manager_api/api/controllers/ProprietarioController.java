@@ -2,6 +2,7 @@ package com.techchallenge.user_manager_api.api.controllers;
 
 import com.techchallenge.user_manager_api.application.usecases.proprietario.BuscarProprietarioPorIdUseCase;
 import com.techchallenge.user_manager_api.application.usecases.proprietario.CriacaoDeProprietarioUseCase;
+import com.techchallenge.user_manager_api.application.usecases.proprietario.DeletarProprietarioPorIdUseCase;
 import com.techchallenge.user_manager_api.application.usecases.proprietario.ProprietarioPresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ProprietarioResponseDTO;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +28,14 @@ public class ProprietarioController {
     private final CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase;
     private final ProprietarioPresenter proprietarioPresenter;
     private final BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase;
+    private final DeletarProprietarioPorIdUseCase deletarProprietarioPorIdUseCase;
 
     public ProprietarioController(CriacaoDeProprietarioUseCase criacaoDeProprietarioUseCase, ProprietarioPresenter proprietarioPresenter,
-                                  BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase) {
+                                  BuscarProprietarioPorIdUseCase buscarProprietarioPorIdUseCase, DeletarProprietarioPorIdUseCase deletarProprietarioPorIdUseCase) {
         this.criacaoDeProprietarioUseCase = criacaoDeProprietarioUseCase;
         this.proprietarioPresenter = proprietarioPresenter;
         this.buscarProprietarioPorIdUseCase =  buscarProprietarioPorIdUseCase;
+        this.deletarProprietarioPorIdUseCase =  deletarProprietarioPorIdUseCase;
     }
 
     @Operation(
@@ -54,18 +58,18 @@ public class ProprietarioController {
     ) {
         return ResponseEntity.ok(buscarProprietarioPorIdUseCase.executar(id));
     }
-//
-//    @PreAuthorize("hasRole('PROPRIETARIO')")
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Operation(summary = "Deletar proprietário", description = "Deleta um Proprietário pelo ID. Somente um Proprietário pode executar.")
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deletarProprietario(
-//            @Parameter(description = "ID do Proprietário a ser deletado", example = "550e8400-e29b-41d4-a716-446655440000")
-//            @PathVariable UUID id
-//    ) {
-//        proprietarioService.deletarProprietario(id);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Deletar proprietário", description = "Deleta um Proprietário pelo ID. Somente um Proprietário pode executar.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProprietario(
+            @Parameter(description = "ID do Proprietário a ser deletado", example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id
+    ) {
+        deletarProprietarioPorIdUseCase.executar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 //
 //    @PreAuthorize("#id == authentication.principal.id")
 //    @SecurityRequirement(name = "bearerAuth")

@@ -12,4 +12,6 @@ public interface ProprietarioGatewayRepository {
     boolean existsByLogin(String login);
 
     ProprietarioDomain buscarProprietarioPorId(UUID id);
+
+    void deletarProprietarioPorId(UUID id);
 }
