@@ -107,3 +107,48 @@ INSERT INTO status_conta (descricao) VALUES
 
 
 
+create table if not exists tipo_cozinha (
+    id UUID primary key DEFAULT uuid_generate_v4(),
+    descricao varchar(50) unique not null
+);
+
+create table if not exists restaurante (
+
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    nome varchar(50) not null,
+    proprietario_id UUID not null,
+    constraint restaurante_proprietario_id_fkey foreign key (proprietario_id)  references proprietarios(id) ON DELETE CASCADE
+);
+
+create table if not exists endereco_restaurante(
+
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    estado VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    bairro VARCHAR(100) NOT NULL,
+    rua VARCHAR(255) NOT NULL,
+    numero INTEGER NOT NULL,
+    complemento VARCHAR(255),
+    cep VARCHAR(20) NOT NULL,
+    restaurante_id UUID not null,
+    CONSTRAINT fk_endereco_restaurante FOREIGN KEY (restaurante_id) REFERENCES restaurante(id) ON DELETE CASCADE
+);
+
+
+create table if not exists horario_funcionamento (
+
+    id UUID primary key DEFAULT uuid_generate_v4(),
+    dia_semana varchar(15) not null,
+    hora_abertura Time not null,
+    hora_fechamento time not null,
+    restaurante_id UUID not null,
+    CONSTRAINT fk_horario_restaurante foreign key (restaurante_id) REFERENCES restaurante(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS restaurante_tipo_cozinha (
+    restaurante_id UUID NOT NULL,
+    tipo_cozinha_id UUID NOT NULL,
+    PRIMARY KEY (restaurante_id, tipo_cozinha_id),
+    FOREIGN KEY (restaurante_id) REFERENCES restaurante(id) ON DELETE CASCADE,
+    FOREIGN KEY (tipo_cozinha_id) REFERENCES tipo_cozinha(id) ON DELETE CASCADE
+);
