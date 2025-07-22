@@ -1,6 +1,7 @@
 package com.techchallenge.user_manager_api.infra.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
+@Getter
 @Table(name = "restaurante")
 public class RestauranteEntity {
 

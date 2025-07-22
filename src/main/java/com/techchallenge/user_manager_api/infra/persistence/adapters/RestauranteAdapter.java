@@ -1,9 +1,6 @@
 package com.techchallenge.user_manager_api.infra.persistence.adapters;
 
-import com.techchallenge.user_manager_api.domain.entities.EnderecoRestauranteDomain;
-import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
-import com.techchallenge.user_manager_api.domain.entities.RestauranteDomain;
-import com.techchallenge.user_manager_api.domain.entities.TipoCozinhaDomain;
+import com.techchallenge.user_manager_api.domain.entities.*;
 import com.techchallenge.user_manager_api.infra.model.*;
 
 import java.util.List;
@@ -12,20 +9,62 @@ public class RestauranteAdapter {
 
     public static RestauranteEntity toEntity(RestauranteDomain restauranteDomain) {
         return new RestauranteEntity(restauranteDomain.getNome(), toEnderecoEntity(restauranteDomain.getEndereco()),
-                , UsuarioAdapter.toProprietario(restauranteDomain.getProprietario()));
+                toTiposCozinhaEntity(restauranteDomain.getTiposCozinha()),
+                toProprietarioEntity(restauranteDomain.getProprietario()));
     }
 
     public static EnderecoRestauranteEntity toEnderecoEntity(EnderecoRestauranteDomain endereco) {
         return new EnderecoRestauranteEntity(endereco.getEstado(), endereco.getCidade(), endereco.getBairro(),
                 endereco.getRua(), endereco.getNumero(), endereco.getComplemento(), endereco.getCep());
     }
+
     public static List<TipoCozinhaEntity> toTiposCozinhaEntity(List<TipoCozinhaDomain> tiposCozinha){
+        return tiposCozinha.stream()
+                .map(tipoCozinha -> new TipoCozinhaEntity(tipoCozinha.getId(), tipoCozinha.getDescricao()))
+                .toList();
 
     }
 
     public static ProprietarioEntity toProprietarioEntity(ProprietarioDomain proprietario) {
-        new ProprietarioEntity(proprietario.getCnpj(), proprietario.getRazaoSocial(), proprietario.getNomeFantasia(),
+        ProprietarioEntity proprietarioEntity =  new ProprietarioEntity(proprietario.getCnpj(), proprietario.getRazaoSocial(), proprietario.getNomeFantasia(),
                 proprietario.getInscricaoEstadual(), proprietario.getTelefoneComercial(), proprietario.getWhatsapp(), proprietario.getStatusConta(),
-                proprietario.getNome(), proprietario.getEmail(), proprietario.getLogin(), proprietario.getSenha(), proprietario.getEnderecos());
+                proprietario.getNome(), proprietario.getEmail(), proprietario.getLogin(), proprietario.getSenha(), List.of());
+
+        adicionarEnderecosAoUsuario(proprietarioEntity, proprietario.getEnderecos());
+        return proprietarioEntity;
+    }
+
+    private static void adicionarEnderecosAoUsuario(UsuarioEntity usuario, List<EnderecoDomain> enderecos) {
+        if (enderecos == null || enderecos.isEmpty()) return;
+
+        List<EnderecoEntity> enderecosEntity = enderecos.stream()
+                .map(endereco -> new EnderecoEntity(endereco, usuario))
+                .toList();
+
+        usuario.getEnderecos().addAll(enderecosEntity);
+    }
+
+    public static RestauranteDomain toRestauranteDomain(RestauranteEntity restauranteEntity) {
+        return new RestauranteDomain(restauranteEntity.getNome(), toEnderecoDomain(restauranteEntity.getEndereco()),
+                toTiposCozinhaDomain(restauranteEntity.getTiposCozinha()),
+                toProprietarioDomain(restauranteEntity.getProprietario()));
+    }
+
+    private static ProprietarioDomain toProprietarioDomain(ProprietarioEntity proprietario) {
+         return new ProprietarioDomain(proprietario.getId(), proprietario.getCnpj(), proprietario.getRazaoSocial(), proprietario.getNomeFantasia(),
+                proprietario.getInscricaoEstadual(), proprietario.getTelefoneComercial(), proprietario.getWhatsapp(),
+                proprietario.getStatusConta(), proprietario.getNome(), proprietario.getEmail(), proprietario.getLogin(),
+                proprietario.getSenha());
+    }
+
+    private static List<TipoCozinhaDomain> toTiposCozinhaDomain(List<TipoCozinhaEntity> tiposCozinha) {
+        return  tiposCozinha.stream()
+                .map(tipoCozinha -> new TipoCozinhaDomain(tipoCozinha.getId(), tipoCozinha.getDescricao()))
+                .toList();
+    }
+
+    private static EnderecoRestauranteDomain toEnderecoDomain(EnderecoRestauranteEntity endereco) {
+        return new EnderecoRestauranteDomain(endereco.getEstado(), endereco.getCidade(), endereco.getBairro(),
+                endereco.getRua(), endereco.getNumero(), endereco.getComplemento(), endereco.getCep());
     }
 }

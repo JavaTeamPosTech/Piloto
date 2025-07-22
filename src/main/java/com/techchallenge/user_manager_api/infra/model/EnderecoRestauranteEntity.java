@@ -1,17 +1,20 @@
 package com.techchallenge.user_manager_api.infra.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
+@Getter
 @Table(name = "endereco_restaurante")
 public class EnderecoRestauranteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     private String estado;

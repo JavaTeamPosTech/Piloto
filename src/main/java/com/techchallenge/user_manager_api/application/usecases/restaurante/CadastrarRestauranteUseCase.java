@@ -15,7 +15,6 @@ import com.techchallenge.user_manager_api.domain.entities.TipoCozinhaDomain;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CadastrarRestauranteUseCase {
@@ -37,7 +36,7 @@ public class CadastrarRestauranteUseCase {
         this.tipoCozinhaRepository = tipoCozinhaRepository;
     }
 
-    public void executar(RestauranteRequestDTO dto){
+    public RestauranteDomain executar(RestauranteRequestDTO dto){
 
         //verifica se o proprietario existe
         ProprietarioDomain proprietarioDomain = proprietarioRepository.buscarProprietarioPorId(dto.proprietarioId());
@@ -50,6 +49,6 @@ public class CadastrarRestauranteUseCase {
 
 
         RestauranteDomain restauranteDomain = RestauranteMapper.toDomain(dto, enderecoRestauranteDomain,tipoCozinhaDomains, proprietarioDomain);
-        restauranteRepository.cadastrarRestaurante(restauranteDomain);
+        return restauranteRepository.cadastrarRestaurante(restauranteDomain);
     }
 }

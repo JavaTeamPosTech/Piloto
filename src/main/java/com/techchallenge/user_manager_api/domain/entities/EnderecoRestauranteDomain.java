@@ -16,6 +16,18 @@ public class EnderecoRestauranteDomain {
 
     private RestauranteDomain restaurante;
 
+    public EnderecoRestauranteDomain() {}
+
+    public EnderecoRestauranteDomain(String estado, String cidade, String bairro, String rua, Integer numero, String complemento, String cep) {
+        this.estado = estado;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+    }
+
 
     public EnderecoRestauranteDomain cadastrarEndereco(String estado, String cidade, String bairro, String rua,
                                                        Integer numero, String complemento, String cep) {

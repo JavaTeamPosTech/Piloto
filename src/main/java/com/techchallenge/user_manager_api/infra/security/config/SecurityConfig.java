@@ -40,6 +40,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/proprietarios").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/restaurantes").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated()
