@@ -16,7 +16,6 @@ import java.util.List;
 public class UsuarioMapper {
 
     public static ClienteDomain toClienteDomain(ClienteRequestDTO dto, String senhaCriptografada) {
-
         ClienteDomain clienteDomain = new ClienteDomain(
                 null,
                 dto.cpf(),
@@ -27,11 +26,16 @@ public class UsuarioMapper {
                 dto.alergias(),
                 dto.metodoPagamentoPreferido(),
                 dto.notificacoesAtivas(),
+                dto.clienteVip(),
+                0,
+                0,
+                null,
                 dto.nome(),
                 dto.email(),
                 dto.login(),
                 senhaCriptografada
         );
+
 
         adicionarEnderecosAoUsuario(clienteDomain, dto.enderecos());
         return clienteDomain;

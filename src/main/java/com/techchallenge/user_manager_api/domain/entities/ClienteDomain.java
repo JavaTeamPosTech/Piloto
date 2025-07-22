@@ -44,8 +44,9 @@ public class ClienteDomain extends UsuarioDomain {
 
     public ClienteDomain(UUID id, String cpf, LocalDate dataNascimento, GeneroEnum genero, String telefone,
                          Set<TiposComidaEnum> preferenciasAlimentares, Set<AlergiaAlimentarEnum> alergias,
-                         MetodoPagamentoEnum metodoPagamentoPreferido,
-                         Boolean notificacoesAtivas, String nome, String email, String login, String senhaCriptografada) {
+                         MetodoPagamentoEnum metodoPagamentoPreferido, Boolean notificacoesAtivas,
+                         Boolean clienteVip, Integer saldoPontos, Integer avaliacoesFeitas, Date ultimoPedido,
+                         String nome, String email, String login, String senhaCriptografada) {
 
         super(id, nome, email, login, senhaCriptografada);
         this.cpf = cpf;
@@ -61,6 +62,46 @@ public class ClienteDomain extends UsuarioDomain {
         this.metodoPagamentoPreferido = metodoPagamentoPreferido;
         this.clienteVip = clienteVip;
         this.notificacoesAtivas = notificacoesAtivas;
+        this.saldoPontos = saldoPontos;
+        this.avaliacoesFeitas = avaliacoesFeitas;
+        this.ultimoPedido = ultimoPedido;
     }
+
+    public ClienteDomain(UUID id,
+                         String cpf,
+                         LocalDate dataNascimento,
+                         GeneroEnum genero,
+                         String telefone,
+                         Set<TiposComidaEnum> preferenciasAlimentares,
+                         Set<AlergiaAlimentarEnum> alergias,
+                         MetodoPagamentoEnum metodoPagamentoPreferido,
+                         Boolean notificacoesAtivas,
+                         String nome,
+                         String email,
+                         String login,
+                         String senhaCriptografada) {
+
+        super(id, nome, email, login, senhaCriptografada);
+
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.telefone = telefone;
+        this.preferenciasAlimentares = preferenciasAlimentares != null
+                ? new HashSet<>(preferenciasAlimentares)
+                : new HashSet<>();
+        this.alergias = alergias != null
+                ? new HashSet<>(alergias)
+                : new HashSet<>();
+        this.metodoPagamentoPreferido = metodoPagamentoPreferido;
+        this.notificacoesAtivas = notificacoesAtivas;
+
+        this.clienteVip = false;
+        this.saldoPontos = 0;
+        this.avaliacoesFeitas = 0;
+        this.ultimoPedido = null;
+    }
+
+
 
 }
