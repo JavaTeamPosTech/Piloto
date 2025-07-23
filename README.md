@@ -5,7 +5,6 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-
 Um sistema de gerenciamento de menus e pedidos para restaurantes, desenvolvido com **Java**, **Spring Boot**, **PostgreSQL** e **Docker**.
 
 ---
@@ -46,19 +45,23 @@ Um sistema de gerenciamento de menus e pedidos para restaurantes, desenvolvido c
    cd meu-menu
    ```
 2. Configure o arquivo .env:
+
 - POSTGRES_DB=meuMenu
 - POSTGRES_USER=seu_usuario
 - POSTGRES_PASSWORD=sua_senha
 - SPRING_PROFILES_ACTIVE=dev
+
 3. Inicie os contêineres com Docker Compose:
-    ```bash
-    docker-compose up --build
-    ```
+   ```bash
+   docker-compose up --build
+   ```
 4. Acesse a aplicação:
+
 - API: http://localhost:8080
 - Banco de Dados (via DBeaver ou outro clienteDomain): jdbc:postgresql://localhost:5432/meuMenu
 
-## 📂  Estrutura do projeto
+## 📂 Estrutura do projeto
+
 ```plaintext
 meu-menu/
 ├── src/
@@ -79,10 +82,12 @@ meu-menu/
 ```
 
 ## 🧪 Testes
+
 Para executar os testes unitários, utilize o comando:
-   ```bash
-    mvn test
-   ```
+
+```bash
+ mvn test
+```
 
 ## 📖 Documentação da API
 
@@ -91,14 +96,31 @@ Acesse a documentação da API gerada automaticamente pelo Swagger em:
 http://localhost:8080/swagger-ui.html
 
 ## 🐳 Docker Subir os Contêineres
- ```bash
+
+```bash
 docker-compose up --build
- ```
+```
 
 ## 👥 Contribuidores
+
 - Rafael Caxixi Fuzeti
 - Gustavo Soares Bomfim
 - Francisco Aguiar Barreto de Souza Lima
 - Fernanda de Oliveira Ferreira
 
+# 📦 Comandos úteis para projetos Java com Maven e Jacoco
 
+Este documento reúne comandos Maven importantes para facilitar o desenvolvimento, execução de testes e geração de relatórios de cobertura de testes com Jacoco.
+
+---
+
+## ✅ Comandos disponíveis
+
+### 🔍 Gerar relatório Jacoco
+
+Executa a limpeza, os testes e gera o relatório de cobertura de testes com Jacoco.
+
+```bash
+mvn clean test jacoco:report
+
+```
