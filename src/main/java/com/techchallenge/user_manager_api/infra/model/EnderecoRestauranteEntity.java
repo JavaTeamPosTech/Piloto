@@ -25,9 +25,10 @@ public class EnderecoRestauranteEntity {
     private String complemento;
     private String cep;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurante_id")
+    @OneToOne
+    @JoinColumn(name = "restaurante_id", referencedColumnName = "id")
     private RestauranteEntity restaurante;
+
 
     public EnderecoRestauranteEntity(String estado, String cidade, String bairro, String rua, Integer numero,
                                      String complemento, String cep) {
@@ -38,5 +39,9 @@ public class EnderecoRestauranteEntity {
         this.numero = numero;
         this.complemento = complemento;
         this.cep = cep;
+    }
+
+    public void setRestaurante(RestauranteEntity restaurante) {
+        this.restaurante = restaurante;
     }
 }

@@ -36,7 +36,7 @@ public class CadastrarRestauranteUseCase {
         this.tipoCozinhaRepository = tipoCozinhaRepository;
     }
 
-    public RestauranteDomain executar(RestauranteRequestDTO dto){
+    public void executar(RestauranteRequestDTO dto){
 
         //verifica se o proprietario existe
         ProprietarioDomain proprietarioDomain = proprietarioRepository.buscarProprietarioPorId(dto.proprietarioId());
@@ -48,7 +48,8 @@ public class CadastrarRestauranteUseCase {
         EnderecoRestauranteDomain enderecoRestauranteDomain = EnderecoRestauranteMapper.toDomain(dto.endereco());
 
 
-        RestauranteDomain restauranteDomain = RestauranteMapper.toDomain(dto, enderecoRestauranteDomain,tipoCozinhaDomains, proprietarioDomain);
-        return restauranteRepository.cadastrarRestaurante(restauranteDomain);
+        RestauranteDomain restauranteDomain = RestauranteMapper.toDomain(dto, proprietarioDomain);
+        restauranteRepository.cadastrarRestaurante(restauranteDomain);
+        restaurantePresenter.apresentar(restauranteDomain);
     }
 }

@@ -15,11 +15,8 @@ public class RestauranteDomain {
 
     private ProprietarioDomain proprietario;
 
-    public RestauranteDomain(String nome,  EnderecoRestauranteDomain endereco, List<TipoCozinhaDomain> tiposCozinha,
-                             ProprietarioDomain proprietario) {
+    public RestauranteDomain(String nome, ProprietarioDomain proprietario) {
         this.nome = nome;
-        this.endereco = endereco;
-        this.tiposCozinha = tiposCozinha;
         this.proprietario = proprietario;
     }
 

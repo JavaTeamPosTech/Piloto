@@ -40,8 +40,8 @@ public class ProprietarioEntity extends UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private StatusContaEnum statusConta;
 
-//    @OneToOne(mappedBy = "proprietario")
-//    private RestauranteEntity restaurante;
+    @OneToOne(mappedBy = "proprietario")
+    private RestauranteEntity restaurante;
 
     public ProprietarioEntity(String cnpj, String razaoSocial, String nomeFantasia, String inscricaoEstadual,
                               String telefoneComercial, String whatsapp, StatusContaEnum statusConta, String nome,

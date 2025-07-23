@@ -3,12 +3,15 @@ package com.techchallenge.user_manager_api.api.controllers;
 import com.techchallenge.user_manager_api.application.usecases.presenters.RestaurantePresenter;
 import com.techchallenge.user_manager_api.application.usecases.restaurante.CadastrarRestauranteUseCase;
 import com.techchallenge.user_manager_api.domain.dto.requests.RestauranteRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.RestauranteResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.RestauranteDomain;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +37,12 @@ public class RestauranteController {
             summary = "Realiza o cadastro de um novo Restaurante",
             description = "Este endpoint cria um novo restaurante no sistema."
     )
+    //@PreAuthorize("hasRole('PROPRIETARIO')")
+    //@SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public ResponseEntity<RestauranteResponseDTO> cadastrarRestaurante(@RequestBody @Valid RestauranteRequestDTO restauranteRequestDTO) {
-        RestauranteDomain restauranteDomain = cadastrarRestauranteUseCase.executar(restauranteRequestDTO);
-        return ResponseEntity.ok(restaurantePresenter.toViewModel(restauranteDomain));
-
-
+        cadastrarRestauranteUseCase.executar(restauranteRequestDTO);
+        return ResponseEntity.ok(restaurantePresenter.getViewModel());
+        //return ResponseEntity.ok(restaurantePresenter.toViewModel(restauranteDomain));
     }
 }

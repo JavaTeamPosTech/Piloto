@@ -3,13 +3,14 @@ package com.techchallenge.user_manager_api.infra.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
-@NoArgsConstructor
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "restaurante")
 public class RestauranteEntity {
 
@@ -19,25 +20,32 @@ public class RestauranteEntity {
 
     private String nome;
 
-    @OneToOne(mappedBy = "restaurante")
+    @OneToOne(mappedBy = "restaurante", cascade = CascadeType.ALL)
     private EnderecoRestauranteEntity endereco;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "restaurante_tipo_cozinha", joinColumns = @JoinColumn(name = "restaurante_id"),
-            inverseJoinColumns = @JoinColumn(name = "tipo_cozinha_id")
-    )
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "restaurante_tipo_cozinha",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipo_cozinha_id"))
     private List<TipoCozinhaEntity> tiposCozinha;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proprietario_id", referencedColumnName = "id")
     private ProprietarioEntity proprietario;
 
-    public RestauranteEntity(String nome, EnderecoRestauranteEntity endereco, List<TipoCozinhaEntity> tiposCozinha,
-                             ProprietarioEntity proprietario) {
+
+    public RestauranteEntity(String nome, ProprietarioEntity proprietario) {
         this.nome = nome;
-        this.endereco = endereco;
-        this.tiposCozinha = tiposCozinha;
         this.proprietario = proprietario;
     }
 
+    public void setEndereco(EnderecoRestauranteEntity endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setTiposCozinha(List<TipoCozinhaEntity> tiposCozinha) {
+        this.tiposCozinha = tiposCozinha;
+    }
+
 }
+

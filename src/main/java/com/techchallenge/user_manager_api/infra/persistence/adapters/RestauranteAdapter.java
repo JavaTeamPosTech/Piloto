@@ -7,11 +7,13 @@ import java.util.List;
 
 public class RestauranteAdapter {
 
-    public static RestauranteEntity toEntity(RestauranteDomain restauranteDomain) {
-        return new RestauranteEntity(restauranteDomain.getNome(), toEnderecoEntity(restauranteDomain.getEndereco()),
-                toTiposCozinhaEntity(restauranteDomain.getTiposCozinha()),
-                toProprietarioEntity(restauranteDomain.getProprietario()));
+    public static RestauranteEntity toEntity(RestauranteDomain domain, ProprietarioEntity proprietarioEntity) {
+        RestauranteEntity restaurante = new RestauranteEntity(domain.getNome(), proprietarioEntity);
+        // setar endereço e outros campos
+        return restaurante;
     }
+
+
 
     public static EnderecoRestauranteEntity toEnderecoEntity(EnderecoRestauranteDomain endereco) {
         return new EnderecoRestauranteEntity(endereco.getEstado(), endereco.getCidade(), endereco.getBairro(),
@@ -45,8 +47,7 @@ public class RestauranteAdapter {
     }
 
     public static RestauranteDomain toRestauranteDomain(RestauranteEntity restauranteEntity) {
-        return new RestauranteDomain(restauranteEntity.getNome(), toEnderecoDomain(restauranteEntity.getEndereco()),
-                toTiposCozinhaDomain(restauranteEntity.getTiposCozinha()),
+        return new RestauranteDomain(restauranteEntity.getNome(),
                 toProprietarioDomain(restauranteEntity.getProprietario()));
     }
 
