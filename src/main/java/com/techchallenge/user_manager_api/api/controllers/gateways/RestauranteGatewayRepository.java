@@ -8,4 +8,6 @@ public interface RestauranteGatewayRepository  {
     RestauranteDomain cadastrarRestaurante(RestauranteDomain restauranteDomain);
 
     RestauranteDomain buscarRestaurantePorId(UUID id);
+
+    void deletarRestauratePorId(UUID id);
 }

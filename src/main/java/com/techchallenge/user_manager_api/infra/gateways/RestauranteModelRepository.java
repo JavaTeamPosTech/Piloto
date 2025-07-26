@@ -44,4 +44,11 @@ public class RestauranteModelRepository implements RestauranteGatewayRepository 
         return RestauranteAdapter.toRestauranteDomain(restauranteEntity);
     }
 
+    @Override
+    public void deletarRestauratePorId(UUID id) {
+        RestauranteEntity restaurante = restauranteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado o restaurante com id: " + id));
+
+        restauranteRepository.delete(restaurante);
+    }
 }
