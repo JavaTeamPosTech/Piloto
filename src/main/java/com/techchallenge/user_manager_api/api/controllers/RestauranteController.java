@@ -1,21 +1,18 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
 import com.techchallenge.user_manager_api.application.usecases.presenters.RestaurantePresenter;
+import com.techchallenge.user_manager_api.application.usecases.restaurante.BuscarRestaurantePorIdUseCase;
 import com.techchallenge.user_manager_api.application.usecases.restaurante.CadastrarRestauranteUseCase;
 import com.techchallenge.user_manager_api.domain.dto.requests.RestauranteRequestDTO;
-import com.techchallenge.user_manager_api.domain.dto.response.CadastroResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.RestauranteResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.RestauranteDomain;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @Tag(name = "Restaurante Controller", description = "Operações relacionadas ao Restaurante")
@@ -25,11 +22,13 @@ public class RestauranteController {
     private final CadastrarRestauranteUseCase cadastrarRestauranteUseCase;
 
     private final RestaurantePresenter restaurantePresenter;
+    private final BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase;
 
     public RestauranteController (CadastrarRestauranteUseCase cadastrarRestauranteUseCase,
-                                  RestaurantePresenter restaurantePresenter) {
+                                  RestaurantePresenter restaurantePresenter, BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase) {
         this.cadastrarRestauranteUseCase = cadastrarRestauranteUseCase;
         this.restaurantePresenter = restaurantePresenter;
+        this.buscarRestaurantePorIdUseCase  = buscarRestaurantePorIdUseCase;
 
     }
 
@@ -45,4 +44,14 @@ public class RestauranteController {
         return ResponseEntity.ok(restaurantePresenter.getViewModel());
         //return ResponseEntity.ok(restaurantePresenter.toViewModel(restauranteDomain));
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RestauranteResponseDTO> buscarRestaurantePorId(@PathVariable UUID id) {
+        RestauranteDomain domain = buscarRestaurantePorIdUseCase.executar(id);
+        RestauranteResponseDTO dto = RestaurantePresenter.retornarRestaurante(domain);
+        return ResponseEntity.ok(dto);
+    }
+
+
 }
