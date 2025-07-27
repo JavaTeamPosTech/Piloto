@@ -22,10 +22,13 @@ public class TipoCozinhaController {
     }
 
 
-    @PostMapping("adicionarParaRestaurante")
+    @PostMapping("/adicionarParaRestaurante")
     public ResponseEntity<String> adicionarTipo(@RequestBody @Valid TipoCozinhaRequestDTO dto) {
         RestauranteTipoCozinhaDomain domain = RestauranteTipoCozinhaMapper.toDomain(dto);
         adicionarTipoCozinhaParaRestauranteUseCase.executar(domain);
         return ResponseEntity.ok("Os tipos de cozinha foram adicionados com sucesos");
     }
+
+
+
 }
