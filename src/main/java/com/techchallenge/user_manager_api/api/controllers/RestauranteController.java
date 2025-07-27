@@ -1,9 +1,12 @@
 package com.techchallenge.user_manager_api.api.controllers;
 
+import com.techchallenge.user_manager_api.application.mappers.RestauranteMapper;
 import com.techchallenge.user_manager_api.application.usecases.presenters.RestaurantePresenter;
+import com.techchallenge.user_manager_api.application.usecases.restaurante.AtualizarRestauranteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.restaurante.BuscarRestaurantePorIdUseCase;
 import com.techchallenge.user_manager_api.application.usecases.restaurante.CadastrarRestauranteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.restaurante.DeletarRestaurantePorIdUseCase;
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarRestauranteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.RestauranteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.RestauranteResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.RestauranteDomain;
@@ -25,14 +28,17 @@ public class RestauranteController {
     private final RestaurantePresenter restaurantePresenter;
     private final BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase;
     private final DeletarRestaurantePorIdUseCase deletarRestaurantePorIdUseCase;
+    private final AtualizarRestauranteUseCase atualizarRestauranteUseCase;
 
     public RestauranteController(CadastrarRestauranteUseCase cadastrarRestauranteUseCase,
                                  RestaurantePresenter restaurantePresenter, BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase,
-                                 DeletarRestaurantePorIdUseCase deletarRestaurantePorIdUseCase) {
+                                 DeletarRestaurantePorIdUseCase deletarRestaurantePorIdUseCase,
+                                 AtualizarRestauranteUseCase atualizarRestauranteUseCase) {
         this.cadastrarRestauranteUseCase = cadastrarRestauranteUseCase;
         this.restaurantePresenter = restaurantePresenter;
         this.buscarRestaurantePorIdUseCase = buscarRestaurantePorIdUseCase;
         this.deletarRestaurantePorIdUseCase = deletarRestaurantePorIdUseCase;
+        this.atualizarRestauranteUseCase = atualizarRestauranteUseCase;
 
     }
 
@@ -61,6 +67,14 @@ public class RestauranteController {
     public ResponseEntity<String> deletarRestaurantePorId(@PathVariable UUID id){
         deletarRestaurantePorIdUseCase.executar(id);
         return ResponseEntity.ok("Restaurante deletado com sucesso!");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<RestauranteResponseDTO> atualizarRestaurante(@PathVariable UUID id,
+                                                                       @RequestBody @Valid AtualizarRestauranteRequestDTO restauranteRequestDTO) {
+        RestauranteDomain domain = RestauranteMapper.toDomain(restauranteRequestDTO, id);
+        atualizarRestauranteUseCase.executar(domain);
+        return ResponseEntity.ok(RestaurantePresenter.retornarRestaurante(domain));
     }
 
 

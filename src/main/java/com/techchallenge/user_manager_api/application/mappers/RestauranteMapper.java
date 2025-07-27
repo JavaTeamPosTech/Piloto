@@ -1,12 +1,13 @@
 package com.techchallenge.user_manager_api.application.mappers;
 
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarRestauranteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.RestauranteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.RestauranteResponseDTO;
-import com.techchallenge.user_manager_api.domain.entities.*;
+import com.techchallenge.user_manager_api.domain.entities.ProprietarioDomain;
+import com.techchallenge.user_manager_api.domain.entities.RestauranteDomain;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class RestauranteMapper {
@@ -21,5 +22,9 @@ public class RestauranteMapper {
         return new RestauranteResponseDTO(
                 restauranteDomain.getNome()
         );
+    }
+
+    public static RestauranteDomain toDomain(AtualizarRestauranteRequestDTO dto, UUID id) {
+        return new RestauranteDomain(id, dto.nome(), EnderecoRestauranteMapper.toDomain(dto.endereco()));
     }
 }

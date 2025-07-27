@@ -33,6 +33,12 @@ public class RestauranteDomain {
     }
 
 
+    public RestauranteDomain(UUID id, String nome, EnderecoRestauranteDomain endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+    }
+
     public void setNome(String nome) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do restaurante não pode ser vazio");
