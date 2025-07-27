@@ -34,8 +34,21 @@ public class RestauranteEntity {
     private ProprietarioEntity proprietario;
 
 
-    public RestauranteEntity(String nome, ProprietarioEntity proprietario) {
+
+    public RestauranteEntity(String nome, EnderecoRestauranteEntity endereco, List<TipoCozinhaEntity> tiposCozinha,
+                             ProprietarioEntity proprietario) {
         this.nome = nome;
+        this.endereco = endereco;
+        this.tiposCozinha = tiposCozinha;
+        this.proprietario = proprietario;
+    }
+
+    public RestauranteEntity(UUID id, String nome, EnderecoRestauranteEntity endereco, List<TipoCozinhaEntity> tiposCozinha,
+                             ProprietarioEntity proprietario) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tiposCozinha = tiposCozinha;
         this.proprietario = proprietario;
     }
 

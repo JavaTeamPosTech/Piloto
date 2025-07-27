@@ -7,8 +7,14 @@ import java.util.List;
 
 public class RestauranteAdapter {
 
-    public static RestauranteEntity toEntity(RestauranteDomain domain, ProprietarioEntity proprietarioEntity) {
-        RestauranteEntity restaurante = new RestauranteEntity(domain.getNome(), proprietarioEntity);
+    public static RestauranteEntity toEntity(RestauranteDomain domain) {
+
+        ProprietarioEntity proprietarioEntity = UsuarioAdapter.toProprietario(domain.getProprietario());
+        EnderecoRestauranteEntity enderecoRestauranteEntity = toEnderecoEntity(domain.getEndereco());
+
+        List<TipoCozinhaEntity> tiposCozinhaEntity = toTiposCozinhaEntity(domain.getTiposCozinha());
+
+        RestauranteEntity restaurante = new RestauranteEntity(domain.getNome(), enderecoRestauranteEntity, tiposCozinhaEntity, proprietarioEntity);
         // setar endereço e outros campos
         return restaurante;
     }

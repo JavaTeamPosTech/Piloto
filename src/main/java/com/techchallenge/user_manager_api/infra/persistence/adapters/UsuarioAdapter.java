@@ -56,9 +56,8 @@ public class UsuarioAdapter {
                 clienteEntity.getEmail(),
                 clienteEntity.getLogin(),
                 clienteEntity.getSenha()
-                );
+        );
     }
-
 
 
     public static ProprietarioEntity toProprietario(ProprietarioDomain proprietarioDomain, String senhaCriptografada) {
@@ -122,7 +121,7 @@ public class UsuarioAdapter {
 //        );
 //    }
 
-//    public static Proprietario toProprietario(ProprietarioRequestDTO dto, String senhaCriptografada) {
+    //    public static Proprietario toProprietario(ProprietarioRequestDTO dto, String senhaCriptografada) {
 //        Proprietario proprietario = new Proprietario(
 //                dto.cnpj(),
 //                dto.razaoSocial(),
@@ -152,7 +151,8 @@ public class UsuarioAdapter {
 
         usuario.getEnderecos().addAll(enderecosEntity);
     }
-//
+
+    //
 //    public static ClienteResponseDTO toClienteResponseDTO(Cliente cliente) {
 //
 //        return new ClienteResponseDTO(
@@ -195,6 +195,26 @@ public class UsuarioAdapter {
                 toEnderecoResponseDTO(proprietario.getEnderecos())
         );
 
+    }
+
+    public static ProprietarioEntity toProprietario(ProprietarioDomain proprietarioDomain) {
+        ProprietarioEntity proprietario = new ProprietarioEntity(
+                proprietarioDomain.getCnpj(),
+                proprietarioDomain.getRazaoSocial(),
+                proprietarioDomain.getNomeFantasia(),
+                proprietarioDomain.getInscricaoEstadual(),
+                proprietarioDomain.getTelefoneComercial(),
+                proprietarioDomain.getWhatsapp(),
+                proprietarioDomain.getStatusConta(),
+                proprietarioDomain.getNome(),
+                proprietarioDomain.getEmail(),
+                proprietarioDomain.getLogin(),
+                proprietarioDomain.getSenha(),
+                new ArrayList<>()
+        );
+
+        adicionarEnderecosAoUsuario(proprietario, proprietarioDomain.getEnderecos());
+        return proprietario;
     }
 
 }
