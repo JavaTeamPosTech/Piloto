@@ -49,4 +49,15 @@ public class RestauranteTipoCozinhaModelRepository implements RestauranteTipoCoz
         restauranteTipoCozinhaRepository.saveAll(entidades);
 
     }
+
+    @Override
+    public void excluirTiposPorId(UUID id, List<TipoCozinhaDomain> tipoCozinhaDomains) {
+        List<RestauranteTipoCozinhaEntity> entidades = RestauranteTipoCozinhaAdapter.toEntityList(id, tipoCozinhaDomains);
+
+        List<RestauranteTipoCozinhaId> ids = entidades.stream()
+                .map(RestauranteTipoCozinhaEntity::getId)
+                .toList();
+
+        restauranteTipoCozinhaRepository.deleteAllById(ids);
+    }
 }

@@ -7,4 +7,7 @@ import java.util.UUID;
 
 public interface RestauranteTipoCozinhaGatewayRepository {
     void adicionarTipos(UUID id, List<TipoCozinhaDomain> tipoCozinhaDomains);
+
+    void excluirTiposPorId(UUID id, List<TipoCozinhaDomain> tipoCozinhaDomains);
+
 }
