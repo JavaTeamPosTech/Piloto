@@ -1,16 +1,18 @@
 package com.techchallenge.user_manager_api.infra.model;
 
-import com.techchallenge.user_manager_api.infra.model.enums.*;
+import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
+import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
+import com.techchallenge.user_manager_api.infra.model.enums.AlergiaAlimentarEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.GeneroEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.MetodoPagamentoEnum;
+import com.techchallenge.user_manager_api.infra.model.enums.TiposComidaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -80,5 +82,94 @@ public class ClienteEntity extends UsuarioEntity {
         this.clienteVip = clienteVip;
         this.notificacoesAtivas = notificacoesAtivas;
     }
+
+    public ClienteEntity atualizarCom(ClienteDomain clienteDomain, String senhaCriptografada) {
+        if (clienteDomain.getNome() != null) {
+            this.setNome(clienteDomain.getNome());
+        }
+        if (clienteDomain.getEmail() != null) {
+            this.setEmail(clienteDomain.getEmail());
+        }
+        if (clienteDomain.getLogin() != null) {
+            this.setLogin(clienteDomain.getLogin());
+        }
+        if (senhaCriptografada != null) {
+            this.atualizarSenha(senhaCriptografada);
+        }
+        if (clienteDomain.getCpf() != null) {
+            this.cpf = clienteDomain.getCpf();
+        }
+        if (clienteDomain.getDataNascimento() != null) {
+            this.dataNascimento = clienteDomain.getDataNascimento();
+        }
+        if (clienteDomain.getGenero() != null) {
+            this.genero = clienteDomain.getGenero();
+        }
+        if (clienteDomain.getTelefone() != null) {
+            this.telefone = clienteDomain.getTelefone();
+        }
+        if (clienteDomain.getPreferenciasAlimentares() != null) {
+            this.preferenciasAlimentares = clienteDomain.getPreferenciasAlimentares();
+        }
+        if (clienteDomain.getAlergias() != null) {
+            this.alergias = clienteDomain.getAlergias();
+        }
+        if (clienteDomain.getMetodoPagamentoPreferido() != null) {
+            this.metodoPagamentoPreferido = clienteDomain.getMetodoPagamentoPreferido();
+        }
+        if (clienteDomain.getNotificacoesAtivas() != null) {
+            this.notificacoesAtivas = clienteDomain.getNotificacoesAtivas();
+        }
+
+        if (clienteDomain.getEnderecos() != null) {
+            this.atualizarEnderecos(clienteDomain);
+        }
+
+        return this;
+    }
+
+    public void atualizarEnderecos(ClienteDomain clienteDomain) {
+        List<EnderecoDomain> enderecosDomain = clienteDomain.getEnderecos();
+        if (enderecosDomain == null) return;
+
+        if (this.getEnderecos() == null) {
+            this.setEnderecos(new ArrayList<>());
+        }
+
+        Map<UUID, EnderecoEntity> enderecosAtuaisMap = this.getEnderecos().stream()
+                .filter(e -> e.getId() != null)
+                .collect(Collectors.toMap(EnderecoEntity::getId, e -> e));
+
+        // Limpa a lista original para manter a mesma instância
+        this.getEnderecos().clear();
+
+        for (EnderecoDomain enderecoDomain : enderecosDomain) {
+            if (enderecoDomain.getId() != null && enderecosAtuaisMap.containsKey(enderecoDomain.getId())) {
+                EnderecoEntity enderecoExistente = enderecosAtuaisMap.get(enderecoDomain.getId());
+                // Atualiza campos da entidade usando dados do domínio já validados
+                enderecoExistente.atualizarCom(enderecoDomain);
+                this.getEnderecos().add(enderecoExistente);
+                enderecosAtuaisMap.remove(enderecoDomain.getId());
+            } else {
+                EnderecoEntity novoEndereco = new EnderecoEntity(enderecoDomain, this);
+                this.getEnderecos().add(novoEndereco);
+            }
+        }
+
+        // Os endereços que sobraram em enderecosAtuaisMap foram removidos no domínio
+        // Como a coleção original foi limpa e reenchida, eles não estarão mais presentes e o orphanRemoval cuidará da exclusão
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

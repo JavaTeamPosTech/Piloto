@@ -1,6 +1,11 @@
 package com.techchallenge.user_manager_api.application.mappers;
 
-import com.techchallenge.user_manager_api.domain.dto.requests.*;
+import com.techchallenge.user_manager_api.application.inputs.AtualizarClienteInput;
+import com.techchallenge.user_manager_api.application.inputs.EnderecoInput;
+import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarProprietarioRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.EnderecoRequestDTO;
+import com.techchallenge.user_manager_api.domain.dto.requests.ProprietarioRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.*;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.domain.entities.EnderecoDomain;
@@ -46,6 +51,16 @@ public class UsuarioMapper {
 
         List<EnderecoDomain> enderecos = dtos.stream()
                 .map(enderecoDTO -> new EnderecoDomain(enderecoDTO, usuarioDomain))
+                .toList();
+
+        usuarioDomain.getEnderecos().addAll(enderecos);
+    }
+
+    private static void adicionarEnderecosInputAoUsuario(UsuarioDomain usuarioDomain, List<EnderecoInput> enderecoInputs) {
+        if (enderecoInputs == null || enderecoInputs.isEmpty()) return;
+
+        List<EnderecoDomain> enderecos = enderecoInputs.stream()
+                .map(enderecoInput -> new EnderecoDomain(enderecoInput, usuarioDomain))
                 .toList();
 
         usuarioDomain.getEnderecos().addAll(enderecos);
@@ -151,25 +166,30 @@ public class UsuarioMapper {
 //        );
 //    }
 
-    public static ClienteDomain toClienteDomain(AtualizarClienteRequestDTO dto, String senhaCriptografada) {
+    public static ClienteDomain toClienteDomain(AtualizarClienteInput input, String senhaCriptografada) {
+
+        if (input.getId() == null) {
+            throw new IllegalArgumentException("ID do cliente é obrigatório para atualização.");
+        }
+
 
         ClienteDomain clienteDomain = new ClienteDomain(
-                null,
-                dto.cpf(),
-                dto.dataNascimento(),
-                dto.genero(),
-                dto.telefone(),
-                dto.preferenciasAlimentares(),
-                dto.alergias(),
-                dto.metodoPagamentoPreferido(),
-                dto.notificacoesAtivas(),
-                dto.nome(),
-                dto.email(),
-                dto.login(),
+                input.getId(),
+                input.getCpf(),
+                input.getDataNascimento(),
+                input.getGenero(),
+                input.getTelefone(),
+                input.getPreferenciasAlimentares(),
+                input.getAlergias(),
+                input.getMetodoPagamentoPreferido(),
+                input.getNotificacoesAtivas(),
+                input.getNome(),
+                input.getEmail(),
+                input.getLogin(),
                 senhaCriptografada
         );
 
-        adicionarEnderecosAoUsuario(clienteDomain, dto.enderecos());
+        adicionarEnderecosInputAoUsuario(clienteDomain, input.getEnderecos());
         return clienteDomain;
     }
 

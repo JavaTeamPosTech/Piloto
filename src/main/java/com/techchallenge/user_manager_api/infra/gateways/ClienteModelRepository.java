@@ -6,7 +6,7 @@ import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import com.techchallenge.user_manager_api.infra.model.ClienteEntity;
 import com.techchallenge.user_manager_api.infra.persistence.adapters.UsuarioAdapter;
 import com.techchallenge.user_manager_api.infra.repositories.ClienteRepository;
-import org.apache.coyote.BadRequestException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,11 @@ public class ClienteModelRepository implements ClienteGatewayRepository {
 
     @Override
     public ClienteDomain alterarInformacoesDoCliente(ClienteDomain domain, String senhaCriptografada){
-        ClienteEntity clienteEntity = UsuarioAdapter.toCliente(domain, senhaCriptografada);
+        ClienteEntity clienteExistente = clienteRepository.findById(domain.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+
+
+        ClienteEntity clienteEntity = clienteExistente.atualizarCom(domain, senhaCriptografada);
         clienteRepository.save(clienteEntity);
         return UsuarioAdapter.toClienteDomain(clienteEntity);
     }

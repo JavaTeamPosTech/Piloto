@@ -2,11 +2,9 @@ package com.techchallenge.user_manager_api.api.controllers;
 
 import com.techchallenge.user_manager_api.application.usecases.BuscarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.CriacaoDeClienteUseCase;
-import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.cliente.BuscarTodosClientesUseCase;
 import com.techchallenge.user_manager_api.application.usecases.cliente.DeletarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
-import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.requests.ClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.UsuarioResponseDTO;
@@ -33,18 +31,16 @@ public class ClienteController {
     private final CriacaoDeClienteUseCase criacaoDeClienteUseCase;
     private final ClientePresenter clientePresenter;
     private final BuscarClienteUseCase buscarClienteUseCase;
-    private final AtualizarClienteUseCase atualizarClienteUseCase;
     private final BuscarTodosClientesUseCase buscarTodosClientesUseCase;
     private final DeletarClienteUseCase deletarClienteUseCase;
 
     public ClienteController(CriacaoDeClienteUseCase criacaoDeClienteUseCase,
                              ClientePresenter clientePresenter,  BuscarClienteUseCase buscarClienteUseCase,
-                             AtualizarClienteUseCase atualizarClienteUseCase, BuscarTodosClientesUseCase buscarTodosClientesUseCase,
+                             BuscarTodosClientesUseCase buscarTodosClientesUseCase,
                              DeletarClienteUseCase deletarClienteUseCase) {
         this.clientePresenter = clientePresenter;
         this.criacaoDeClienteUseCase = criacaoDeClienteUseCase;
         this.buscarClienteUseCase = buscarClienteUseCase;
-        this.atualizarClienteUseCase = atualizarClienteUseCase;
         this.buscarTodosClientesUseCase = buscarTodosClientesUseCase;
         this.deletarClienteUseCase = deletarClienteUseCase;
     }
@@ -76,17 +72,7 @@ public class ClienteController {
         return ResponseEntity.ok(clientePresenter.retornarCliente(cliente));
     }
 
-    @PreAuthorize("#id == authentication.principal.id")
-    @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Editar cliente", description = "Editar um Cliente pelo ID. Apenas o próprio Cliente pode executar.")
-    @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponseDTO> editarCliente(
-            @Parameter(description = "ID do Cliente a ser atualizado", example = "550e8400-e29b-41d4-a716-446655440000")
-            @PathVariable UUID id,
-            @RequestBody @Valid AtualizarClienteRequestDTO clienteRequestDTO) {
-        ClienteResponseDTO response = atualizarClienteUseCase.executar(id, clienteRequestDTO);
-        return ResponseEntity.ok(response);
-    }
+
 
     @PreAuthorize("hasRole('PROPRIETARIO')")
     @SecurityRequirement(name = "bearerAuth")

@@ -1,14 +1,11 @@
 package com.techchallenge.user_manager_api.application.usecases.cliente;
 
 import com.techchallenge.user_manager_api.api.controllers.gateways.ClienteGatewayRepository;
-import com.techchallenge.user_manager_api.application.mappers.UsuarioMapper;
+import com.techchallenge.user_manager_api.application.inputs.AtualizarClienteInput;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
-import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
 import com.techchallenge.user_manager_api.domain.dto.response.ClienteResponseDTO;
 import com.techchallenge.user_manager_api.domain.entities.ClienteDomain;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class AtualizarClienteUseCase {
@@ -24,15 +21,15 @@ public class AtualizarClienteUseCase {
     }
 
 
-    public ClienteResponseDTO executar(UUID id, AtualizarClienteRequestDTO dto) {
-        ClienteDomain clienteAtual = clienteRepository.buscarClientePorId(id);
+    public ClienteResponseDTO executar(AtualizarClienteInput atualizarClienteInput) {
+        ClienteDomain clienteAtual = clienteRepository.buscarClientePorId(atualizarClienteInput.getId());
 
-        boolean loginEmUso = clienteRepository.existsByLogin(dto.login());
-        if (loginEmUso && !clienteAtual.getLogin().equals(dto.login())) {
+        boolean loginEmUso = clienteRepository.existsByLogin(atualizarClienteInput.getLogin());
+        if (loginEmUso && !clienteAtual.getLogin().equals(atualizarClienteInput.getLogin())) {
             throw new IllegalArgumentException("Login já está em uso");
         }
 
-        ClienteDomain clienteAtualizado = UsuarioMapper.toClienteDomain(dto, clienteAtual.getSenha());
+        ClienteDomain clienteAtualizado = clienteAtual.atualizarCom(atualizarClienteInput, clienteAtual.getSenha());
 
         clienteRepository.alterarInformacoesDoCliente(clienteAtualizado, clienteAtualizado.getSenha());
 

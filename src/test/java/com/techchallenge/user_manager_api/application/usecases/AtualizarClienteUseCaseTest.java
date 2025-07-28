@@ -1,7 +1,7 @@
 package com.techchallenge.user_manager_api.application.usecases;
 
 import com.techchallenge.user_manager_api.api.controllers.gateways.ClienteGatewayRepository;
-import com.techchallenge.user_manager_api.application.mappers.UsuarioMapper;
+import com.techchallenge.user_manager_api.application.inputs.AtualizarClienteInput;
 import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
 import com.techchallenge.user_manager_api.application.usecases.presenters.ClientePresenter;
 import com.techchallenge.user_manager_api.domain.dto.requests.AtualizarClienteRequestDTO;
@@ -47,7 +47,7 @@ class AtualizarClienteUseCaseTest {
     void deveLancarExcecaoQuandoClienteNaoForEncontrado() {
         UUID clienteId = UUID.randomUUID();
 
-        AtualizarClienteRequestDTO dto = new AtualizarClienteRequestDTO(
+        AtualizarClienteRequestDTO clienteRequestDTO = new AtualizarClienteRequestDTO(
                 "João da Silva", // Nome
                 "123.456.789-00", // CPF
                 "joaodasilva@email.com", // Email
@@ -60,6 +60,7 @@ class AtualizarClienteUseCaseTest {
                 MetodoPagamentoEnum.CREDITO, // Método de pagamento preferido
                 true, // Notificações ativas
                 List.of(new EnderecoRequestDTO(
+                        null,
                         "SP",                // Estado
                         "Sao Paulo",         // Cidade
                         "Jardim Paulista",   // Bairro
@@ -68,11 +69,13 @@ class AtualizarClienteUseCaseTest {
                         "Apt 101",           // Complemento
                         "01311-000" )));       // CEP
 
+        AtualizarClienteInput atualizarClienteInput = AtualizarClienteInput.from(clienteId, clienteRequestDTO);
+
 
         when(clienteRepository.buscarClientePorId(clienteId)).thenThrow(new IllegalArgumentException("Cliente não encontrado"));
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            useCase.executar(clienteId, dto);
+            useCase.executar(atualizarClienteInput);
         });
 
         assertEquals("Cliente não encontrado", ex.getMessage());
@@ -83,7 +86,7 @@ class AtualizarClienteUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoLoginForNuloOuVazio() {
         UUID clienteId = UUID.randomUUID();
-        AtualizarClienteRequestDTO dto = new AtualizarClienteRequestDTO(
+        AtualizarClienteRequestDTO clienteRequestDTO = new AtualizarClienteRequestDTO(
                 "João da Silva", // Nome
                 "123.456.789-00", // CPF
                 "joaodasilva@email.com", // Email
@@ -96,6 +99,7 @@ class AtualizarClienteUseCaseTest {
                 MetodoPagamentoEnum.CREDITO, // Método de pagamento preferido
                 true, // Notificações ativas
                 List.of(new EnderecoRequestDTO(
+                        null,
                         "SP",                // Estado
                         "Sao Paulo",         // Cidade
                         "Jardim Paulista",   // Bairro
@@ -122,12 +126,13 @@ class AtualizarClienteUseCaseTest {
         );
 
 
+        AtualizarClienteInput atualizarClienteInput = AtualizarClienteInput.from(clienteId, clienteRequestDTO);
 
         when(clienteRepository.buscarClientePorId(clienteId)).thenReturn(clienteDomain);
-        when(clienteRepository.existsByLogin(dto.login())).thenReturn(true); // simula login já usado
+        when(clienteRepository.existsByLogin(atualizarClienteInput.getLogin())).thenReturn(true); // simula login já usado
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            useCase.executar(clienteId, dto);
+            useCase.executar(atualizarClienteInput);
         });
 
         assertEquals("Login já está em uso", ex.getMessage());
@@ -157,7 +162,7 @@ class AtualizarClienteUseCaseTest {
                 "senha123" // senhaCriptografada
         );
 
-        AtualizarClienteRequestDTO dto = new AtualizarClienteRequestDTO(
+        AtualizarClienteRequestDTO clienteRequestDTO = new AtualizarClienteRequestDTO(
                 "João da Silva", // Nome
                 "123.456.789-00", // CPF
                 "joaodasilva@email.com", // Email
@@ -170,6 +175,7 @@ class AtualizarClienteUseCaseTest {
                 MetodoPagamentoEnum.CREDITO, // Método de pagamento preferido
                 true, // Notificações ativas
                 List.of(new EnderecoRequestDTO(
+                        null,
                         "SP",                // Estado
                         "Sao Paulo",         // Cidade
                         "Jardim Paulista",   // Bairro
@@ -178,7 +184,6 @@ class AtualizarClienteUseCaseTest {
                         "Apt 101",           // Complemento
                         "01311-000" )));       // CEP
 
-        ClienteDomain clienteAtualizado = UsuarioMapper.toClienteDomain(dto, senhaAtual);
 
         ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO(
                 UUID.randomUUID(),
@@ -200,11 +205,13 @@ class AtualizarClienteUseCaseTest {
                 ))
         );
 
+        AtualizarClienteInput atualizarClienteInput = AtualizarClienteInput.from(clienteId, clienteRequestDTO);
+
         when(clienteRepository.buscarClientePorId(clienteId)).thenReturn(clienteAtual);
-        when(clienteRepository.existsByLogin(dto.login())).thenReturn(false);
+        when(clienteRepository.existsByLogin(atualizarClienteInput.getLogin())).thenReturn(false);
         when(clientePresenter.retornarCliente(any())).thenReturn(clienteResponseDTO);
 
-        ClienteResponseDTO resultado = useCase.executar(clienteId, dto);
+        ClienteResponseDTO resultado = useCase.executar(atualizarClienteInput);
 
         assertEquals("João da Silva", resultado.nome());
         assertEquals("joaodasilva@email.com", resultado.email());
@@ -232,7 +239,7 @@ class AtualizarClienteUseCaseTest {
         String login = "joaosilva";
         String senhaAtual = "senha123";
 
-        AtualizarClienteRequestDTO dto = new AtualizarClienteRequestDTO(
+        AtualizarClienteRequestDTO clienteRequestDTO = new AtualizarClienteRequestDTO(
                 "João Atualizado",
                 "123.456.789-00",
                 "joao.atualizado@email.com",
@@ -245,6 +252,7 @@ class AtualizarClienteUseCaseTest {
                 MetodoPagamentoEnum.CREDITO,
                 true,
                 List.of(new EnderecoRequestDTO(
+                        null,
                         "SP", "São Paulo", "Centro", "Rua A", 100, "", "01000-000"
                 ))
         );
@@ -278,11 +286,13 @@ class AtualizarClienteUseCaseTest {
                 ))
         );
 
+        AtualizarClienteInput atualizarClienteInput = AtualizarClienteInput.from(clienteId, clienteRequestDTO);
+
         when(clienteRepository.buscarClientePorId(clienteId)).thenReturn(clienteAtual);
         when(clienteRepository.existsByLogin(login)).thenReturn(true); // login está em uso, mas é do próprio cliente
         when(clientePresenter.retornarCliente(any())).thenReturn(clienteResponseDTO);
 
-        ClienteResponseDTO resultado = useCase.executar(clienteId, dto);
+        ClienteResponseDTO resultado = useCase.executar(atualizarClienteInput);
 
         assertEquals("João Atualizado", resultado.nome());
         verify(clienteRepository).alterarInformacoesDoCliente(any(), eq(senhaAtual));

@@ -41,4 +41,14 @@ public class EnderecoEntity {
         this.cep = enderecoDomain.getCep();
         this.usuario = usuario;
     }
+
+    public void atualizarCom(EnderecoDomain enderecoDomain) {
+        this.estado = enderecoDomain.getEstado();
+        this.cidade = enderecoDomain.getCidade();
+        this.bairro = enderecoDomain.getBairro();
+        this.rua = enderecoDomain.getRua();
+        this.numero = enderecoDomain.getNumero();
+        this.complemento = enderecoDomain.getComplemento();
+        this.cep = enderecoDomain.getCep();
+    }
 }

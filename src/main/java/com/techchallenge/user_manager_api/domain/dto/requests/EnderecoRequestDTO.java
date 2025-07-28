@@ -3,7 +3,12 @@ package com.techchallenge.user_manager_api.domain.dto.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
+import java.util.UUID;
+
 public record EnderecoRequestDTO(
+
+        @Schema(description = "ID do endereço. Obrigatório para atualizar um endereço existente. Deve ser omitido para novos endereços", example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
+        UUID id,
 
         @Schema(description = "Estado precisa estar preenchido", example = "SP")
         @NotBlank(message = "Estado precisa estar preenchido")
