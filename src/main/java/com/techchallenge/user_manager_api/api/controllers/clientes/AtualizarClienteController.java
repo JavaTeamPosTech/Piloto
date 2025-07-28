@@ -1,4 +1,4 @@
-package com.techchallenge.user_manager_api.api.controllers;
+package com.techchallenge.user_manager_api.api.controllers.clientes;
 
 import com.techchallenge.user_manager_api.application.inputs.AtualizarClienteInput;
 import com.techchallenge.user_manager_api.application.usecases.cliente.AtualizarClienteUseCase;
